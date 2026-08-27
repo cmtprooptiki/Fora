@@ -1,14 +1,20 @@
 # ============================================================================
 #  FORA – Strapi (backend)
-#  Δύο στάδια: (1) εγκατάσταση + build του πίνακα διαχείρισης, (2) τελική εικόνα.
+#  Βάση: node:20-slim (Debian). ΓΙΑΤΙ ΟΧΙ alpine: τα πακέτα "sharp" (επεξεργασία
+#  εικόνων) και "better-sqlite3" (βάση) έχουν έτοιμα (prebuilt) binaries για
+#  Debian/glibc, μαζί με τη libvips. Στο alpine χτίζονταν από τον κώδικα και
+#  έσπαγαν με σφάλμα «libvips-cpp.so.42: No such file or directory».
+#
 #  ΠΡΟΣΟΧΗ: ΟΥΤΕ η βάση (.tmp/data.db) ΟΥΤΕ τα ανεβασμένα αρχεία
 #  (public/uploads) μπαίνουν στην εικόνα — έρχονται από Docker volumes.
 # ============================================================================
-FROM node:20-alpine AS builder
+FROM node:20-slim AS builder
 WORKDIR /app
 
-# Το better-sqlite3 και το sharp είναι "native" και θέλουν εργαλεία μεταγλώττισης.
-RUN apk add --no-cache build-base python3 libc6-compat vips-dev
+# Εργαλεία μόνο για την περίπτωση που κάποιο πακέτο χρειαστεί μεταγλώττιση.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends python3 make g++ ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 RUN npm ci
@@ -20,12 +26,13 @@ RUN NODE_ENV=production npm run build
 RUN npm prune --omit=dev
 
 
-FROM node:20-alpine
+FROM node:20-slim
 WORKDIR /app
 ENV NODE_ENV=production
 
-# Βιβλιοθήκες που χρειάζονται τα native modules κατά την εκτέλεση.
-RUN apk add --no-cache libc6-compat vips
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
 # Αντιγράφουμε την έτοιμη εφαρμογή (κώδικας + node_modules + admin build).
 COPY --from=builder /app ./
