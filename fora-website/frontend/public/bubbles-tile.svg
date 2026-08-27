@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="456" height="428" viewBox="0 0 456 428">
+  <defs>
+    <linearGradient id="fbBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2f74b6"/>
+      <stop offset="100%" stop-color="#114a86"/>
+    </linearGradient>
+    <linearGradient id="fbPale" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9fb6d4"/>
+      <stop offset="100%" stop-color="#7f9cc2"/>
+    </linearGradient>
+    <linearGradient id="fbMuted" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6d90bf"/>
+      <stop offset="100%" stop-color="#4a6f9f"/>
+    </linearGradient>
+    <linearGradient id="fbRing" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#23a6dd"/>
+      <stop offset="100%" stop-color="#1a56a0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="66.6" cy="66.6" r="46.6" fill="url(#fbBlue)"/>
+  <circle cx="216.8" cy="66.6" r="46.6" fill="url(#fbBlue)"/>
+  <circle cx="336.7" cy="66.4" r="29.8" fill="url(#fbBlue)"/>
+  <circle cx="413.1" cy="66.8" r="22.3" fill="url(#fbBlue)"/>
+  <circle cx="66.6" cy="225.9" r="37.9" fill="url(#fbBlue)"/>
+  <circle cx="216.3" cy="220.2" r="25.7" fill="url(#fbBlue)"/>
+  <circle cx="336.5" cy="214.2" r="33.5" fill="none" stroke="url(#fbRing)" stroke-width="3"/>
+  <circle cx="66.6" cy="361.7" r="45.3" fill="url(#fbPale)"/>
+  <circle cx="216.3" cy="361.3" r="41.8" fill="url(#fbBlue)"/>
+  <circle cx="336.9" cy="366.1" r="32.7" fill="url(#fbMuted)"/>
+</svg>

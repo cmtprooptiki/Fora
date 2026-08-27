@@ -1,0 +1,28 @@
+# Ό,τι ΔΕΝ πρέπει να μπει στην εικόνα Docker
+node_modules
+.git
+.gitignore
+Dockerfile
+.dockerignore
+
+# Μυστικά — έρχονται από τις μεταβλητές του Portainer
+.env
+.env.*
+!.env.example
+
+# Βάση δεδομένων & ανεβασμένα αρχεία — έρχονται από Docker volumes
+.tmp
+*.db
+*.sqlite
+*.sqlite3
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Προσωρινά / build
+.cache
+.strapi
+dist
+build
+*.log
+.DS_Store
+Thumbs.db

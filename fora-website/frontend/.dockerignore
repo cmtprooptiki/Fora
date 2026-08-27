@@ -1,0 +1,19 @@
+# Ό,τι ΔΕΝ πρέπει να μπει στην εικόνα Docker
+node_modules
+.git
+.gitignore
+Dockerfile
+.dockerignore
+
+# Build output (ξαναχτίζεται μέσα στο Docker)
+.next
+out
+
+# Μυστικά / τοπικές ρυθμίσεις
+.env
+.env.*
+!.env.example
+
+*.log
+.DS_Store
+Thumbs.db

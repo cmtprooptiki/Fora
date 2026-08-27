@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_forum_videos",
+  "info": {
+    "displayName": "Βίντεο",
+    "description": "Ένα βίντεο YouTube. Επικολλήστε τον σύνδεσμο του YouTube."
+  },
+  "options": {},
+  "attributes": {
+    "titlos": {
+      "type": "string"
+    },
+    "syndesmosYoutube": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

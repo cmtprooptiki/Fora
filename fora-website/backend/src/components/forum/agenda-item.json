@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_forum_agenda_items",
+  "info": {
+    "displayName": "Στοιχείο Προγράμματος",
+    "description": "Μία γραμμή του προγράμματος: ομιλία, διάλειμμα, έναρξη, στρογγυλό τραπέζι κ.λπ."
+  },
+  "options": {},
+  "attributes": {
+    "titlos": {
+      "type": "string",
+      "required": true
+    },
+    "typos": {
+      "type": "enumeration",
+      "enum": [
+        "Ομιλία",
+        "Κεντρική Ομιλία",
+        "Έναρξη",
+        "Χαιρετισμοί",
+        "Διάλειμμα",
+        "Στρογγυλό Τραπέζι",
+        "Λήξη"
+      ],
+      "default": "Ομιλία"
+    },
+    "omilitis": {
+      "type": "string"
+    },
+    "idiotita": {
+      "type": "string"
+    },
+    "ora": {
+      "type": "string"
+    }
+  }
+}

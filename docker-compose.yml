@@ -1,0 +1,60 @@
+# ============================================================================
+#  FORA – Innovating Healthcare Management
+#  Stack: Strapi (backend) + Next.js (frontend) + SQLite σε μόνιμο volume.
+#
+#  ΤΑ ΔΕΔΟΜΕΝΑ ΣΑΣ ζουν στα volumes strapi_db και strapi_uploads.
+#  Επιβιώνουν ΚΑΘΕ νέας έκδοσης (rebuild / update stack).
+#  ΠΟΤΕ μην τρέξετε: docker volume rm strapi_db
+#  ΠΟΤΕ μην τρέξετε: docker system prune -a --volumes
+# ============================================================================
+services:
+  backend:
+    build:
+      context: ./fora-website/backend
+    container_name: fora_backend
+    environment:
+      HOST: 0.0.0.0
+      PORT: 1337
+      NODE_ENV: production
+      APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      DATABASE_CLIENT: sqlite
+      # ΑΠΟΛΥΤΗ διαδρομή: το αρχείο της βάσης μπαίνει μέσα στο volume.
+      DATABASE_FILENAME: /app/.tmp/data.db
+      # Ποιες διευθύνσεις επιτρέπεται να διαβάζουν το API (ο δημόσιος ιστότοπος).
+      CORS_ORIGINS: ${CORS_ORIGINS}
+    volumes:
+      - strapi_db:/app/.tmp                 # ΒΑΣΗ SQLite — ΜΗΝ το σβήσετε ποτέ
+      - strapi_uploads:/app/public/uploads  # Εικόνες/αρχεία που ανεβάζετε
+    ports:
+      - "1337:1337"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./fora-website/frontend
+      args:
+        # Δημόσια διεύθυνση Strapi — «ψήνεται» στην εικόνα (για τις εικόνες).
+        NEXT_PUBLIC_STRAPI_URL: ${NEXT_PUBLIC_STRAPI_URL}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+    container_name: fora_frontend
+    environment:
+      NODE_ENV: production
+      # Εσωτερική επικοινωνία μεταξύ containers (γρήγορη, χωρίς internet).
+      STRAPI_INTERNAL_URL: http://backend:1337
+      NEXT_PUBLIC_STRAPI_URL: ${NEXT_PUBLIC_STRAPI_URL}
+      # 0 = πάντα φρέσκο περιεχόμενο. Βάλτε π.χ. 60 για προσωρινή αποθήκευση.
+      CONTENT_REVALIDATE_SECONDS: 0
+    ports:
+      - "3003:3000"   # ο ιστότοπος στη θύρα 3003 του διακομιστή
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  strapi_db:       # Εδώ ζει η βάση SQLite — επιβιώνει κάθε rebuild
+  strapi_uploads:  # Εδώ ζουν τα ανεβασμένα αρχεία — επιβιώνουν κάθε rebuild

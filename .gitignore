@@ -1,0 +1,44 @@
+# ============================================================================
+#  FORA – Τι ΔΕΝ ανεβαίνει ποτέ στο git
+# ============================================================================
+
+# --- Βιβλιοθήκες ---
+node_modules/
+
+# --- Μυστικά (κρατάμε ΜΟΝΟ τα .env.example) ---
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# --- Βάση δεδομένων (ΠΟΤΕ στο git — ζει σε Docker volume) ---
+*.db
+*.sqlite
+*.sqlite3
+**/.tmp/
+
+# --- Ανεβασμένα αρχεία χρήστη (ζουν σε Docker volume) ---
+fora-website/backend/public/uploads/*
+!fora-website/backend/public/uploads/.gitkeep
+fora-website/strapi/public/uploads/*
+!fora-website/strapi/public/uploads/.gitkeep
+
+# --- Build / cache ---
+dist/
+build/
+.next/
+out/
+.cache/
+.strapi/
+.strapi-updater.json
+
+# ΣΗΜΕΙΩΣΗ: το data/content.local.json (αντίγραφο του περιεχομένου από το
+# Strapi) ΔΕΝ αγνοείται σκόπιμα — είναι ένα επιπλέον αντίγραφο ασφαλείας των
+# κειμένων σας και δεν περιέχει μυστικά.
+
+# --- Λειτουργικό σύστημα / editors ---
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

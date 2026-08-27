@@ -1,0 +1,43 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Ρυθμίσεις Ιστότοπου",
+    "description": "Γενικές ρυθμίσεις που ισχύουν σε όλο τον ιστότοπο (λογότυπο, στοιχεία επικοινωνίας, σύνδεσμοι social)."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "logotypo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "emailEpikoinonias": {
+      "type": "string"
+    },
+    "tilefonoEpikoinonias": {
+      "type": "string"
+    },
+    "keimenoEpikoinonias": {
+      "type": "text"
+    },
+    "facebookUrl": {
+      "type": "string"
+    },
+    "linkedinUrl": {
+      "type": "string"
+    },
+    "keimenoNewsletter": {
+      "type": "text"
+    },
+    "keimenoFooter": {
+      "type": "string"
+    }
+  }
+}

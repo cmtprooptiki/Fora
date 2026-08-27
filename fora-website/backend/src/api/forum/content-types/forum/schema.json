@@ -1,0 +1,171 @@
+{
+  "kind": "collectionType",
+  "collectionName": "forums",
+  "info": {
+    "singularName": "forum",
+    "pluralName": "forums",
+    "displayName": "Forum (Διοργάνωση)",
+    "description": "Κάθε ετήσια διοργάνωση του FORA. Δημιουργήστε μία εγγραφή ανά χρονιά."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": false
+    }
+  },
+  "attributes": {
+    "arithmos": {
+      "type": "integer",
+      "required": true
+    },
+    "etos": {
+      "type": "integer",
+      "required": true
+    },
+    "thema": {
+      "type": "string"
+    },
+    "ypotitlos": {
+      "type": "text"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "thema",
+      "required": true
+    },
+    "imerominia": {
+      "type": "string"
+    },
+    "imerominiaEnarksis": {
+      "type": "datetime"
+    },
+    "imerominiaLiksis": {
+      "type": "datetime"
+    },
+    "xoros": {
+      "type": "string"
+    },
+    "eisagogikoKeimeno": {
+      "type": "richtext"
+    },
+    "paragrafosKefalidas": {
+      "type": "text"
+    },
+    "lexeisKleidia": {
+      "type": "text"
+    },
+    "koumpiKefalidasKeimeno": {
+      "type": "string"
+    },
+    "koumpiKefalidasSyndesmos": {
+      "type": "string"
+    },
+    "koumpiKefalidasPdf": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "themaEmfanisis": {
+      "type": "enumeration",
+      "enum": [
+        "Κλασικό",
+        "Πετρόλ",
+        "Πράσινο",
+        "Μωβ",
+        "Μπορντό",
+        "Σκούρο",
+        "Πορτοκαλί"
+      ],
+      "default": "Κλασικό"
+    },
+    "grammatoseiraTitlon": {
+      "type": "enumeration",
+      "enum": [
+        "Hagrid",
+        "Poppins",
+        "Montserrat",
+        "Playfair",
+        "Oswald"
+      ],
+      "default": "Hagrid"
+    },
+    "xromaKyrioOverride": {
+      "type": "customField",
+      "customField": "plugin::color-picker.color"
+    },
+    "xromaAksesouarOverride": {
+      "type": "customField",
+      "customField": "plugin::color-picker.color"
+    },
+    "trexonForum": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "syndesmoEggrafis": {
+      "type": "string"
+    },
+    "eikonaHero": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "eikonaKarouzel": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "atzentaPdf": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "arithmoi": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.stat"
+    },
+    "thematikesEnotites": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.thematic-section"
+    },
+    "omilites": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.speaker"
+    },
+    "synergates": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.sponsor-group"
+    },
+    "fotografies": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "vinteo": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.video"
+    },
+    "programma": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.agenda-session"
+    }
+  }
+}

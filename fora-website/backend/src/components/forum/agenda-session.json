@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_forum_agenda_sessions",
+  "info": {
+    "displayName": "Ενότητα Προγράμματος",
+    "description": "Μία ενότητα του προγράμματος: τίτλος, χρονικό μπλοκ, συντονιστής και οι ομιλίες της."
+  },
+  "options": {},
+  "attributes": {
+    "titlos": {
+      "type": "string",
+      "required": true
+    },
+    "xronikoBlok": {
+      "type": "string"
+    },
+    "syntonistis": {
+      "type": "string"
+    },
+    "stoixeia": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.agenda-item"
+    }
+  }
+}

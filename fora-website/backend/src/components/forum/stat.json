@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_forum_stats",
+  "info": {
+    "displayName": "Αριθμός (Στατιστικό)",
+    "description": "Ένας αριθμός/στατιστικό της διοργάνωσης, π.χ. «400+ Συμμετέχοντες». Διαφορετικός ανά Forum."
+  },
+  "options": {},
+  "attributes": {
+    "arithmos": {
+      "type": "string",
+      "required": true
+    },
+    "perigrafi": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

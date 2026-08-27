@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_forum_thematic_sections",
+  "info": {
+    "displayName": "Θεματική Ενότητα",
+    "description": "Μία θεματική ενότητα του Forum: τίτλος και περιγραφή."
+  },
+  "options": {},
+  "attributes": {
+    "titlos": {
+      "type": "string",
+      "required": true
+    },
+    "perigrafi": {
+      "type": "text"
+    }
+  }
+}

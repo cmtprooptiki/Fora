@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_forum_sponsor_groups",
+  "info": {
+    "displayName": "Ομάδα Συνεργατών",
+    "description": "Μια κατηγορία συνεργατών (π.χ. Χρυσός Χορηγός, Συνδιοργανωτές) και τα λογότυπά της."
+  },
+  "options": {},
+  "attributes": {
+    "katigoria": {
+      "type": "string",
+      "required": true
+    },
+    "logotypa": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.sponsor"
+    }
+  }
+}

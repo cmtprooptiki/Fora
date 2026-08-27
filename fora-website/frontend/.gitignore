@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+# next.js build output
+.next/
+out/
+# environment variables — ΠΟΤΕ μην τα ανεβάζετε
+.env
+.env.local
+.env.production
+# misc
+.DS_Store
+Thumbs.db
+*.log
