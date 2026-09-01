@@ -9,16 +9,12 @@ import Videos from '../../../components/Videos';
 import ThemeScope from '../../../components/ThemeScope';
 import { getAllForums, getForumBySlug } from '../../../lib/strapi';
 
-// Με το output: 'export', πρέπει να ξέρουμε εκ των προτέρων ποιες σελίδες
-// να φτιαχτούν. Αυτή η συνάρτηση δίνει τη λίστα (μία ανά διοργάνωση).
-export async function generateStaticParams() {
-  const forums = await getAllForums();
-  return forums.map((f) => ({ slug: f.slug }));
-}
-
-// true: αν προσθέσετε ΝΕΟ Forum στο Strapi, η σελίδα του δημιουργείται
-// αυτόματα την πρώτη φορά που θα τη ζητήσει κάποιος — χωρίς νέα έκδοση.
-export const dynamicParams = true;
+// Η σελίδα κάθε διοργάνωσης φτιάχνεται ΤΗΝ ΩΡΑ ΤΗΣ ΕΠΙΣΚΕΨΗΣ, διαβάζοντας
+// ζωντανά το Strapi. Έτσι: (α) νέο Forum εμφανίζεται χωρίς νέα έκδοση,
+// (β) δεν χρειάζεται λίστα σελίδων εκ των προτέρων (generateStaticParams),
+// η οποία σε συνδυασμό με «φρέσκα» δεδομένα προκαλούσε σφάλμα 500
+// («Page changed from static to dynamic at runtime»).
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
   const forum = await getForumBySlug(params.slug);
