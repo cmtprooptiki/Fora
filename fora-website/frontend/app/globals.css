@@ -570,6 +570,9 @@ main { min-height: 40vh; }
    ΔΕΝ επηρεάζει tablet/υπολογιστή.
    ========================================================================== */
 @media (max-width: 600px) {
+  /* Χωρίς το μοτίβο «μπαλών» στην κεφαλίδα σε κινητά — καθαρό μπλε φόντο */
+  .hero__bubbles-bg { display: none; }
+
   .hero__inner { text-align: center; padding-block: 110px 40px; }
   .hero__left { align-items: center; }
   .hero__right { align-items: center; text-align: center; }
