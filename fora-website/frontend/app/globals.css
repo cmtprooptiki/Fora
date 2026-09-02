@@ -233,6 +233,8 @@ main { min-height: 40vh; }
 .nav-dropdown__menu a:hover { background: var(--fora-section-tint); color: var(--fora-blue); }
 
 .nav-toggle, .nav-burger { display: none; }
+/* Το «Επικοινωνία» του μενού κινητού — κρυφό στον υπολογιστή */
+.site-nav__cta-m { display: none; }
 
 @media (max-width: 940px) {
   .nav-burger {
@@ -267,7 +269,16 @@ main { min-height: 40vh; }
   }
   .nav-dropdown__menu a { padding: 12px 22px 12px 40px; border-top: 1px solid var(--fora-border); }
 
-  .nav-toggle:checked ~ .site-nav { max-height: 720px; }
+  /* Το κουμπί «Επικοινωνία» εμφανίζεται ΜΕΣΑ στο μενού του κινητού */
+  .site-nav a.site-nav__cta-m {
+    display: block; margin: 14px 22px; padding: 13px 20px;
+    border: none; border-top: none; border-radius: var(--radius);
+    background: var(--fora-blue); color: #fff; text-align: center; font-weight: 700;
+  }
+  /* ...και κρύβεται από τη μπάρα, ώστε να μη στοιβάζεται δίπλα στο burger */
+  .site-nav__cta { display: none; }
+
+  .nav-toggle:checked ~ .site-nav { max-height: 760px; }
 }
 
 /* ==========================================================================
@@ -424,7 +435,8 @@ main { min-height: 40vh; }
   margin-top: clamp(28px, 4vh, 64px);
   max-width: 72%;
   color: #fff; font-weight: 400;
-  font-size: 25px; line-height: 1.4;
+  /* 25px σε υπολογιστή, μικρότερο σε κινητό ώστε να διαβάζεται άνετα */
+  font-size: clamp(1.05rem, 4.2vw, 25px); line-height: 1.45;
 }
 .hero__intro-para strong { font-weight: 700; }
 @media (max-width: 1024px) { .hero__intro-para { max-width: 100%; } }
@@ -569,11 +581,17 @@ main { min-height: 40vh; }
 .hero__place { margin: 0; line-height: 1.6; max-width: 100%; font-size: clamp(1.05rem, 1.5vw, 27px); }
 
 @media (max-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr; gap: 26px; min-height: 0; }
+  .hero__inner {
+    grid-template-columns: 1fr; gap: 26px; min-height: 0;
+    /* Λιγότερος κενός χώρος πάνω σε κινητά */
+    padding-block: clamp(104px, 15vh, 150px) clamp(36px, 8vw, 60px);
+  }
   .hero__right { text-align: left; align-items: flex-start; }
-  .hero__tagline { max-width: none; }
+  /* Χωρίς το διακοσμητικό τόξο και τις εσοχές σε στενές οθόνες */
+  .hero__tagline { max-width: none; padding-left: 0; }
+  .hero__tagline::before { display: none; }
+  .hero__meta { padding-top: 16px; padding-left: 0; }
   .hero__actions { padding-top: 26px; }
-  .hero__meta { padding-top: 16px; }
 }
 
 /* Λωρίδα εικόνας κάτω από την κεφαλίδα — σε όλο το πλάτος, χωρίς κενό */
@@ -589,6 +607,11 @@ main { min-height: 40vh; }
   font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
   color: var(--fora-black); line-height: 1.05;
   font-size: clamp(2rem, 5vw, 4rem);
+}
+/* Σε στενές οθόνες οι δύο λέξεις του τίτλου στοιβάζονται αντί να «πετάγονται»
+   στις δύο άκρες (space-between), που έδειχνε χαλασμένο σε κινητά. */
+@media (max-width: 700px) {
+  .thematics__head { flex-direction: column; align-items: flex-start; gap: 0; }
 }
 .thematics__intro {
   color: var(--fora-text); font-size: 1.05rem; line-height: 1.6;

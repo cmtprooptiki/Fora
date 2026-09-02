@@ -58,6 +58,12 @@ export default function Header({ settings, archive = [] }) {
           <a href="/#omilites">Ομιλητές</a>
           <a href="/#analytiko-programma">Πρόγραμμα</a>
           <a href="/#newsletter">Νέα &amp; Ανακοινώσεις</a>
+
+          {/* Μόνο σε κινητά: το «Επικοινωνία» μέσα στο μενού (στον υπολογιστή
+              εμφανίζεται ως κουμπί δεξιά στη μπάρα). */}
+          <a href="/#epikoinonia" className="site-nav__cta-m">
+            Επικοινωνία
+          </a>
         </nav>
 
         {/* Το CTA είναι ξεχωριστό ώστε το μενού να «απλώνεται» ανάμεσα
