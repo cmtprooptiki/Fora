@@ -16,10 +16,11 @@ export const viewport = {
 export default async function RootLayout({ children }) {
   const settings = await getSiteSettings();
   const forums = await getAllForums();
-  const current = forums.find((f) => f.trexonForum);
-  const archive = (current ? forums.filter((f) => f.id !== current.id) : forums)
+  // Στο μενού εμφανίζονται ΟΛΕΣ οι διοργανώσεις, από τη νεότερη προς την
+  // παλαιότερη (Forum 2025, 2024, 2023, 2022) — όπως στο σχέδιο.
+  const archive = forums
     .slice()
-    .sort((a, b) => (a.etos || 0) - (b.etos || 0));
+    .sort((a, b) => (b.etos || 0) - (a.etos || 0));
   const typekit =
     process.env.NEXT_PUBLIC_TYPEKIT_URL || 'https://use.typekit.net/njw0ocx.css';
 

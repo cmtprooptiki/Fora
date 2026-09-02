@@ -233,61 +233,163 @@ main { min-height: 40vh; }
 .nav-dropdown__menu a:hover { background: var(--fora-section-tint); color: var(--fora-blue); }
 
 .nav-toggle, .nav-burger { display: none; }
-/* Το «Επικοινωνία» του μενού κινητού — κρυφό στον υπολογιστή */
-.site-nav__cta-m { display: none; }
+/* Στοιχεία που υπάρχουν ΜΟΝΟ στο μενού κινητού/tablet — κρυφά στον υπολογιστή */
+.site-nav__num,
+.site-nav__cta-m,
+.site-nav__ctawrap,
+.site-nav__contact { display: none; }
 
-@media (max-width: 940px) {
+@media (max-width: 1024px) {
+  /* Με ανοιχτό μενού η μπάρα γίνεται λευκή, με το κανονικό (μπλε) λογότυπο
+     και σκούρο «X» — όπως στο σχέδιο. */
+  .site-header:has(.nav-toggle:checked) {
+    background: #fff; box-shadow: var(--shadow-sm); border-bottom-color: transparent;
+  }
+  .site-header:has(.nav-toggle:checked) .site-header__logo img { filter: none; }
+  .site-header:has(.nav-toggle:checked) .site-header__wordmark { color: var(--fora-blue); }
+
+  /* ---- Εικονίδιο μενού: γίνεται «X» όταν το μενού είναι ανοιχτό ---- */
   .nav-burger {
-    display: flex; flex-direction: column; justify-content: center; gap: 5px;
-    width: 42px; height: 42px; cursor: pointer;
+    display: flex; flex-direction: column; justify-content: center; gap: 6px;
+    width: 30px; height: 30px; cursor: pointer;
   }
-  .nav-burger span { height: 3px; width: 24px; background: #fff; border-radius: 2px; }
-  .site-header.is-scrolled .nav-burger span { background: var(--fora-blue); }
-  .site-nav {
-    position: absolute; top: 88px; left: 0; right: 0;
-    flex-direction: column; align-items: stretch; gap: 0;
-    background: #fff; border-bottom: 1px solid var(--fora-border);
-    box-shadow: var(--shadow-md); max-height: 0; overflow: hidden;
-    transition: max-height 0.25s ease;
+  .nav-burger span {
+    height: 2px; width: 26px; background: #fff; border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease, background 0.25s ease;
   }
-  /* Στο ανοιχτό μενού κινητού (λευκό πάνελ) τα γράμματα μαύρα, πάντα */
-  .site-nav a:not(.site-nav__cta) { padding: 14px 22px; border-top: 1px solid var(--fora-border); color: var(--fora-text); }
-  .site-nav a:not(.site-nav__cta):hover { color: var(--fora-blue); }
-  .site-header .nav-dropdown__toggle { color: var(--fora-text); }
-  .site-nav__cta { margin: 12px 22px; text-align: center; background: var(--fora-blue); color: #fff; }
+  .site-header.is-scrolled .nav-burger span { background: #313131; }
+  .nav-toggle:checked ~ .nav-burger span { background: #313131; }
+  .nav-toggle:checked ~ .nav-burger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .nav-toggle:checked ~ .nav-burger span:nth-child(2) { opacity: 0; }
+  .nav-toggle:checked ~ .nav-burger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-  /* Υπομενού σε κινητά: εμφανίζεται εσωτερικά κάτω από τον τίτλο */
-  .nav-dropdown { width: 100%; flex-direction: column; }
-  .nav-dropdown__toggle {
-    width: 100%; padding: 14px 22px; border-top: 1px solid var(--fora-border);
-    justify-content: space-between; font-size: 1rem;
+  /* ---- Λευκό πάνελ μενού κάτω από τη μπάρα ---- */
+  .site-nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    margin-inline: 0; padding: 0 24px;
+    background: #fff; border-bottom: none; box-shadow: var(--shadow-md);
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease;
   }
+  .nav-toggle:checked ~ .site-nav {
+    max-height: calc(100vh - 88px); overflow-y: auto; padding-top: 24px;
+  }
+
+  /* ---- Στοιχεία 01–04: αριθμός (γκρι) + ετικέτα (σκούρα) + διαχωριστικό ---- */
+  .site-nav > a,
+  .nav-dropdown__toggle {
+    display: flex; align-items: baseline; gap: 15px; width: 100%;
+    padding: 0 0 16px; margin: 0 0 16px; text-align: left;
+    background: none; border: none; border-bottom: 1px solid #dddcdc;
+  }
+  .site-nav__num {
+    display: block; flex: 0 0 34px;
+    font-family: var(--font-heading); font-weight: 400;
+    font-size: 1.65rem; line-height: 1.2; color: #939292;
+  }
+  .site-nav__label {
+    flex: 1 1 auto;
+    font-family: var(--font-heading); font-weight: 600;
+    font-size: 1.3rem; line-height: 1.35; color: #313131;
+  }
+  /* Τα χρώματα ισχύουν πάντα μέσα στο λευκό πάνελ */
+  .site-header .site-nav > a .site-nav__label,
+  .site-header .nav-dropdown__toggle .site-nav__label { color: #313131; }
+  .site-header .site-nav > a .site-nav__num,
+  .site-header .nav-dropdown__toggle .site-nav__num { color: #939292; }
+
+  .nav-dropdown { width: 100%; flex-direction: column; }
+  .nav-dropdown__caret {
+    margin-left: auto; align-self: center;
+    color: #939292; font-size: 0.95rem;
+  }
+
+  /* ---- Υπομενού Forum: πάντα ορατό, με εσοχή στο ύψος των ετικετών ---- */
   .nav-dropdown__menu {
     position: static; transform: none; opacity: 1; visibility: visible;
     box-shadow: none; border: none; border-radius: 0; padding: 0; min-width: 0;
     background: transparent;
   }
-  /* ΣΗΜΑΝΤΙΚΟ: στον υπολογιστή το υπομενού κεντράρεται με translateX(-50%).
-     Σε κινητά, μόλις ο χρήστης πατούσε το κουμπί (focus/hover), εκείνος ο
-     κανόνας —που είναι πιο «ισχυρός»— ξαναέβαζε το translateX και το υπομενού
-     έφευγε εκτός οθόνης (έμοιαζε σαν να «εξαφανίζονται» τα Forum).
-     Εδώ το ακυρώνουμε ώστε να μένει στη θέση του. */
+  /* Ακυρώνει το translateX(-50%) του υπολογιστή (αλλιώς «έφευγε» εκτός οθόνης) */
   .nav-dropdown:hover .nav-dropdown__menu,
   .nav-dropdown:focus-within .nav-dropdown__menu {
     transform: none; opacity: 1; visibility: visible;
   }
-  .nav-dropdown__menu a { padding: 12px 22px 12px 40px; border-top: 1px solid var(--fora-border); }
-
-  /* Το κουμπί «Επικοινωνία» εμφανίζεται ΜΕΣΑ στο μενού του κινητού */
-  .site-nav a.site-nav__cta-m {
-    display: block; margin: 14px 22px; padding: 13px 20px;
-    border: none; border-top: none; border-radius: var(--radius);
-    background: var(--fora-blue); color: #fff; text-align: center; font-weight: 700;
+  .nav-dropdown__menu a {
+    display: block; padding: 0 0 16px 49px; margin: 0 0 16px;
+    border: none; border-bottom: 1px solid #dddcdc; border-radius: 0;
+    font-family: var(--font-heading); font-weight: 400;
+    font-size: 1.12rem; line-height: 1.4; color: #939292; white-space: normal;
   }
-  /* ...και κρύβεται από τη μπάρα, ώστε να μη στοιβάζεται δίπλα στο burger */
+  .nav-dropdown__menu a:hover { background: none; color: var(--fora-blue); }
+
+  /* ---- Κάτω μπλοκ: μπλε φόντο με λευκό κουμπί «Επικοινωνία» ---- */
+  .site-nav__ctawrap {
+    display: block; margin: 8px -24px 0; padding: 24px;
+    background: linear-gradient(90deg, #2874af 0%, #0d4f9f 100%);
+  }
+  .site-nav a.site-nav__cta-m {
+    display: flex; width: 100%; min-height: 72px;
+    align-items: center; justify-content: center;
+    margin: 0; padding: 12px 20px; border: none; border-radius: 8px;
+    background: #fff; color: var(--fora-blue);
+    font-family: var(--font-body); font-weight: 600; font-size: 1.15rem;
+  }
+  /* Το κουμπί της μπάρας κρύβεται (υπάρχει μέσα στο μενού) */
   .site-nav__cta { display: none; }
 
-  .nav-toggle:checked ~ .site-nav { max-height: 760px; }
+  /* ---- Κοινωνικά + email: ΜΟΝΟ σε tablet (κρυφά στο κινητό, όπως στο σχέδιο) ---- */
+  .site-nav__contact { display: none; }
+}
+
+/* ==========================================================================
+   TABLET (601–1024px): ίδια δομή με το κινητό, μεγαλύτερη τυπογραφία,
+   περιθώρια 48px και μπλοκ «κοινωνικά + επικοινωνία» (Figma: tablet frame)
+   ========================================================================== */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .site-nav { padding-inline: 48px; }
+
+  /* Μεγαλύτερα γράμματα και πιο «αραιές» γραμμές */
+  .site-nav > a,
+  .nav-dropdown__toggle { padding-bottom: 24px; margin-bottom: 24px; }
+  .site-nav__num { flex-basis: 40px; }
+  .site-nav__label { font-size: 1.9rem; }
+  .nav-dropdown__caret { font-size: 1.15rem; }
+  .nav-dropdown__menu a { font-size: 1.55rem; padding: 0 0 16px 48px; }
+
+  /* Κοινωνικά δίκτυα + στοιχεία επικοινωνίας */
+  .site-nav__contact {
+    display: flex; flex-direction: column; align-items: center; gap: 28px;
+    margin-top: 22px; padding: 36px 0 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+  }
+  .site-nav__social { display: flex; gap: 34px; }
+  .site-nav__social a {
+    width: 40px; height: 40px; border-radius: 8px; background: #f2f2f2;
+    display: flex; align-items: center; justify-content: center; color: #313131;
+  }
+  .site-nav__social a:hover { background: #e6ecf6; color: var(--fora-blue); }
+  .site-nav__social svg { width: 22px; height: 22px; display: block; }
+
+  .site-nav__contactrow {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 56px;
+  }
+  .site-nav__cinfo {
+    display: flex; align-items: center; gap: 14px;
+    color: #313131; font-size: 1.05rem;
+  }
+  .site-nav__cinfo:hover { color: var(--fora-blue); }
+  .site-nav__cicon {
+    flex: 0 0 auto; width: 30px; height: 30px; border-radius: 6px;
+    background: var(--fora-blue); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .site-nav__cicon svg { width: 17px; height: 17px; display: block; }
+
+  /* Μπλε μπλοκ με ψηλότερο λευκό κουμπί (88px) */
+  .site-nav__ctawrap { margin: 8px -48px 0; padding: 40px 48px; }
+  .site-nav a.site-nav__cta-m { min-height: 88px; font-size: 1.25rem; }
 }
 
 /* ==========================================================================

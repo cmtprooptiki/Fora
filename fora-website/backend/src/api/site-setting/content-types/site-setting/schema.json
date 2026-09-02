@@ -27,10 +27,16 @@
     "keimenoEpikoinonias": {
       "type": "text"
     },
+    "emailEtaireias": {
+      "type": "string"
+    },
     "facebookUrl": {
       "type": "string"
     },
     "linkedinUrl": {
+      "type": "string"
+    },
+    "youtubeUrl": {
       "type": "string"
     },
     "keimenoNewsletter": {
