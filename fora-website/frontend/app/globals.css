@@ -267,6 +267,15 @@ main { min-height: 40vh; }
     box-shadow: none; border: none; border-radius: 0; padding: 0; min-width: 0;
     background: transparent;
   }
+  /* ΣΗΜΑΝΤΙΚΟ: στον υπολογιστή το υπομενού κεντράρεται με translateX(-50%).
+     Σε κινητά, μόλις ο χρήστης πατούσε το κουμπί (focus/hover), εκείνος ο
+     κανόνας —που είναι πιο «ισχυρός»— ξαναέβαζε το translateX και το υπομενού
+     έφευγε εκτός οθόνης (έμοιαζε σαν να «εξαφανίζονται» τα Forum).
+     Εδώ το ακυρώνουμε ώστε να μένει στη θέση του. */
+  .nav-dropdown:hover .nav-dropdown__menu,
+  .nav-dropdown:focus-within .nav-dropdown__menu {
+    transform: none; opacity: 1; visibility: visible;
+  }
   .nav-dropdown__menu a { padding: 12px 22px 12px 40px; border-top: 1px solid var(--fora-border); }
 
   /* Το κουμπί «Επικοινωνία» εμφανίζεται ΜΕΣΑ στο μενού του κινητού */
