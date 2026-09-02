@@ -763,6 +763,18 @@ main { min-height: 40vh; }
   pointer-events: none;
 }
 .hero__meta { margin-top: auto; padding-top: 32px; color: #fff; padding-left: 32px; }
+
+/* Υπολογιστής: ο υπότιτλος σε ΜΙΑ γραμμή και η ημερομηνία/χώρος κεντραρισμένα
+   μέσα στη δεξιά στήλη. (Σε κινητά είναι ήδη κεντραρισμένα.) */
+@media (min-width: 901px) {
+  .hero__tagline {
+    white-space: nowrap;
+    /* Κλιμακώνεται με το πλάτος ώστε να χωράει ΠΑΝΤΑ σε μία γραμμή:
+       μετρημένο σε 901–1920px, ο υπότιτλος χωράει άνετα στη δεξιά στήλη. */
+    font-size: min(1.28vw, 24px);
+  }
+  .hero__meta { width: 100%; padding-left: 0; text-align: center; }
+}
 .hero__date { font-weight: 400; font-size: clamp(1.05rem, 1.5vw, 27px); color: #fff; margin: 0 0 10px; }
 .hero__place { margin: 0; line-height: 1.6; max-width: 100%; font-size: clamp(1.05rem, 1.5vw, 27px); }
 
