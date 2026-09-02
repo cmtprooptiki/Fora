@@ -36,12 +36,12 @@ export default function Hero({ forum, backHref, backLabel }) {
           )}
           <p className="hero__edition">
             {forum?.arithmos ? (
-              <>
+              <span className="hero__edition-no">
                 {forum.arithmos}
-                <sup className="hero__edition-ord">ο</sup>{' '}
-              </>
-            ) : null}
-            Υβριδικό Forum
+                <sup className="hero__edition-ord">ο</sup>
+              </span>
+            ) : null}{' '}
+            <span className="hero__edition-txt">Υβριδικό Forum</span>
           </p>
           <h1 className="hero__title">{forum?.thema}</h1>
 
