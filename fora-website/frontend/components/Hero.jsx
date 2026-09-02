@@ -66,6 +66,11 @@ export default function Hero({ forum, backHref, backLabel }) {
           {forum?.ypotitlos && <p className="hero__tagline">{forum.ypotitlos}</p>}
           <div className="hero__meta">
             {forum?.imerominia && <p className="hero__date">{forum.imerominia}</p>}
+            {/* Διαχωριστική κουκκίδα — εμφανίζεται ΜΟΝΟ σε tablet, όπου η
+                ημερομηνία και ο χώρος μπαίνουν στη ίδια σειρά (σχέδιο Figma). */}
+            {forum?.imerominia && forum?.xoros && (
+              <span className="hero__meta-dot" aria-hidden="true" />
+            )}
             {forum?.xoros && <p className="hero__place">{forum.xoros}</p>}
           </div>
         </div>

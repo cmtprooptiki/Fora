@@ -702,6 +702,8 @@ main { min-height: 40vh; }
   pointer-events: none;
 }
 .hero__meta { margin-top: auto; padding-top: 32px; color: #fff; padding-left: 32px; }
+/* Η διαχωριστική κουκκίδα χρησιμοποιείται ΜΟΝΟ σε tablet (βλ. μπλοκ 601–1024px) */
+.hero__meta-dot { display: none; }
 
 /* Υπολογιστής: ο υπότιτλος σε ΜΙΑ γραμμή και η ημερομηνία/χώρος κεντραρισμένα
    μέσα στη δεξιά στήλη. (Σε κινητά είναι ήδη κεντραρισμένα.) */
@@ -792,6 +794,142 @@ main { min-height: 40vh; }
   .hero__intro-para { text-align: center; margin-top: 40px; }
   .hero__intro-btnwrap { margin-top: 30px; }
   .hero__intro-btn { width: 100%; justify-content: center; min-height: 58px; }
+}
+
+/* ==========================================================================
+   ΚΕΦΑΛΙΔΑ ΣΕ TABLET (601–1024px) — σχέδιο Figma «FORA_2026_iPad mini» (744px)
+   Ένα κεντραρισμένο μπλοκ: αριθμός + ΥΒΡΙΔΙΚΟ FORUM, θέμα, υπότιτλος,
+   ημερομηνία/χώρος σε μία σειρά με κουκκίδα, δύο κουμπιά δίπλα-δίπλα.
+   Τα μεγέθη κλιμακώνονται με το πλάτος (σχεδιασμένα στα 744px) και έχουν
+   ανώτατο όριο ώστε να μη «φουσκώνουν» στα 1024px.
+   ΔΕΝ επηρεάζει κινητά (≤600px) ούτε υπολογιστή (≥1025px).
+   ========================================================================== */
+@media (min-width: 601px) and (max-width: 1024px) {
+  /* Χωρίς το μοτίβο «μπαλών» — καθαρή μπλε διαβάθμιση, όπως στο σχέδιο */
+  .hero__bubbles-bg { display: none; }
+
+  /* --- Διάταξη: μία κολόνα, κεντραρισμένη, σε όλο το ύψος της οθόνης --- */
+  .hero__inner {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 0;
+    min-height: 100vh;
+    /* 132px = ύψος μπάρας πλοήγησης στο σχέδιο, 80px κάτω */
+    padding-block: 132px 80px;
+    padding-inline: 24px;
+  }
+  /* Οι δύο κολόνες «διαλύονται» ώστε τα παιδιά τους να μπουν στη σωστή σειρά:
+     αριθμός → θέμα → υπότιτλος → ημερομηνία/χώρος → κουμπιά. */
+  .hero__left, .hero__right { display: contents; }
+  .hero__back { order: 0; }
+  .hero__edition { order: 1; }
+  .hero__title { order: 2; }
+  .hero__tagline { order: 3; }
+  .hero__meta { order: 4; }
+  .hero__actions { order: 5; }
+
+  /* --- Τίτλος: «5°» 152px + «ΥΒΡΙΔΙΚΟ FORUM» 56px (στα 744px) --- */
+  .hero__edition {
+    /* margin-top:auto → μοιράζει τον ελεύθερο χώρο πάνω/κάτω, όπως στο σχέδιο */
+    margin: auto 0 0;
+    font-size: min(7.53vw, 66px); line-height: 1.05; white-space: normal;
+  }
+  .hero__edition-no { font-size: 2.714em; line-height: 1; }
+  /* Το δαχτυλίδι «°» ακουμπάει πάνω-δεξιά στον αριθμό (όπως στο σχέδιο) και
+     η ετικέτα μαζεύεται προς αυτό, ώστε το σύνολο να μένει ~640px στα 744px. */
+  .hero__edition-ord {
+    width: 0.25em; height: 0.25em; border-width: 0.05em;
+    vertical-align: 0.62em; margin-left: -0.05em;
+  }
+  .hero__edition-txt { font-size: 1em; margin-left: -0.25em; }
+
+  /* --- Θέμα (Hagrid Medium 40px) --- */
+  .hero__title {
+    margin: 8px 0 0; font-size: min(5.38vw, 48px); line-height: 1.15;
+    white-space: normal;
+  }
+
+  /* --- Υπότιτλος (Lato Regular 40px, δύο γραμμές, κεντραρισμένος) --- */
+  .hero__tagline {
+    margin: 22px 0 0; padding-left: 0;
+    font-weight: 400; font-size: min(5.38vw, 48px); line-height: 1.2;
+    text-align: center; white-space: normal;
+    max-width: 76%; text-wrap: balance;
+  }
+  .hero__tagline::before { display: none; }
+
+  /* --- Ημερομηνία • Χώρος: μία σειρά που «σπάει» όταν δεν χωράει --- */
+  .hero__meta {
+    margin: auto 0 0; padding: 0; width: 100%; max-width: 715px;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    column-gap: 16px; row-gap: 32px; text-align: center;
+  }
+  .hero__date, .hero__place {
+    margin: 0; max-width: none;
+    /* 24px στα 744px, με ανώτατο όριο 28px */
+    font-size: min(3.23vw, 28px); line-height: 1.333; letter-spacing: -0.05em;
+  }
+  .hero__date { font-weight: 500; }
+  .hero__meta-dot {
+    display: block; flex: none; width: 8px; height: 8px;
+    border-radius: 50%; background: currentColor;
+  }
+
+  /* --- Κουμπιά: δίπλα-δίπλα, κεντραρισμένα, κενό 21px --- */
+  .hero__actions {
+    order: 5; margin: 0; padding-top: 56px; width: auto;
+    justify-content: center; flex-wrap: wrap; gap: 21px;
+  }
+  .hero__actions .btn {
+    font-family: var(--font-heading); font-weight: 400; font-size: 20px;
+    gap: 16px; border-radius: 8px; min-height: 53px;
+    padding: 12px clamp(40px, 8.6vw, 64px); justify-content: center;
+  }
+  /* Το κενό το δίνει το gap:16px — χωρίς επιπλέον margin στην κουκκίδα */
+  .hero__actions .btn::after, .hero__intro-btn::after { margin-left: 0; }
+
+  /* --- Αριθμοί: 2×2, κεντραρισμένοι, κενό 60px --- */
+  .hero__below { padding: 80px 24px; text-align: center; }
+  .hero__stats {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 60px;
+  }
+  .hero-stat {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 32px;
+    /* 286px στα 744px· πιο κάτω συρρικνώνεται ώστε να μένουν ΠΑΝΤΑ 2 στη σειρά */
+    flex: 0 1 calc((100% - 60px) / 2); max-width: 286px;
+  }
+  .hero-stat__num {
+    font-size: min(12.9vw, 110px); line-height: 1;
+    position: relative; z-index: 1;
+  }
+  .hero-stat__desc {
+    margin-top: 0; max-width: none; color: #fff; font-weight: 500;
+    font-size: min(3.23vw, 28px); line-height: 1.333; letter-spacing: -0.05em;
+  }
+  /* Διακοσμητικός κύκλος πίσω από τον πρώτο αριθμό (όπως στο σχέδιο) */
+  .hero-stat:first-child { position: relative; }
+  .hero-stat:first-child::before {
+    content: ''; position: absolute; z-index: 0;
+    left: -15px; top: -17px; width: 178px; height: 180px; transform: none;
+    border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 50%;
+    /* Τόξο (μόνο το αριστερό μέρος του κύκλου), όπως στο σχέδιο */
+    clip-path: inset(0 45% 0 0);
+    pointer-events: none;
+  }
+
+  /* --- Παράγραφος + κουμπί «Μάθετε περισσότερα» (πλήρες πλάτος) --- */
+  .hero__intro-para {
+    margin-top: 98px; max-width: none; text-align: center;
+    font-size: min(3.76vw, 32px); line-height: 1.25;
+  }
+  .hero__intro-btnwrap { margin-top: 80px; width: 100%; }
+  .hero__intro-btn {
+    width: 100%; justify-content: center;
+    font-family: var(--font-heading); font-weight: 400;
+    font-size: min(3.23vw, 28px); gap: 16px;
+    padding: 32px 24px; border-radius: 8px; min-height: 99px;
+  }
 }
 
 /* Λωρίδα εικόνας κάτω από την κεφαλίδα — σε όλο το πλάτος, χωρίς κενό */
