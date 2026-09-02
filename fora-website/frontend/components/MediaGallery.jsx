@@ -4,8 +4,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { mediaUrl, youtubeId } from '../lib/strapi';
 import Pagination from './Pagination';
 
-// Πόσες φωτογραφίες ανά σελίδα (18 = δύο πλήρεις «κύκλοι» του μοτίβου).
-const PER_PAGE = 18;
+// Πόσες φωτογραφίες ανά σελίδα.
+const PER_PAGE = 8;
 
 // Ενότητα «ΣΤΙΓΜΙΟΤΥΠΑ ΤΟΥ FORUM» (Figma: Section_Gallery)
 // Φίλτρα: Όλα / Φωτογραφίες / Βίντεο + επιλογή έτους (ανά διοργάνωση).

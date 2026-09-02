@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { mediaUrl } from '../lib/strapi';
 import Pagination from './Pagination';
 
-const PER_PAGE = 24; // μικρές μικρογραφίες — χωράνε περισσότερες ανά σελίδα
+const PER_PAGE = 8;
 
 export default function Gallery({ forum }) {
   const photos = forum?.fotografies || [];
