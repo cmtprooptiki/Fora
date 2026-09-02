@@ -309,16 +309,23 @@ main { min-height: 40vh; }
   }
 
   /* ---- Υπομενού Forum: πάντα ορατό, με εσοχή στο ύψος των ετικετών ---- */
+  /* Κλειστό από προεπιλογή· ανοίγει με κλικ στο «Σχετικά με τα Forum» */
   .nav-dropdown__menu {
+    display: none;
     position: static; transform: none; opacity: 1; visibility: visible;
     box-shadow: none; border: none; border-radius: 0; padding: 0; min-width: 0;
     background: transparent;
   }
-  /* Ακυρώνει το translateX(-50%) του υπολογιστή (αλλιώς «έφευγε» εκτός οθόνης) */
+  .nav-dropdown.is-open .nav-dropdown__menu { display: block; }
+  /* Ακυρώνει το translateX(-50%) του υπολογιστή (αλλιώς «έφευγε» εκτός οθόνης).
+     Το hover/focus ΔΕΝ ανοίγει το υπομενού σε κινητά — μόνο το κλικ. */
   .nav-dropdown:hover .nav-dropdown__menu,
   .nav-dropdown:focus-within .nav-dropdown__menu {
     transform: none; opacity: 1; visibility: visible;
   }
+  /* Το βελάκι μένει όπως στο σχέδιο (χωρίς περιστροφή στο άγγιγμα) */
+  .nav-dropdown:hover .nav-dropdown__caret,
+  .nav-dropdown:focus-within .nav-dropdown__caret { transform: none; }
   .nav-dropdown__menu a {
     display: block; padding: 0 0 16px 49px; margin: 0 0 16px;
     border: none; border-bottom: 1px solid #dddcdc; border-radius: 0;

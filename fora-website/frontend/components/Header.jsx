@@ -11,6 +11,9 @@ function mediaUrl(url) {
 export default function Header({ settings, archive = [] }) {
   const logo = settings?.logotypo?.url ? mediaUrl(settings.logotypo.url) : null;
   const [scrolled, setScrolled] = useState(false);
+  // Σε κινητά/tablet: το «Σχετικά με τα Forum» ανοίγει/κλείνει με κλικ.
+  // Στον υπολογιστή το υπομενού συνεχίζει να ανοίγει με hover (CSS).
+  const [forumsOpen, setForumsOpen] = useState(false);
   const email = settings?.emailEpikoinonias;
   const emailEtaireias = settings?.emailEtaireias;
   const facebook = settings?.facebookUrl;
@@ -45,8 +48,14 @@ export default function Header({ settings, archive = [] }) {
 
         <nav className="site-nav">
           {archive.length > 0 && (
-            <div className="nav-dropdown">
-              <button type="button" className="nav-dropdown__toggle" aria-haspopup="true">
+            <div className={`nav-dropdown ${forumsOpen ? 'is-open' : ''}`}>
+              <button
+                type="button"
+                className="nav-dropdown__toggle"
+                aria-haspopup="true"
+                aria-expanded={forumsOpen}
+                onClick={() => setForumsOpen((open) => !open)}
+              >
                 <span className="site-nav__num" aria-hidden="true">01</span>
                 <span className="site-nav__label">Σχετικά με τα Forum</span>
                 <span className="nav-dropdown__caret" aria-hidden="true">▾</span>
