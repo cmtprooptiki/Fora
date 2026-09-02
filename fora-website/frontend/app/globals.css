@@ -290,9 +290,12 @@ main { min-height: 40vh; }
   }
   .site-nav__label {
     flex: 1 1 auto;
-    font-family: var(--font-heading); font-weight: 600;
+    font-family: var(--font-heading); font-weight: 700;
     font-size: 1.3rem; line-height: 1.35; color: #313131;
   }
+  /* Στο σχέδιο το «01 Σχετικά με τα Forum» είναι κανονικού βάρους,
+     ενώ τα 02–04 είναι έντονα (bold). */
+  .nav-dropdown__toggle .site-nav__label { font-weight: 400; }
   /* Τα χρώματα ισχύουν πάντα μέσα στο λευκό πάνελ */
   .site-header .site-nav > a .site-nav__label,
   .site-header .nav-dropdown__toggle .site-nav__label { color: #313131; }
