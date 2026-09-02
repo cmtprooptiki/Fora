@@ -2,6 +2,10 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { mediaUrl, youtubeId } from '../lib/strapi';
+import Pagination from './Pagination';
+
+// Πόσες φωτογραφίες ανά σελίδα (18 = δύο πλήρεις «κύκλοι» του μοτίβου).
+const PER_PAGE = 18;
 
 // Ενότητα «ΣΤΙΓΜΙΟΤΥΠΑ ΤΟΥ FORUM» (Figma: Section_Gallery)
 // Φίλτρα: Όλα / Φωτογραφίες / Βίντεο + επιλογή έτους (ανά διοργάνωση).
@@ -24,6 +28,7 @@ export default function MediaGallery({ forums = [], currentForum }) {
   const [year, setYear] = useState(defaultYear);
   const [tab, setTab] = useState('ola'); // ola | fotografies | vinteo
   const [active, setActive] = useState(null); // δείκτης φωτογραφίας στο lightbox
+  const [page, setPage] = useState(1);
 
   const forum = withMedia.find((f) => f.etos === year) || withMedia[0] || null;
   const photos = forum?.fotografies || [];
@@ -31,6 +36,19 @@ export default function MediaGallery({ forums = [], currentForum }) {
     .map((v) => ({ ...v, id: youtubeId(v.syndesmosYoutube) }))
     .filter((v) => v.id);
   const len = photos.length;
+
+  // Σελιδοποίηση φωτογραφιών
+  const totalPages = Math.max(1, Math.ceil(len / PER_PAGE));
+  const safePage = Math.min(page, totalPages);
+  const start = (safePage - 1) * PER_PAGE;
+  const pagePhotos = photos.slice(start, start + PER_PAGE);
+
+  // Αλλαγή σελίδας: πάμε στην αρχή της ενότητας για να μη «χαθεί» ο χρήστης.
+  const goPage = (p) => {
+    setPage(p);
+    const el = document.getElementById('gallery');
+    if (el) el.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  };
 
   const close = () => setActive(null);
 
@@ -81,7 +99,10 @@ export default function MediaGallery({ forums = [], currentForum }) {
                 role="tab"
                 aria-selected={tab === key}
                 className={`mgal__tab ${tab === key ? 'is-active' : ''}`}
-                onClick={() => setTab(key)}
+                onClick={() => {
+                  setTab(key);
+                  setPage(1);
+                }}
               >
                 {label}
               </button>
@@ -96,6 +117,7 @@ export default function MediaGallery({ forums = [], currentForum }) {
                 onChange={(e) => {
                   setYear(Number(e.target.value));
                   setActive(null);
+                  setPage(1);
                 }}
               >
                 {withMedia.map((f) => (
@@ -109,27 +131,39 @@ export default function MediaGallery({ forums = [], currentForum }) {
         </div>
 
         {showPhotos && len > 0 && (
-          <div className="mgal__grid">
-            {photos.map((p, i) => {
-              const full = mediaUrl(p.url);
-              const thumb = p.formats?.medium?.url
-                ? mediaUrl(p.formats.medium.url)
-                : p.formats?.small?.url
-                  ? mediaUrl(p.formats.small.url)
-                  : full;
-              return (
-                <button
-                  type="button"
-                  className="mgal__item"
-                  key={i}
-                  onClick={() => setActive(i)}
-                  aria-label="Μεγέθυνση φωτογραφίας"
-                >
-                  <img src={thumb} alt={p.alternativeText || 'Φωτογραφία Forum'} loading="lazy" />
-                </button>
-              );
-            })}
-          </div>
+          <>
+            <div className="mgal__grid">
+              {pagePhotos.map((p, i) => {
+                const abs = start + i; // απόλυτη θέση (για τη μεγέθυνση)
+                const full = mediaUrl(p.url);
+                const thumb = p.formats?.medium?.url
+                  ? mediaUrl(p.formats.medium.url)
+                  : p.formats?.small?.url
+                    ? mediaUrl(p.formats.small.url)
+                    : full;
+                return (
+                  <button
+                    type="button"
+                    className="mgal__item"
+                    key={abs}
+                    onClick={() => setActive(abs)}
+                    aria-label="Μεγέθυνση φωτογραφίας"
+                  >
+                    <img src={thumb} alt={p.alternativeText || 'Φωτογραφία Forum'} loading="lazy" />
+                  </button>
+                );
+              })}
+            </div>
+
+            {totalPages > 1 && (
+              <>
+                <p className="pager__count">
+                  Φωτογραφίες {start + 1}–{Math.min(start + PER_PAGE, len)} από {len}
+                </p>
+                <Pagination page={safePage} totalPages={totalPages} onChange={goPage} />
+              </>
+            )}
+          </>
         )}
 
         {showVideos && videos.length > 0 && (

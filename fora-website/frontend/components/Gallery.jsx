@@ -2,11 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { mediaUrl } from '../lib/strapi';
+import Pagination from './Pagination';
+
+const PER_PAGE = 24; // μικρές μικρογραφίες — χωράνε περισσότερες ανά σελίδα
 
 export default function Gallery({ forum }) {
   const photos = forum?.fotografies || [];
   const len = photos.length;
   const [active, setActive] = useState(null); // δείκτης εικόνας (ή null)
+  const [page, setPage] = useState(1);
 
   const close = () => setActive(null);
   const next = () => setActive((a) => (a === null ? a : (a + 1) % len));
@@ -34,6 +38,17 @@ export default function Gallery({ forum }) {
 
   const activePhoto = active !== null ? mediaUrl(photos[active].url) : null;
 
+  // Σελιδοποίηση
+  const totalPages = Math.max(1, Math.ceil(len / PER_PAGE));
+  const safePage = Math.min(page, totalPages);
+  const start = (safePage - 1) * PER_PAGE;
+  const pagePhotos = photos.slice(start, start + PER_PAGE);
+  const goPage = (p) => {
+    setPage(p);
+    const el = document.getElementById('gallery');
+    if (el) el.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  };
+
   return (
     <section className="section section--grey" id="gallery">
       <div className="container">
@@ -43,15 +58,16 @@ export default function Gallery({ forum }) {
         </div>
 
         <div className="gallery">
-          {photos.map((p, i) => {
+          {pagePhotos.map((p, i) => {
+            const abs = start + i;
             const full = mediaUrl(p.url);
             const thumb = p.formats?.small?.url ? mediaUrl(p.formats.small.url) : full;
             return (
               <button
                 type="button"
                 className="gallery__item"
-                key={i}
-                onClick={() => setActive(i)}
+                key={abs}
+                onClick={() => setActive(abs)}
                 aria-label="Μεγέθυνση φωτογραφίας"
               >
                 <img src={thumb} alt={p.alternativeText || 'Φωτογραφία Forum'} loading="lazy" />
@@ -59,6 +75,15 @@ export default function Gallery({ forum }) {
             );
           })}
         </div>
+
+        {totalPages > 1 && (
+          <>
+            <p className="pager__count">
+              Φωτογραφίες {start + 1}–{Math.min(start + PER_PAGE, len)} από {len}
+            </p>
+            <Pagination page={safePage} totalPages={totalPages} onChange={goPage} />
+          </>
+        )}
       </div>
 
       {active !== null && (
