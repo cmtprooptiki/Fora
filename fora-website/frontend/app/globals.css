@@ -780,12 +780,14 @@ main { min-height: 40vh; }
   .hero-stat { align-items: center; text-align: center; }
   .hero-stat__num { font-size: 3rem; position: relative; z-index: 1; }
   .hero-stat__desc { font-size: 0.95rem; max-width: 20rem; margin-inline: auto; }
-  /* Διακοσμητικός κύκλος πίσω από τον πρώτο αριθμό (όπως στο σχέδιο) */
+  /* Διακοσμητικός κύκλος: μικρός, γύρω ΜΟΝΟ από τον πρώτο αριθμό.
+     Ύψος 124px με top:-30px ⇒ τελειώνει στα 94px, δηλαδή μέσα στο πρώτο
+     στοιχείο — δεν «πατάει» τον επόμενο αριθμό (ξεκινά στα ~140px). */
   .hero-stat:first-child { position: relative; }
   .hero-stat:first-child::before {
     content: ''; position: absolute; z-index: 0;
-    left: 50%; top: -16px; width: 172px; height: 172px;
-    transform: translateX(-58%);
+    left: 50%; top: -30px; width: 124px; height: 124px;
+    transform: translateX(-56%);
     border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 50%;
     pointer-events: none;
   }
