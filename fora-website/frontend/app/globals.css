@@ -1008,6 +1008,66 @@ main { min-height: 40vh; }
 }
 
 /* ==========================================================================
+   ΘΕΜΑΤΙΚΕΣ ΕΝΟΤΗΤΕΣ ΣΕ ΚΙΝΗΤΑ (≤600px) — Figma «Section_Ενότητες» (393px)
+   Πλάτος περιεχομένου 361px (περιθώρια 16px). Οι αποστάσεις του Figma
+   μετριούνται από το ύψος των κεφαλαίων (cap height), ενώ η CSS μετρά από το
+   κουτί της γραμμής· γι' αυτό κάθε κενό είναι μειωμένο κατά το «αέρα» της
+   γραμματοσειράς (σχόλιο ανά κανόνα: Figma → CSS).
+   ========================================================================== */
+@media (max-width: 600px) {
+  /* Padding τμήματος: Figma 104px πάνω / 128px κάτω, πλάγια 16px */
+  #thematikes { padding-block: 96px 128px; }
+  #thematikes .container { padding-inline: 16px; }
+
+  /* Επικεφαλίδα σε δύο σειρές: 59px, βήμα γραμμής 67px (67/59 = 1.135).
+     Κλιμακώνεται με το πλάτος ώστε το «ΘΕΜΑΤΙΚΕΣ» (336px στα 393) να χωράει
+     και σε οθόνες 360px. */
+  .thematics__head {
+    flex-direction: column; align-items: flex-start; gap: 0;
+    font-size: min(15vw, 60px); line-height: 1.135;
+  }
+
+  /* Εισαγωγική παράγραφος: 16px / 22px, σε όλο το πλάτος (Figma κενό 48px) */
+  .thematics__intro {
+    margin: 28px 0 0; max-width: none;
+    font-size: 16px; line-height: 22px;
+  }
+
+  /* Figma κενό 56px από την παράγραφο στην 1η θεματική */
+  .thematics__list { margin-top: 43px; }
+
+  /* Γραμμές: τίτλος πάνω, ετικέτα ΚΑΤΩ (στο σχέδιο δεν είναι από πάνω),
+     χωρίς διαχωριστικές γραμμές και χωρίς εσωτερικό padding. */
+  .thematic-row {
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: 19px;            /* Figma 32px τίτλος → ετικέτα */
+    padding: 0; border: 0;
+  }
+  .thematic-row:last-child { border-bottom: 0; }
+  .thematic-row + .thematic-row { margin-top: 36px; } /* Figma 48px */
+  .thematic-row__main { width: 100%; }
+  .thematic-row__title { font-size: 25px; line-height: 35px; }
+  /* Στο σχέδιο για κινητά η περιγραφή της ενότητας ΔΕΝ εμφανίζεται */
+  .thematic-row__desc { display: none; }
+  .thematic-row__label {
+    order: 0; padding-top: 0; white-space: normal;
+    font-size: 19px; line-height: 1.2; font-weight: 400;
+    color: var(--fora-text);
+  }
+
+  /* Κουμπιά: πλήρες πλάτος, σε στοίβα, κενό 24px (Figma 56px από τη λίστα) */
+  .thematics__actions {
+    flex-direction: column; align-items: stretch;
+    gap: 24px; margin-top: 50px;
+  }
+  .thematics__actions .btn {
+    width: 100%; justify-content: center; text-align: center;
+    gap: 16px; padding: 16px 24px; min-height: 58px;
+    font-size: 18px; line-height: 26px;
+  }
+}
+
+/* ==========================================================================
    ΑΝΑΛΥΤΙΚΟ ΠΡΟΓΡΑΜΜΑ (accordion)
    ========================================================================== */
 /* Ημερομηνία κάτω από τον τίτλο (εικονίδιο ημερολογίου) */
