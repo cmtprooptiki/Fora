@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
 function mediaUrl(url) {
@@ -14,6 +15,17 @@ export default function Header({ settings, archive = [] }) {
   // Σε κινητά/tablet: το «Σχετικά με τα Forum» ανοίγει/κλείνει με κλικ.
   // Στον υπολογιστή το υπομενού συνεχίζει να ανοίγει με hover (CSS).
   const [forumsOpen, setForumsOpen] = useState(false);
+  // Το μενού σε κινητά/tablet είναι «ελεγχόμενο» ώστε να κλείνει μόνο του
+  // όταν πατηθεί σύνδεσμος (αλλιώς, σε συνδέσμους της ΙΔΙΑΣ σελίδας, θα
+  // έμενε ανοιχτό και θα έκρυβε την ενότητα στην οποία πήγαμε).
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Οι σύνδεσμοι του μενού δείχνουν στις ενότητες ΤΗΣ ΣΕΛΙΔΑΣ ΠΟΥ ΒΛΕΠΟΥΜΕ.
+  // Σε σελίδα διοργάνωσης (/forum/forum-2024/) το «Ομιλητές» πάει στους
+  // ομιλητές ΕΚΕΙΝΟΥ του Forum, όχι του τρέχοντος.
+  const pathname = usePathname() || '/';
+  const forumPath = pathname.match(/^\/forum\/[^/]+/);
+  const base = forumPath ? `${forumPath[0]}/` : '/';
   const email = settings?.emailEpikoinonias;
   const emailEtaireias = settings?.emailEtaireias;
   const facebook = settings?.facebookUrl;
@@ -39,14 +51,23 @@ export default function Header({ settings, archive = [] }) {
           )}
         </a>
 
-        <input type="checkbox" id="nav-toggle" className="nav-toggle" />
+        <input
+          type="checkbox"
+          id="nav-toggle"
+          className="nav-toggle"
+          checked={menuOpen}
+          onChange={(e) => setMenuOpen(e.target.checked)}
+        />
         <label htmlFor="nav-toggle" className="nav-burger" aria-label="Μενού">
           <span></span>
           <span></span>
           <span></span>
         </label>
 
-        <nav className="site-nav">
+        <nav className="site-nav" onClick={(e) => {
+          // Κλείσιμο του μενού σε κινητά/tablet μόλις πατηθεί σύνδεσμος
+          if (e.target.closest('a')) setMenuOpen(false);
+        }}>
           {archive.length > 0 && (
             <div className={`nav-dropdown ${forumsOpen ? 'is-open' : ''}`}>
               <button
@@ -71,15 +92,15 @@ export default function Header({ settings, archive = [] }) {
             </div>
           )}
 
-          <a href="/#omilites">
+          <a href={`${base}#omilites`}>
             <span className="site-nav__num" aria-hidden="true">02</span>
             <span className="site-nav__label">Ομιλητές</span>
           </a>
-          <a href="/#analytiko-programma">
+          <a href={`${base}#analytiko-programma`}>
             <span className="site-nav__num" aria-hidden="true">03</span>
             <span className="site-nav__label">Πρόγραμμα</span>
           </a>
-          <a href="/#newsletter">
+          <a href={`${base}#newsletter`}>
             <span className="site-nav__num" aria-hidden="true">04</span>
             <span className="site-nav__label">Νέα &amp; Ανακοινώσεις</span>
           </a>
@@ -87,7 +108,7 @@ export default function Header({ settings, archive = [] }) {
           {/* Μόνο σε κινητά/tablet: μπλε μπλοκ με λευκό κουμπί «Επικοινωνία»
               (στον υπολογιστή εμφανίζεται ως κουμπί δεξιά στη μπάρα). */}
           <div className="site-nav__ctawrap">
-            <a href="/#epikoinonia" className="btn btn--white site-nav__cta-m">
+            <a href={`${base}#epikoinonia`} className="btn btn--white site-nav__cta-m">
               Επικοινωνία
             </a>
           </div>
@@ -150,7 +171,7 @@ export default function Header({ settings, archive = [] }) {
 
         {/* Το CTA είναι ξεχωριστό ώστε το μενού να «απλώνεται» ανάμεσα
             στο λογότυπο (αριστερά) και στο κουμπί (δεξιά) — όπως στο σχέδιο. */}
-        <a href="/#epikoinonia" className="btn btn--white site-nav__cta">
+        <a href={`${base}#epikoinonia`} className="btn btn--white site-nav__cta">
           Επικοινωνία
         </a>
       </div>
