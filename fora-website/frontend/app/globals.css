@@ -742,9 +742,26 @@ main { min-height: 40vh; }
   /* Χωρίς το μοτίβο «μπαλών» στην κεφαλίδα σε κινητά — καθαρό μπλε φόντο */
   .hero__bubbles-bg { display: none; }
 
-  .hero__inner { text-align: center; padding-block: 110px 40px; }
-  .hero__left { align-items: center; }
-  .hero__right { align-items: center; text-align: center; }
+  /* Μία κεντραρισμένη κολόνα. Οι δύο στήλες «διαλύονται» (display:contents)
+     ώστε τα παιδιά τους να μπουν στη σειρά του σχεδίου:
+     αριθμός → θέμα → υπότιτλος → ημερομηνία/χώρος → κουμπιά.
+     (Χωρίς αυτό τα κουμπιά έβγαιναν ΠΑΝΩ από τον υπότιτλο, επειδή στο HTML
+     ανήκουν στην αριστερή στήλη.) */
+  .hero__inner {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 0;
+    padding-block: 110px 40px;
+  }
+  /* ΠΡΟΣΟΧΗ: το display:contents σβήνει το κουτί, ΟΧΙ την κληρονομικότητα.
+     Χωρίς το text-align:center εδώ, το «text-align:left» της δεξιάς στήλης
+     (μπλοκ ≤900px) θα περνούσε πάλι στην ημερομηνία και στον χώρο. */
+  .hero__left, .hero__right { display: contents; text-align: center; }
+  .hero__back { order: 0; }
+  .hero__edition { order: 1; }
+  .hero__title { order: 2; }
+  .hero__tagline { order: 3; }
+  .hero__meta { order: 4; }
+  .hero__actions { order: 5; }
 
   /* Τίτλος: μεγάλος αριθμός με δαχτυλίδι + «ΥΒΡΙΔΙΚΟ FORUM» δίπλα του */
   .hero__edition { font-size: 20px; line-height: 1.05; margin: 0 0 14px; }
@@ -763,14 +780,14 @@ main { min-height: 40vh; }
   .hero__tagline::before { display: none; }
 
   /* Ημερομηνία / χώρος */
-  .hero__meta { margin-top: 0; padding: 26px 0 0; padding-left: 0; }
+  .hero__meta { margin-top: 0; padding: 26px 0 0; padding-left: 0; text-align: center; }
   .hero__date { font-size: clamp(14px, 4vw, 18px); margin: 0 0 8px; }
   .hero__place { font-size: clamp(14px, 4vw, 18px); max-width: 100%; }
 
-  /* Κουμπιά σε στοίβα, πλήρες πλάτος */
+  /* Κουμπιά σε στοίβα, πλήρες πλάτος — ΚΑΤΩ από ημερομηνία/χώρο */
   .hero__actions {
     flex-direction: column; align-items: stretch; width: 100%;
-    gap: 21px; padding-top: 30px;
+    gap: 21px; margin-top: 0; padding-top: 30px;
   }
   .hero__actions .btn { width: 100%; justify-content: center; min-height: 47px; }
 
@@ -821,7 +838,9 @@ main { min-height: 40vh; }
   }
   /* Οι δύο κολόνες «διαλύονται» ώστε τα παιδιά τους να μπουν στη σωστή σειρά:
      αριθμός → θέμα → υπότιτλος → ημερομηνία/χώρος → κουμπιά. */
-  .hero__left, .hero__right { display: contents; }
+  /* Το display:contents σβήνει το κουτί, ΟΧΙ την κληρονομικότητα — γι' αυτό
+     επαναφέρουμε εδώ το text-align (βλ. «text-align:left» στο μπλοκ ≤900px). */
+  .hero__left, .hero__right { display: contents; text-align: center; }
   .hero__back { order: 0; }
   .hero__edition { order: 1; }
   .hero__title { order: 2; }
