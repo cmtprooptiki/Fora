@@ -797,15 +797,18 @@ main { min-height: 40vh; }
   .hero-stat { align-items: center; text-align: center; }
   .hero-stat__num { font-size: 3rem; position: relative; z-index: 1; }
   .hero-stat__desc { font-size: 0.95rem; max-width: 20rem; margin-inline: auto; }
-  /* Διακοσμητικός κύκλος: μικρός, γύρω ΜΟΝΟ από τον πρώτο αριθμό.
-     Ύψος 124px με top:-30px ⇒ τελειώνει στα 94px, δηλαδή μέσα στο πρώτο
-     στοιχείο — δεν «πατάει» τον επόμενο αριθμό (ξεκινά στα ~140px). */
+  /* Διακοσμητικό ΤΟΞΟ γύρω από τον πρώτο αριθμό — ίδια εμφάνιση με το tablet:
+     μόνο το αριστερό μέρος του κύκλου, ακουμπισμένο στα αριστερά του «400+».
+     Ύψος 136px με top:-30px ⇒ τελειώνει στα 106px, δηλαδή μένει 34px πιο πάνω
+     από τον επόμενο αριθμό (ξεκινά στα ~140px). */
   .hero-stat:first-child { position: relative; }
   .hero-stat:first-child::before {
     content: ''; position: absolute; z-index: 0;
-    left: 50%; top: -30px; width: 124px; height: 124px;
-    transform: translateX(-56%);
-    border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 50%;
+    top: -30px; width: 136px; height: 136px;
+    /* Ο αριθμός είναι κεντραρισμένος· το τόξο μετατοπίζεται αριστερά του */
+    left: 50%; transform: translateX(-86px);
+    border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 50%;
+    clip-path: inset(0 45% 0 0);
     pointer-events: none;
   }
 
