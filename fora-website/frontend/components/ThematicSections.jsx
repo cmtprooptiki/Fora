@@ -1,4 +1,4 @@
-import ThematicItem from './ThematicItem';
+import ThematicList from './ThematicList';
 import { mediaUrl } from '../lib/strapi';
 
 // Δημιουργεί σύνδεσμο «Προσθήκη στο Ημερολόγιο» (Outlook) για την εκδήλωση.
@@ -43,24 +43,20 @@ export default function ThematicSections({ forum, intro }) {
 
         {intro && <p className="thematics__intro">{intro}</p>}
 
-        <div className="thematics__list">
-          {items.map((item, i) => {
+        <ThematicList
+          items={items.map((item, i) => ({
             // 1η: «Εναρκτήρια Ομιλία», τελευταία: «Στρογγυλό Τραπέζι»,
             // ενδιάμεσες: «Ενότητα 1», «Ενότητα 2», ...
-            let label;
-            if (i === 0) label = 'Εναρκτήρια Ομιλία';
-            else if (i === items.length - 1) label = 'Στρογγυλό Τραπέζι';
-            else label = `Ενότητα ${i}`;
-            return (
-              <ThematicItem
-                key={i}
-                label={label}
-                titlos={item.titlos}
-                perigrafi={item.perigrafi}
-              />
-            );
-          })}
-        </div>
+            label:
+              i === 0
+                ? 'Εναρκτήρια Ομιλία'
+                : i === items.length - 1
+                  ? 'Στρογγυλό Τραπέζι'
+                  : `Ενότητα ${i}`,
+            titlos: item.titlos,
+            perigrafi: item.perigrafi,
+          }))}
+        />
 
         {(pdf || calUrl) && (
           <div className="thematics__actions">
