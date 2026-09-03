@@ -58,8 +58,22 @@
 
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 90px; }
 
+/* Καμία οριζόντια κύλιση στη σελίδα.
+   Χωρίς αυτό, οποιοδήποτε στοιχείο ξεπερνά έστω λίγο το πλάτος της οθόνης
+   δημιουργεί μια λωρίδα κενού στα δεξιά σε κινητά. Τα τμήματα που «βγαίνουν»
+   εσκεμμένα έξω από την οθόνη (φυσαλίδες κεφαλίδας, κυλιόμενες λέξεις-κλειδιά,
+   «Ιστορία του Forum») κόβουν ήδη μόνα τους με overflow:hidden, άρα εδώ δεν
+   χάνεται περιεχόμενο.
+   Το «clip» είναι προτιμότερο από το «hidden»: δεν δημιουργεί περιοχή κύλισης,
+   οπότε δεν χαλάει τυχόν position:sticky στο μέλλον. */
+html, body { overflow-x: hidden; }
+@supports (overflow-x: clip) {
+  html, body { overflow-x: clip; }
+}
+
 body {
   margin: 0;
+  max-width: 100%;
   font-family: var(--font-body);
   color: var(--fora-text);
   background: var(--fora-bg);
