@@ -26,7 +26,9 @@ export default function Speakers({ forum }) {
   const activePhoto = active?.fotografia?.url ? mediaUrl(active.fotografia.url) : null;
 
   return (
-    <section className="section section--grey" id="omilites">
+    // Λευκό φόντο τμήματος (όπως το «Πρόγραμμα» πιο πάνω) — ο γκρι τόνος
+    // μεταφέρθηκε στις κάρτες των ομιλητών (.speaker στο globals.css).
+    <section className="section" id="omilites">
       <div className="container">
         <div className="thematics__head">
           <span>Ομιλητές</span>

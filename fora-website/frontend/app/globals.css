@@ -1150,15 +1150,19 @@ main { min-height: 40vh; }
    ΟΜΙΛΗΤΕΣ
    ========================================================================== */
 .speakers { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); margin-top: clamp(36px, 5vw, 60px); }
+/* Το φόντο του τμήματος είναι λευκό· ο γκρι τόνος μπαίνει στις ΚΑΡΤΕΣ. */
 .speaker {
-  background: #fff; border-radius: 14px; padding: 24px 22px; box-shadow: var(--shadow-sm);
+  background: var(--fora-section-tint); border-radius: 14px; padding: 24px 22px;
+  box-shadow: var(--shadow-sm);
   text-align: center; display: flex; flex-direction: column; align-items: center;
 }
 .speaker__photo {
   width: 130px; height: 130px; border-radius: 50%; overflow: hidden;
   background: var(--fora-bg-blue-grey); margin-bottom: 16px;
   display: flex; align-items: center; justify-content: center;
-  border: 3px solid #fff; box-shadow: 0 0 0 1px var(--fora-border);
+  /* Το δαχτυλίδι παίρνει το χρώμα της κάρτας ώστε να «χάνεται» μέσα της,
+     όπως γινόταν όταν η κάρτα ήταν λευκή. */
+  border: 3px solid var(--fora-section-tint); box-shadow: 0 0 0 1px var(--fora-border);
 }
 .speaker__photo img { width: 100%; height: 100%; object-fit: cover; }
 .speaker__initials { font-family: var(--font-heading); font-weight: 800; font-size: 2rem; color: var(--fora-blue); }
