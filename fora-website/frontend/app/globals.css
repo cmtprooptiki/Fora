@@ -975,6 +975,60 @@ main { min-height: 40vh; }
 .hero-image-band img { display: block; width: 100%; height: auto; margin: 0; }
 
 /* ==========================================================================
+   ΛΩΡΙΔΑ ΧΟΡΗΓΙΑΣ — κάθετη διάταξη (Figma «Banner»)
+   Σε υπολογιστή μένει η φαρδιά εικόνα· η κάθετη εμφανίζεται ≤1024px.
+   ========================================================================== */
+.spbanner { display: none; }
+
+@media (max-width: 1024px) {
+  .hero-image-band__wide { display: none; }
+
+  .spbanner {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 100%; line-height: 1;
+    /* Μοτίβο «λέπια» πάνω στη μπλε διαβάθμιση. Το pattern.png είναι μικρό
+       πλακίδιο (76×104 @2x) που επαναλαμβάνεται· φτιάχτηκε ώστε να ταιριάζει
+       με το μοτίβο της υπάρχουσας λωρίδας χορηγίας. */
+    background-color: #0d4f9f;
+    background-image:
+      url('/banner/pattern.png'),
+      linear-gradient(150deg, #2874af 0%, #0d4f9f 100%);
+    background-size: 38px 52px, cover;
+    background-repeat: repeat, no-repeat;
+  }
+  .spbanner img { width: auto; }
+  .spbanner__gold {
+    display: flex; flex-direction: column; align-items: center; gap: 40px;
+  }
+  .spbanner__label {
+    margin: 0; color: #fff; font-family: var(--font-body); font-weight: 400;
+    text-align: center; line-height: 1.15;
+  }
+}
+
+/* Κινητό: 393 × 852 στο σχέδιο (λογότυπο 302px, σύμβολο 55px, χορηγός 167px).
+   Τα πλάτη γράφονται ως «.spbanner .spbanner__x» ώστε να υπερισχύουν του
+   «.hero-image-band img { width: 100% }» (ίδια ειδικότητα δεν θα αρκούσε).
+   Το ύψος το δίνει το aspect-ratio· το κεντράρισμα το justify-content, χωρίς
+   επιπλέον padding (αλλιώς το περιεχόμενο ξεπερνά το ύψος του σχεδίου). */
+@media (max-width: 600px) {
+  .spbanner { aspect-ratio: 393 / 852; gap: min(24.4vw, 96px); }
+  .spbanner .spbanner__logo    { width: 76.8vw; max-width: 302px; }
+  .spbanner .spbanner__mark    { width: 14vw;   max-width: 55px; }
+  .spbanner .spbanner__sponsor { width: 42.6vw; max-width: 167px; }
+  .spbanner .spbanner__label   { font-size: min(7.1vw, 28px); }
+}
+
+/* Tablet: 744 × 1133 στο σχέδιο (λογότυπο 462px, σύμβολο 79px, χορηγός 204px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .spbanner { aspect-ratio: 744 / 1133; gap: min(12.9vw, 110px); }
+  .spbanner .spbanner__logo    { width: 62.1vw; max-width: 530px; }
+  .spbanner .spbanner__mark    { width: 10.6vw; max-width: 91px; }
+  .spbanner .spbanner__sponsor { width: 27.4vw; max-width: 234px; }
+  .spbanner .spbanner__label   { font-size: min(4.57vw, 39px); }
+}
+
+/* ==========================================================================
    ΘΕΜΑΤΙΚΕΣ ΕΝΟΤΗΤΕΣ
    ========================================================================== */
 /* Επικεφαλίδα: «ΘΕΜΑΤΙΚΕΣ» αριστερά — «ΕΝΟΤΗΤΕΣ» δεξιά */
