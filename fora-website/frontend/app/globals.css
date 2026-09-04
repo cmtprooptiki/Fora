@@ -1082,6 +1082,82 @@ main { min-height: 40vh; }
 }
 
 /* ==========================================================================
+   ΘΕΜΑΤΙΚΕΣ ΕΝΟΤΗΤΕΣ ΣΕ TABLET (601–1024px) — Figma «Section_Ενότητες» (744px)
+   Πλάτος περιεχομένου 696px (περιθώρια 24px). Τα μεγέθη είναι σχεδιασμένα στα
+   744px και κλιμακώνονται με vw, με ανώτατο όριο ώστε να μη «φουσκώνουν» στα
+   1024px. Οι αποστάσεις του Figma μετριούνται από cap-height· στη CSS
+   αφαιρείται ο «αέρας» της γραμμής (σχόλιο ανά κανόνα: Figma → CSS).
+   ========================================================================== */
+@media (min-width: 601px) and (max-width: 1024px) {
+  /* Figma: 104px πάνω/κάτω, πλάγια 24px */
+  #thematikes { padding-block: 98px 104px; }
+  #thematikes .container { padding-inline: 24px; }
+
+  /* Επικεφαλίδα: Hagrid Medium 96px, δύο σειρές, βήμα 121px (73 cap + 48 gap).
+     line-height:1 + gap 0.26em = 1.26em ≈ 121px στα 96px. */
+  .thematics__head {
+    flex-direction: column; align-items: flex-start;
+    font-family: var(--font-heading); font-weight: 500;
+    font-size: min(12.9vw, 110px); line-height: 1; gap: 0.26em;
+    color: #000;
+  }
+
+  /* Εισαγωγική παράγραφος: Lato Regular 42px/50px, #231f20 (Figma κενό 96px) */
+  .thematics__intro {
+    margin: 69px 0 0; max-width: none;
+    font-family: var(--font-body); font-weight: 400;
+    font-size: min(5.65vw, 48px); line-height: 1.19;
+    color: #231f20; text-wrap: balance;
+  }
+
+  /* Figma κενό 128px από την παράγραφο στην 1η θεματική */
+  .thematics__list { margin-top: 104px; }
+
+  /* Γραμμές: τίτλος πάνω, ετικέτα ΚΑΤΩ· χωρίς διαχωριστικές γραμμές */
+  .thematic-row {
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: 24px;              /* Figma 48px τίτλος → ετικέτα */
+    padding: 0; border: 0;
+  }
+  .thematic-row:last-child { border-bottom: 0; }
+  .thematic-row + .thematic-row { margin-top: 80px; }  /* Figma 104px */
+  .thematic-row__main { width: 100%; }
+  /* Τίτλος: Hagrid Medium 40px/58px, «σβηστό» χρώμα #b9b9b9 */
+  .thematic-row__title {
+    font-weight: 500; font-size: min(5.38vw, 46px); line-height: 1.45;
+  }
+  .thematic-row__title span { color: #b9b9b9; }
+  /* Στο σχέδιο για tablet η περιγραφή της ενότητας ΔΕΝ εμφανίζεται */
+  .thematic-row__desc { display: none; }
+  /* Ετικέτα: Lato Regular 42px, #231f20 */
+  .thematic-row__label {
+    order: 0; padding-top: 0; white-space: normal;
+    font-family: var(--font-body); font-weight: 400;
+    font-size: min(5.65vw, 48px); line-height: 1.2;
+    color: #231f20;
+  }
+
+  /* Κουμπιά: πλήρες πλάτος, σε στοίβα, κενό 40px (Figma 128px από τη λίστα) */
+  .thematics__actions {
+    flex-direction: column; align-items: stretch;
+    gap: 40px; margin-top: 115px;
+  }
+  .thematics__actions .btn {
+    width: 100%; gap: 16px; border-radius: 8px; border-width: 1px;
+    padding: 32px 24px;
+    font-family: var(--font-heading); font-weight: 400;
+    font-size: min(4.3vw, 36px); line-height: 1.4375;
+  }
+  .thematics__actions .btn::after { margin-left: 0; }
+  /* 1ο κουμπί: γεμάτο μπλε, κείμενο αριστερά. 2ο: περίγραμμα, κείμενο κέντρο. */
+  .thematics__actions .btn--primary { justify-content: flex-start; text-align: left; }
+  .thematics__actions .btn--outline {
+    justify-content: center; text-align: center;
+    border-color: #231f20; color: #231f20;
+  }
+}
+
+/* ==========================================================================
    ΑΝΑΛΥΤΙΚΟ ΠΡΟΓΡΑΜΜΑ (accordion)
    ========================================================================== */
 /* Ημερομηνία κάτω από τον τίτλο (εικονίδιο ημερολογίου) */
@@ -1137,6 +1213,86 @@ main { min-height: 40vh; }
   .prog__head-meta { width: 100%; padding-left: 46px; justify-content: flex-start; }
   .prog__body { padding-left: clamp(16px, 2.4vw, 26px); }
   .prog__pill { margin-left: 0; }
+}
+
+/* ==========================================================================
+   ΑΝΑΛΥΤΙΚΟ ΠΡΟΓΡΑΜΜΑ ΣΕ TABLET (601–1024px)
+   Figma «forum-1-agenda-accordion» (744px). Πλάτος περιεχομένου 696px.
+   Μόνο η μεγάλη επικεφαλίδα κλιμακώνεται με vw· τα μεγέθη του πίνακα μένουν
+   σταθερά, γιατί στα 601px θα γίνονταν δυσανάγνωστα.
+   ========================================================================== */
+@media (min-width: 601px) and (max-width: 1024px) {
+  #analytiko-programma { padding-block: 104px; }
+  #analytiko-programma .container { padding-inline: 24px; }
+
+  /* Στο σχέδιο δεν υπάρχει «eyebrow» πάνω από τον τίτλο */
+  #analytiko-programma .section__eyebrow { display: none; }
+  #analytiko-programma .section__head { max-width: none; margin: 0 0 96px; }
+  /* Hagrid Medium 96px, κεφαλαία, μαύρο */
+  #analytiko-programma .section__head h2 {
+    font-family: var(--font-heading); font-weight: 500;
+    font-size: min(12.9vw, 110px); line-height: 1.15;
+    text-transform: uppercase; color: #000; margin: 0;
+  }
+  /* Ημερομηνία: εικονίδιο 32px + Lato Medium 32px #888 (Figma κενό 56px) */
+  .prog__date {
+    gap: 16px; margin: 56px 0 0;
+    font-weight: 500; font-size: min(4.3vw, 36px); color: #888;
+  }
+  .prog__date svg { width: 32px; height: 32px; }
+
+  /* Ο πίνακας «ανοίγει»: χωρίς εξωτερικό πλαίσιο/στρογγύλεμα, μόνο γραμμές */
+  .prog { border: 0; border-radius: 0; background: #fff; }
+  .prog__group, .prog__group:last-child { border-bottom: 1px solid #e5e7eb; }
+
+  /* Κεφαλίδα ενότητας: padding 24/32, κενό 20px, αριθμός 36px */
+  .prog__head { gap: 20px; padding: 24px 32px; }
+  .prog__num {
+    width: 36px; height: 36px; border-radius: 18px;
+    font-family: var(--font-body); font-weight: 700; font-size: 18px;
+  }
+  .prog__head-title {
+    font-family: var(--font-heading); font-weight: 700;
+    font-size: 24px; line-height: 1.4; color: #0d4f9f;
+  }
+  .prog__head-meta { gap: 24px; }
+  .prog__head-time {
+    font-family: var(--font-body); font-weight: 700; font-size: 20px; color: #2874af;
+  }
+
+  /* Ανοιγμένο περιεχόμενο: εσοχή 88px, padding 32px */
+  .prog__body { border-top: 0; padding: 32px 88px; }
+  .prog__coord {
+    gap: 8px; padding: 0 0 16px;
+    font-family: var(--font-body); font-weight: 700; font-size: 20px; color: #2874af;
+  }
+  .prog__coord svg { width: 18px; height: 18px; }
+
+  /* Στοιχεία: γραμμή ΚΑΤΩ από κάθε στοιχείο, κενό 24px ανάμεσά τους */
+  .prog__item {
+    border-top: 0; border-bottom: 1px solid #e5e7eb;
+    padding: 0 0 20px; margin-bottom: 24px;
+  }
+  .prog__item:last-child { margin-bottom: 0; }
+  .prog__item-titlerow { gap: 8px 16px; }
+  .prog__item-time {
+    font-family: var(--font-body); font-weight: 700; font-size: 20px; color: #2874af;
+  }
+  .prog__item-title {
+    font-family: var(--font-body); font-weight: 700; font-size: 20px; color: #231f20;
+  }
+  .prog__item-desc {
+    gap: 8px; margin-top: 8px;
+    font-family: var(--font-body); font-weight: 400; font-size: 16px; color: #888;
+  }
+  .prog__item-desc svg { width: 16px; height: 16px; margin-top: 2px; }
+  /* Ετικέτα «Διάλειμμα»: γαλάζιο πλαίσιο, γωνίες 6px */
+  .prog__pill {
+    font-family: var(--font-body); font-weight: 700; font-size: 14px;
+    padding: 4px 12px; border-radius: 6px;
+    background: #e0f2fe; color: #0369a1;
+  }
+  .prog__pill--muted { background: #eef0f3; color: #6b7280; }
 }
 
 /* ==========================================================================
