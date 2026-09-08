@@ -1362,6 +1362,92 @@ main { min-height: 40vh; }
 }
 
 /* ==========================================================================
+   ΑΝΑΛΥΤΙΚΟ ΠΡΟΓΡΑΜΜΑ ΣΕ ΚΙΝΗΤΑ (≤600px)
+   Figma «forum-1-agenda-accordion» (393px). Περιεχόμενο 361px, περιθώρια 16px.
+   Μπαίνει ΜΕΤΑ το μπλοκ ≤640px, αλλιώς εκείνο θα υπερίσχυε (ίδια ειδικότητα).
+   ========================================================================== */
+@media (max-width: 600px) {
+  #analytiko-programma { padding-block: 104px 128px; }
+  #analytiko-programma .container { padding-inline: 16px; }
+
+  #analytiko-programma .section__eyebrow { display: none; }
+  #analytiko-programma .section__head { max-width: none; margin: 0 0 48px; }
+  /* Hagrid Medium 48px, κεφαλαία (Figma: «ΠΡΟΓΡΑΜΜΑ» 333px πλάτος στα 393) */
+  #analytiko-programma .section__head h2 {
+    font-family: var(--font-heading); font-weight: 500;
+    font-size: min(12.2vw, 52px); line-height: 1.15;
+    text-transform: uppercase; color: #000; margin: 0;
+  }
+  /* Ημερομηνία: εικονίδιο 32px + 24px κείμενο, κενό 40px από τον τίτλο */
+  .prog__date {
+    gap: 16px; margin: 40px 0 0;
+    font-weight: 500; font-size: min(6.1vw, 26px); color: #888;
+  }
+  .prog__date svg { width: 32px; height: 32px; }
+
+  /* Χωρίς εξωτερικό πλαίσιο — μόνο οριζόντιες γραμμές */
+  .prog { border: 0; border-radius: 0; background: #fff; }
+  .prog__group, .prog__group:last-child { border-bottom: 1px solid #e5e7eb; }
+
+  /* Κεφαλίδα ενότητας σε ΔΥΟ σειρές: αριθμός + τίτλος, μετά ώρα + βελάκι */
+  .prog__head {
+    flex-wrap: wrap; align-items: flex-start;
+    column-gap: 20px; row-gap: 16px; padding: 24px 16px;
+  }
+  .prog__num {
+    width: 28px; height: 28px; border-radius: 14px; margin-top: 20px;
+    font-family: var(--font-body); font-weight: 700; font-size: 13px;
+  }
+  .prog__head-title {
+    font-family: var(--font-heading); font-weight: 700;
+    font-size: 16px; line-height: 1.4375; color: #0d4f9f;
+  }
+  /* Η ώρα αριστερά και το βελάκι δεξιά, σε δική τους σειρά πλήρους πλάτους */
+  .prog__head-meta {
+    width: 100%; padding-left: 0; justify-content: space-between; align-items: center;
+  }
+  .prog__head-time {
+    font-family: var(--font-body); font-weight: 700; font-size: 16px; color: #2874af;
+  }
+
+  /* Ανοιγμένο περιεχόμενο: padding 32/16 */
+  .prog__body { border-top: 0; padding: 32px 16px; }
+  .prog__coord {
+    gap: 8px; padding: 0 0 16px; margin: 0;
+    font-family: var(--font-body); font-weight: 700; font-size: 16px; color: #2874af;
+  }
+  .prog__coord svg { width: 18px; height: 18px; }
+  .prog__items { margin-top: 24px; }
+
+  .prog__item {
+    border-top: 0; border-bottom: 1px solid #e5e7eb;
+    padding: 0 0 20px; margin-bottom: 24px;
+  }
+  .prog__item:last-child { margin-bottom: 0; }
+  .prog__item-titlerow { gap: 8px 12px; }
+  .prog__item-time {
+    font-family: var(--font-body); font-weight: 700; font-size: 16px; color: #2874af;
+  }
+  .prog__item-title {
+    font-family: var(--font-body); font-weight: 700; font-size: 18px; line-height: 1.22;
+    color: #231f20;
+  }
+  .prog__item-desc {
+    gap: 8px; margin-top: 8px;
+    font-family: var(--font-body); font-weight: 400; font-size: 16px; line-height: 1.19;
+    color: #888;
+  }
+  .prog__item-desc svg { width: 16px; height: 16px; margin-top: 2px; }
+  .prog__pill {
+    margin-left: 0;
+    font-family: var(--font-body); font-weight: 700; font-size: 14px;
+    padding: 4px 12px; border-radius: 6px;
+    background: #e0f2fe; color: #0369a1;
+  }
+  .prog__pill--muted { background: #eef0f3; color: #6b7280; }
+}
+
+/* ==========================================================================
    ΑΤΖΕΝΤΑ
    ========================================================================== */
 .agenda { text-align: left; }
