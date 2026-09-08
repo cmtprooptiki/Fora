@@ -1645,6 +1645,64 @@ main { min-height: 40vh; }
 }
 
 /* ==========================================================================
+   ΣΤΙΓΜΙΟΤΥΠΑ ΣΕ TABLET (601–1024px) — Figma «Section_Gallery» (744px)
+   Καρουζέλ με κάρτες 320×440 και κενό 24px, φίλτρα ύψους 72px.
+   Μπαίνει ΜΕΤΑ το μπλοκ ≤700px (αλληλεπικαλύπτονται στα 601–700px).
+   ========================================================================== */
+@media (min-width: 601px) and (max-width: 1024px) {
+  #gallery { padding-block: 104px 128px; }
+  #gallery .container { padding-inline: 24px; }
+
+  /* Φίλτρα: τρία κουμπιά αριστερά, έτος δεξιά — όλα ύψους 72px */
+  .mgal__bar { gap: 24px; margin-top: 80px; align-items: stretch; }
+  .mgal__tabs { gap: 24px; flex: 1 1 auto; flex-wrap: nowrap; }
+  .mgal__tab {
+    min-height: 72px; padding: 12px 32px; border-radius: 8px;
+    border: 1px solid #231f20; background: transparent; color: #231f20;
+    font-family: var(--font-heading); font-weight: 500; font-size: 24px;
+    white-space: nowrap;
+  }
+  .mgal__tab.is-active {
+    background: #0d4f9f; border-color: #0d4f9f; color: #fff;
+  }
+  .mgal__year select {
+    min-height: 72px; width: 156px; padding: 12px 44px 12px 32px;
+    border-radius: 8px; border: 1px solid #231f20; color: #231f20;
+    font-family: var(--font-heading); font-weight: 500; font-size: 24px;
+    background-position: calc(100% - 28px) calc(50% - 3px), calc(100% - 21px) calc(50% - 3px);
+    background-size: 7px 7px, 7px 7px;
+  }
+
+  /* Καρουζέλ: μία σειρά που σέρνεται, κάρτες 320×440 */
+  .mgal__grid {
+    display: flex; grid-template-columns: none; flex-wrap: nowrap;
+    gap: 24px; margin-top: 72px;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    margin-inline: -24px; padding-inline: 24px; scroll-padding-inline: 24px;
+    scrollbar-width: none;
+  }
+  .mgal__grid::-webkit-scrollbar { display: none; }
+  /* Οι :nth-child του μπλοκ ≤700px είναι (0,2,0): πρέπει να επαναληφθούν */
+  .mgal__item,
+  .mgal__item:nth-child(9n + 1), .mgal__item:nth-child(9n + 2),
+  .mgal__item:nth-child(9n + 3), .mgal__item:nth-child(9n + 4),
+  .mgal__item:nth-child(9n + 5), .mgal__item:nth-child(9n + 6),
+  .mgal__item:nth-child(9n + 7), .mgal__item:nth-child(9n + 8),
+  .mgal__item:nth-child(9n + 9) {
+    grid-column: auto;
+    flex: 0 0 320px; height: 440px;
+    scroll-snap-align: start;
+    border-radius: 12px; position: relative;
+  }
+  /* Ελαφρύ σκούρο πέπλο πάνω στη φωτογραφία, όπως στο σχέδιο */
+  .mgal__item::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0, 0, 0, 0.15); pointer-events: none;
+  }
+}
+
+/* ==========================================================================
    ΣΕΛΙΔΟΠΟΙΗΣΗ (φωτογραφίες)
    ========================================================================== */
 .pager__count {
