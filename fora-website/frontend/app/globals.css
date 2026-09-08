@@ -578,8 +578,6 @@ main { min-height: 40vh; }
 .hero__intro-para strong { font-weight: 700; }
 @media (max-width: 1024px) { .hero__intro-para { max-width: 100%; } }
 
-
-
 /* Οθόνες laptop: περισσότερος χώρος αριστερά/δεξιά στην κεφαλίδα +
    ελαφρώς μικρότερη γραμματοσειρά ώστε να χωράνε άνετα οι τίτλοι. */
 @media (min-width: 1025px) and (max-width: 1600px) {
@@ -1589,6 +1587,61 @@ main { min-height: 40vh; }
   .mgal__item:nth-child(9n + 5), .mgal__item:nth-child(9n + 6),
   .mgal__item:nth-child(9n + 7), .mgal__item:nth-child(9n + 8),
   .mgal__item:nth-child(9n + 9) { grid-column: span 1; height: 46vw; }
+}
+
+/* ==========================================================================
+   ΟΡΙΖΟΝΤΙΟ SLIDER ΣΕ ΚΙΝΗΤΑ (≤600px)
+   «Ομιλητές του Forum» και «Στιγμιότυπα του Forum»: αντί για πλέγμα, μία
+   σειρά που σέρνεται με το δάχτυλο και «κουμπώνει» σε κάθε κάρτα.
+   Καθαρά με CSS (scroll-snap) — χωρίς JavaScript, δουλεύει φυσικά στην αφή.
+   Οι κάρτες «βγαίνουν» ως την άκρη της οθόνης: αρνητικό margin ίσο με το
+   padding του .container και ίδιο padding μέσα, ώστε η πρώτη κάρτα να
+   ευθυγραμμίζεται με το κείμενο και η επόμενη να «ξεμυτίζει».
+   ========================================================================== */
+@media (max-width: 600px) {
+  .speakers,
+  .mgal__grid {
+    display: flex;
+    grid-template-columns: none;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    margin-inline: calc(-1 * clamp(20px, 5vw, 96px));
+    padding-inline: clamp(20px, 5vw, 96px);
+    scroll-padding-inline: clamp(20px, 5vw, 96px);
+    /* χώρος για τη σκιά των καρτών, αλλιώς κόβεται από το overflow */
+    padding-block: 4px 10px;
+    scrollbar-width: none;
+  }
+  .speakers::-webkit-scrollbar,
+  .mgal__grid::-webkit-scrollbar { display: none; }
+
+  /* Ομιλητές: κάρτα ~78% της οθόνης, ώστε να φαίνεται η επόμενη */
+  .speakers { gap: 16px; }
+  .speaker {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+
+  /* Στιγμιότυπα: ίδια λογική. Οι επιλογείς :nth-child του μπλοκ ≤700px είναι
+     (0,2,0), οπότε πρέπει να επαναληφθούν — σκέτο «.mgal__item» θα έχανε. */
+  .mgal__grid { gap: 12px; }
+  .mgal__item,
+  .mgal__item:nth-child(9n + 1), .mgal__item:nth-child(9n + 2),
+  .mgal__item:nth-child(9n + 3), .mgal__item:nth-child(9n + 4),
+  .mgal__item:nth-child(9n + 5), .mgal__item:nth-child(9n + 6),
+  .mgal__item:nth-child(9n + 7), .mgal__item:nth-child(9n + 8),
+  .mgal__item:nth-child(9n + 9) {
+    grid-column: auto;
+    flex: 0 0 78%;
+    height: 58vw;
+    scroll-snap-align: start;
+  }
+
+  /* Τα βίντεο μένουν σε στοίβα (δεν είναι slider) */
+  .mgal__videos { display: grid; }
 }
 
 /* ==========================================================================
