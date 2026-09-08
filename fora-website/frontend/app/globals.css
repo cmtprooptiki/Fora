@@ -1703,6 +1703,32 @@ main { min-height: 40vh; }
 }
 
 /* ==========================================================================
+   ΟΜΙΛΗΤΕΣ ΣΕ TABLET (601–1024px) — Figma «Ομιλητές» (744px)
+   Ίδια λογική με τα «Στιγμιότυπα»: μία σειρά καρτών που σέρνεται με το
+   δάχτυλο και «κουμπώνει». Κάρτα 411px με κενό 29px, όπως στο σχέδιο.
+   ========================================================================== */
+@media (min-width: 601px) and (max-width: 1024px) {
+  #omilites { padding-block: 104px; }
+  #omilites .container { padding-inline: 24px; }
+
+  .speakers {
+    display: flex; grid-template-columns: none; flex-wrap: nowrap;
+    gap: 29px; margin-top: 140px;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    margin-inline: -24px; padding-inline: 24px; scroll-padding-inline: 24px;
+    /* χώρος για τη σκιά των καρτών, αλλιώς την κόβει το overflow */
+    padding-block: 4px 12px;
+    scrollbar-width: none;
+  }
+  .speakers::-webkit-scrollbar { display: none; }
+  .speaker {
+    flex: 0 0 411px; max-width: 84%;
+    scroll-snap-align: start;
+  }
+}
+
+/* ==========================================================================
    ΣΕΛΙΔΟΠΟΙΗΣΗ (φωτογραφίες)
    ========================================================================== */
 .pager__count {
