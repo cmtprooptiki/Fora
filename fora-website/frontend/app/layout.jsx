@@ -2,6 +2,7 @@ import './globals.css';
 import Script from 'next/script';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import AccessibilityWidget from '../components/AccessibilityWidget';
 import { getSiteSettings, getAllForums } from '../lib/strapi';
 
 // Κωδικός Google Analytics (GA4). Δεν είναι μυστικό — φαίνεται ούτως ή άλλως
@@ -51,6 +52,9 @@ export default async function RootLayout({ children }) {
         <Header settings={settings} archive={archive} />
         <main>{children}</main>
         <Footer settings={settings} />
+
+        {/* Πλωτό κουμπί προσβασιμότητας — σε κάθε σελίδα, κάτω δεξιά */}
+        <AccessibilityWidget />
 
         {/* Google Analytics (GA4). Το «afterInteractive» φορτώνει το script
             αφού γίνει διαδραστική η σελίδα, ώστε να μην καθυστερεί η εμφάνιση. */}

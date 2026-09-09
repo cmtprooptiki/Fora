@@ -81,6 +81,137 @@ body {
   line-height: 1.65;
 }
 
+/* ==========================================================================
+   ΕΡΓΑΛΕΙΟ ΠΡΟΣΒΑΣΙΜΟΤΗΤΑΣ (πλωτό κουμπί κάτω δεξιά)
+   Οι επιλογές του χρήστη γράφονται ως data-attributes στο <html> από το
+   components/AccessibilityWidget.jsx και υλοποιούνται εδώ.
+   ========================================================================== */
+:root {
+  --a11y-navy: #2e4468;
+  --a11y-navy-dark: #233450;
+  --a11y-zoom: 1;
+}
+
+.a11y-fab {
+  position: fixed; right: 24px; bottom: 24px; z-index: 1200;
+  width: 58px; height: 58px; padding: 0;
+  border: 0; border-radius: 50%; cursor: pointer;
+  background: var(--a11y-navy); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(16, 24, 40, 0.30);
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+.a11y-fab:hover {
+  transform: scale(1.06); background: var(--a11y-navy-dark);
+  box-shadow: 0 8px 22px rgba(16, 24, 40, 0.38);
+}
+.a11y-fab:focus-visible { outline: 3px solid #2ea3f2; outline-offset: 3px; }
+.a11y-fab svg { width: 38px; height: 38px; display: block; }
+
+.a11y-panel {
+  position: fixed; right: 24px; bottom: 92px; z-index: 1200;
+  width: 320px; max-width: calc(100vw - 48px);
+  background: #fff; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 18px 50px rgba(16, 24, 40, 0.28);
+  font-family: var(--font-body); line-height: 1.5;
+  transform-origin: bottom right;
+  opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.97);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+.a11y-panel[data-open='true'] { opacity: 1; visibility: visible; transform: none; }
+.a11y-panel__head {
+  background: var(--fora-blue); color: #fff; padding: 14px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.a11y-panel__head h2 {
+  margin: 0; color: #fff; font-family: var(--font-heading);
+  font-size: 1.05rem; font-weight: 700;
+}
+.a11y-panel__close {
+  background: none; border: 0; color: #fff; cursor: pointer;
+  font-size: 1.6rem; line-height: 1; padding: 0 4px;
+}
+.a11y-list {
+  list-style: none; margin: 0; padding: 8px;
+  display: grid; gap: 4px; max-height: 60vh; overflow-y: auto;
+}
+.a11y-item {
+  width: 100%; display: flex; align-items: center; gap: 12px;
+  background: none; border: 0; border-radius: 10px; padding: 11px 12px;
+  font: inherit; font-size: 0.96rem; color: var(--fora-black);
+  text-align: left; cursor: pointer;
+}
+.a11y-item:hover { background: var(--fora-section-tint); }
+.a11y-item[aria-pressed='true'] { background: var(--fora-blue); color: #fff; }
+.a11y-item:focus-visible { outline: 3px solid var(--fora-accent); outline-offset: -2px; }
+.a11y-item__ic {
+  flex: 0 0 24px; height: 24px; display: grid; place-items: center; font-weight: 700;
+}
+.a11y-reset {
+  margin: 6px 8px 10px; width: calc(100% - 16px);
+  justify-content: center; border: 1px solid var(--fora-border); color: var(--fora-text);
+}
+
+/* ---- Τι κάνει κάθε επιλογή ---- */
+
+/* Μεγέθυνση: zoom στο περιεχόμενο, ΟΧΙ στην (fixed) μπάρα πλοήγησης
+   ούτε στο ίδιο το εργαλείο. */
+html[data-a11y-zoom='on'] main,
+html[data-a11y-zoom='on'] .cta,
+html[data-a11y-zoom='on'] .foot { zoom: var(--a11y-zoom); }
+
+html[data-a11y-spacing='on'] main {
+  line-height: 2 !important; letter-spacing: 0.06em; word-spacing: 0.16em;
+}
+
+html[data-a11y-contrast='high'] body { background: #000; color: #fff; }
+html[data-a11y-contrast='high'] main,
+html[data-a11y-contrast='high'] .section,
+html[data-a11y-contrast='high'] .section--grey,
+html[data-a11y-contrast='high'] .speaker,
+html[data-a11y-contrast='high'] .prog,
+html[data-a11y-contrast='high'] .smodal { background: #000 !important; color: #fff !important; }
+html[data-a11y-contrast='high'] h1,
+html[data-a11y-contrast='high'] h2,
+html[data-a11y-contrast='high'] h3,
+html[data-a11y-contrast='high'] .thematics__head,
+html[data-a11y-contrast='high'] .thematic-row__title span { color: #ff0 !important; }
+html[data-a11y-contrast='high'] a,
+html[data-a11y-contrast='high'] .prog__head-title,
+html[data-a11y-contrast='high'] .prog__head-time { color: #4ff !important; }
+html[data-a11y-contrast='high'] p,
+html[data-a11y-contrast='high'] li,
+html[data-a11y-contrast='high'] span { color: #fff !important; }
+
+html[data-a11y-contrast='invert'] { filter: invert(1) hue-rotate(180deg); }
+html[data-a11y-contrast='invert'] img,
+html[data-a11y-contrast='invert'] video { filter: invert(1) hue-rotate(180deg); }
+
+html[data-a11y-grayscale='on'] { filter: grayscale(1); }
+html[data-a11y-grayscale='on'][data-a11y-contrast='invert'] {
+  filter: grayscale(1) invert(1) hue-rotate(180deg);
+}
+/* Το εργαλείο δεν πρέπει να αντιστρέφεται μαζί με τη σελίδα */
+html[data-a11y-contrast='invert'] .a11y-fab,
+html[data-a11y-contrast='invert'] .a11y-panel { filter: invert(1) hue-rotate(180deg); }
+
+html[data-a11y-links='on'] a {
+  text-decoration: underline !important; text-underline-offset: 3px;
+}
+html[data-a11y-font='readable'],
+html[data-a11y-font='readable'] body { --font-heading: Verdana, Tahoma, sans-serif; }
+html[data-a11y-font='readable'] body,
+html[data-a11y-font='readable'] h1, html[data-a11y-font='readable'] h2,
+html[data-a11y-font='readable'] h3, html[data-a11y-font='readable'] h4,
+html[data-a11y-font='readable'] .btn {
+  font-family: Verdana, Tahoma, sans-serif !important; letter-spacing: 0.02em;
+}
+html[data-a11y-motion='off'] *,
+html[data-a11y-motion='off'] *::before,
+html[data-a11y-motion='off'] *::after {
+  animation: none !important; transition: none !important; scroll-behavior: auto !important;
+}
+
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
   color: var(--fora-black);
