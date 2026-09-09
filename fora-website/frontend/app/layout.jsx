@@ -1,8 +1,8 @@
 import './globals.css';
-import Script from 'next/script';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AccessibilityWidget from '../components/AccessibilityWidget';
+import CookieConsent from '../components/CookieConsent';
 import { getSiteSettings, getAllForums } from '../lib/strapi';
 
 // Κωδικός Google Analytics (GA4). Δεν είναι μυστικό — φαίνεται ούτως ή άλλως
@@ -56,23 +56,9 @@ export default async function RootLayout({ children }) {
         {/* Πλωτό κουμπί προσβασιμότητας — σε κάθε σελίδα, κάτω δεξιά */}
         <AccessibilityWidget />
 
-        {/* Google Analytics (GA4). Το «afterInteractive» φορτώνει το script
-            αφού γίνει διαδραστική η σελίδα, ώστε να μην καθυστερεί η εμφάνιση. */}
-        {GA_ID && (
-          <>
-            <Script
-              id="ga4-src"
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4-init" strategy="afterInteractive">
-              {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${GA_ID}');`}
-            </Script>
-          </>
-        )}
+        {/* Μπάρα cookies (κάτω αριστερά). Φορτώνει το Google Analytics ΜΟΝΟ
+            αφού ο επισκέπτης συναινέσει — γι' αυτό ο κωδικός GA δίνεται εδώ. */}
+        <CookieConsent gaId={GA_ID} />
       </body>
     </html>
   );
