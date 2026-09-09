@@ -48,8 +48,13 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body>
+        {/* Πρώτο στοιχείο της σελίδας: επιτρέπει σε όποιον πλοηγείται με
+            πληκτρολόγιο να προσπεράσει το μενού. Φαίνεται μόνο όταν εστιαστεί. */}
+        <a href="#main" className="skip-link">
+          Παράλειψη στο περιεχόμενο
+        </a>
         <Header settings={settings} archive={archive} />
-        <main>{children}</main>
+        <main id="main" tabIndex={-1}>{children}</main>
         <Footer settings={settings} />
 
         {/* Google Analytics (GA4). Το «afterInteractive» φορτώνει το script

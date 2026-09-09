@@ -132,7 +132,13 @@ export default function MediaGallery({ forums = [], currentForum }) {
 
         {showPhotos && len > 0 && (
           <>
-            <div className="mgal__grid">
+            {/* Κυλιόμενο πλαίσιο: χρειάζεται εστίαση για πλοήγηση με πληκτρολόγιο */}
+            <div
+              className="mgal__grid"
+              role="region"
+              aria-label="Φωτογραφίες του Forum"
+              tabIndex={0}
+            >
               {pagePhotos.map((p, i) => {
                 const abs = start + i; // απόλυτη θέση (για τη μεγέθυνση)
                 const full = mediaUrl(p.url);

@@ -26,6 +26,9 @@
   --fora-blue: #0d4f9f;
   --fora-blue-dark: #0a3d7a;
   --fora-accent: #2ea3f2;
+  /* Γκρι κείμενο που ΠΕΡΝΑΕΙ τον έλεγχο αντίθεσης σε λευκό φόντο (4.83:1).
+     Αντικατέστησε το #888, που έδινε μόλις 3.54:1 (όριο WCAG AA: 4.5:1). */
+  --fora-text-muted: #6b7280;
   --fora-text: #4a4f55;
   --fora-text-soft: #666666;
   --fora-black: #231f20;
@@ -80,6 +83,50 @@ body {
   font-size: 17px;
   line-height: 1.65;
 }
+
+/* ==========================================================================
+   ΠΡΟΣΒΑΣΙΜΟΤΗΤΑ
+   ========================================================================== */
+/* Ορατό περίγραμμα εστίασης για όποιον πλοηγείται με πληκτρολόγιο.
+   Το :focus-visible εμφανίζεται ΜΟΝΟ σε πλοήγηση με πλήκτρα — όχι στο κλικ,
+   άρα δεν αλλάζει τίποτα για όσους χρησιμοποιούν ποντίκι ή αφή. */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[role="button"]:focus-visible,
+/* Το tabindex="-1" είναι στόχος προγραμματιστικής εστίασης (π.χ. <main>,
+   το παράθυρο βιογραφικού) — ΟΧΙ στάση του πληκτρολογίου· εξαιρείται, αλλιώς
+   θα εμφάνιζε περίγραμμα και θα νικούσε κάθε δική μας εξαίρεση σε ειδικότητα. */
+[tabindex]:not([tabindex="-1"]):focus-visible {
+  outline: 3px solid var(--fora-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+/* Πάνω σε σκούρα φόντα το γαλάζιο δεν ξεχωρίζει — εκεί λευκό περίγραμμα */
+.hero :focus-visible,
+.keywords :focus-visible,
+.istoria :focus-visible,
+.cta :focus-visible,
+.foot :focus-visible,
+.section--blue :focus-visible,
+.lightbox :focus-visible {
+  outline-color: #fff;
+}
+
+/* Σύνδεσμος «Παράλειψη στο περιεχόμενο»: κρυφός ώσπου να πάρει εστίαση */
+.skip-link {
+  position: fixed; left: 16px; top: -120px; z-index: 200;
+  background: #fff; color: var(--fora-blue);
+  font-family: var(--font-body); font-weight: 700; font-size: 1rem;
+  padding: 12px 20px; border-radius: 8px; box-shadow: var(--shadow-md);
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 16px; }
+/* Ο <main> δέχεται εστίαση από τον σύνδεσμο, χωρίς δικό του περίγραμμα */
+main:focus { outline: none; }
 
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
@@ -1072,9 +1119,12 @@ main { min-height: 40vh; }
   font-family: var(--font-heading); font-weight: 800; margin: 0;
   font-size: clamp(1.3rem, 2.6vw, 2rem); line-height: 1.25;
 }
-/* Το εφέ αποκάλυψης: λέξεις ξεκινούν ανοιχτόχρωμες και γίνονται σκούρες */
-.thematic-row__title span { color: #c6cad0; transition: color 0.3s ease; }
-.thematic-row__title span.is-on { color: #3a3f45; }
+/* Το εφέ αποκάλυψης: λέξεις ξεκινούν ανοιχτόχρωμες και γίνονται σκούρες.
+   Το «σβηστό» χρώμα πρέπει να παραμένει ΑΝΑΓΝΩΣΙΜΟ: αν δεν τρέξει η
+   JavaScript του εφέ, οι τίτλοι μένουν για πάντα σε αυτό το χρώμα.
+   #757575 = 4.61:1 σε λευκό (το παλιό #c6cad0 έδινε 1.86:1). */
+.thematic-row__title span { color: #757575; transition: color 0.3s ease; }
+.thematic-row__title span.is-on { color: var(--fora-black); }
 .thematic-row__desc { color: var(--fora-text-soft); margin: 12px 0 0; max-width: 60ch; line-height: 1.6; }
 .thematic-row__label {
   flex: 0 0 auto; color: var(--fora-text-soft);
@@ -1186,11 +1236,12 @@ main { min-height: 40vh; }
   .thematic-row:last-child { border-bottom: 0; }
   .thematic-row + .thematic-row { margin-top: 80px; }  /* Figma 104px */
   .thematic-row__main { width: 100%; }
-  /* Τίτλος: Hagrid Medium 40px/58px, «σβηστό» χρώμα #b9b9b9 */
+  /* Τίτλος: Hagrid Medium 40px/58px. Το σχέδιο δίνει #b9b9b9, αλλά έχει
+     αντίθεση μόλις 1.96:1 — κρατάμε το αναγνώσιμο #757575 (4.61:1). */
   .thematic-row__title {
     font-weight: 500; font-size: min(5.38vw, 46px); line-height: 1.45;
   }
-  .thematic-row__title span { color: #b9b9b9; }
+  .thematic-row__title span { color: #757575; }
   /* Στο σχέδιο για tablet η περιγραφή της ενότητας ΔΕΝ εμφανίζεται */
   .thematic-row__desc { display: none; }
   /* Ετικέτα: Lato Regular 42px, #231f20 */
@@ -1301,7 +1352,7 @@ main { min-height: 40vh; }
   /* Ημερομηνία: εικονίδιο 32px + Lato Medium 32px #888 (Figma κενό 56px) */
   .prog__date {
     gap: 16px; margin: 56px 0 0;
-    font-weight: 500; font-size: min(4.3vw, 36px); color: #888;
+    font-weight: 500; font-size: min(4.3vw, 36px); color: var(--fora-text-muted);
   }
   .prog__date svg { width: 32px; height: 32px; }
 
@@ -1347,7 +1398,7 @@ main { min-height: 40vh; }
   }
   .prog__item-desc {
     gap: 8px; margin-top: 8px;
-    font-family: var(--font-body); font-weight: 400; font-size: 16px; color: #888;
+    font-family: var(--font-body); font-weight: 400; font-size: 16px; color: var(--fora-text-muted);
   }
   .prog__item-desc svg { width: 16px; height: 16px; margin-top: 2px; }
   /* Ετικέτα «Διάλειμμα»: γαλάζιο πλαίσιο, γωνίες 6px */
@@ -1379,7 +1430,7 @@ main { min-height: 40vh; }
   /* Ημερομηνία: εικονίδιο 32px + 24px κείμενο, κενό 40px από τον τίτλο */
   .prog__date {
     gap: 16px; margin: 40px 0 0;
-    font-weight: 500; font-size: min(6.1vw, 26px); color: #888;
+    font-weight: 500; font-size: min(6.1vw, 26px); color: var(--fora-text-muted);
   }
   .prog__date svg { width: 32px; height: 32px; }
 
@@ -1433,7 +1484,7 @@ main { min-height: 40vh; }
   .prog__item-desc {
     gap: 8px; margin-top: 8px;
     font-family: var(--font-body); font-weight: 400; font-size: 16px; line-height: 1.19;
-    color: #888;
+    color: var(--fora-text-muted);
   }
   .prog__item-desc svg { width: 16px; height: 16px; margin-top: 2px; }
   .prog__pill {

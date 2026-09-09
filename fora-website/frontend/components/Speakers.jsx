@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
 function mediaUrl(url) {
@@ -12,6 +12,8 @@ function mediaUrl(url) {
 export default function Speakers({ forum }) {
   const speakers = forum?.omilites || [];
   const [active, setActive] = useState(null); // ο επιλεγμένος ομιλητής (ή null)
+  const modalRef = useRef(null);
+  const openerRef = useRef(null); // η κάρτα που άνοιξε το παράθυρο
 
   useEffect(() => {
     const onKey = (e) => {
@@ -20,6 +22,45 @@ export default function Speakers({ forum }) {
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, []);
+
+  // Διαχείριση εστίασης όσο το παράθυρο βιογραφικού είναι ανοιχτό:
+  // 1) η εστίαση μπαίνει ΜΕΣΑ στο παράθυρο,
+  // 2) το Tab «κυκλώνει» μέσα του και δεν ξεφεύγει στη σελίδα από πίσω,
+  // 3) όταν κλείσει, επιστρέφει στην κάρτα από την οποία άνοιξε.
+  useEffect(() => {
+    if (!active) return undefined;
+    const box = modalRef.current;
+    if (!box) return undefined;
+
+    const SELECTOR =
+      'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const first = box.querySelector(SELECTOR);
+    (first || box).focus();
+
+    const onKeyDown = (e) => {
+      if (e.key !== 'Tab') return;
+      const items = Array.from(box.querySelectorAll(SELECTOR)).filter(
+        (el) => el.offsetParent !== null
+      );
+      if (items.length === 0) return;
+      const head = items[0];
+      const tail = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === head) {
+        e.preventDefault();
+        tail.focus();
+      } else if (!e.shiftKey && document.activeElement === tail) {
+        e.preventDefault();
+        head.focus();
+      }
+    };
+    box.addEventListener('keydown', onKeyDown);
+
+    const opener = openerRef.current;
+    return () => {
+      box.removeEventListener('keydown', onKeyDown);
+      if (opener && document.contains(opener)) opener.focus();
+    };
+  }, [active]);
 
   if (speakers.length === 0) return null;
 
@@ -40,7 +81,15 @@ export default function Speakers({ forum }) {
           εκσυγχρονισμό των νοσοκομείων.
         </p>
 
-        <div className="grid speakers">
+        {/* Σε κινητά/tablet η λίστα κυλάει οριζόντια. Ένα κυλιόμενο πλαίσιο
+            πρέπει να δέχεται εστίαση, αλλιώς δεν φτάνεις τις κάρτες με
+            πληκτρολόγιο (μόνο με ποντίκι ή δάχτυλο). */}
+        <div
+          className="grid speakers"
+          role="region"
+          aria-label="Ομιλητές του Forum"
+          tabIndex={0}
+        >
           {speakers.map((sp, i) => {
             const photo = sp.fotografia?.url ? mediaUrl(sp.fotografia.url) : null;
             const initials = (sp.onoma || '')
@@ -72,10 +121,14 @@ export default function Speakers({ forum }) {
                 role="button"
                 tabIndex={0}
                 aria-haspopup="dialog"
-                onClick={() => setActive(sp)}
+                onClick={(e) => {
+                  openerRef.current = e.currentTarget;
+                  setActive(sp);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
+                    openerRef.current = e.currentTarget;
                     setActive(sp);
                   }
                 }}
@@ -99,7 +152,12 @@ export default function Speakers({ forum }) {
           aria-modal="true"
           aria-label={`Βιογραφικό: ${active.onoma}`}
         >
-          <div className="smodal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="smodal"
+            ref={modalRef}
+            tabIndex={-1}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button className="smodal__close" aria-label="Κλείσιμο" onClick={() => setActive(null)}>
               ×
             </button>
