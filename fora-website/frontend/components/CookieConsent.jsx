@@ -84,9 +84,20 @@ gtag('config', '${gaId}');`}
           «αναβοσβήνει» σε όποιον έχει ήδη απαντήσει. */}
       {ready && !choice && (
         <div className="cookie" role="dialog" aria-labelledby="cookie-title">
-          <h2 className="cookie__title" id="cookie-title">
-            Σεβόμαστε την ιδιωτικότητά σας
-          </h2>
+          <div className="cookie__head">
+            <span className="cookie__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"
+                   strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2.6a9.4 9.4 0 1 0 9.4 9.4 3.3 3.3 0 0 1-4.3-4.3A3.3 3.3 0 0 1 12 2.6z" />
+                <circle cx="9" cy="10" r="1" fill="currentColor" stroke="none" />
+                <circle cx="13.5" cy="14.5" r="1" fill="currentColor" stroke="none" />
+                <circle cx="8.5" cy="15.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </span>
+            <h2 className="cookie__title" id="cookie-title">
+              Σεβόμαστε την ιδιωτικότητά σας
+            </h2>
+          </div>
           <p className="cookie__text">
             Χρησιμοποιούμε cookies για να βελτιώσουμε την εμπειρία περιήγησης και
             να αναλύσουμε την επισκεψιμότητα του ιστότοπου. Πατώντας «Αποδοχή

@@ -218,13 +218,27 @@ html[data-a11y-motion='off'] *::after {
 .cookie {
   position: fixed; left: 24px; bottom: 24px; z-index: 1300;
   width: 380px; max-width: calc(100vw - 48px);
-  background: #fff; border-radius: 12px; padding: 22px 24px;
-  box-shadow: 0 18px 50px rgba(16, 24, 40, 0.28);
+  background: #fff; border-radius: 14px; padding: 24px 26px;
+  border: 1px solid rgba(16, 24, 40, 0.06);
+  box-shadow: 0 2px 6px rgba(16, 24, 40, 0.06), 0 20px 48px rgba(16, 24, 40, 0.22);
   font-family: var(--font-body); line-height: 1.5;
+  animation: cookie-in 0.28s ease both;
 }
+@keyframes cookie-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+/* Τίτλος με μικρό εικονίδιο σε γαλάζιο δισκάκι */
+.cookie__head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.cookie__icon {
+  flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--fora-section-tint); color: var(--fora-blue);
+}
+.cookie__icon svg { width: 21px; height: 21px; }
 .cookie__title {
-  margin: 0 0 10px; font-family: var(--font-heading); font-weight: 700;
-  font-size: 1.3rem; color: var(--fora-black); line-height: 1.25;
+  margin: 0; font-family: var(--font-heading); font-weight: 700;
+  font-size: 1.22rem; color: var(--fora-black); line-height: 1.25;
 }
 .cookie__text { margin: 0; font-size: 0.95rem; color: var(--fora-text); }
 
@@ -245,10 +259,11 @@ html[data-a11y-motion='off'] *::after {
 
 .cookie__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 .cookie__btn {
-  flex: 1 1 auto; min-width: 104px;
+  flex: 1 1 auto; min-width: 0; white-space: nowrap;
   font-family: var(--font-body); font-weight: 700; font-size: 0.95rem;
   padding: 11px 16px; border-radius: 8px; cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease,
+              transform 0.18s ease, box-shadow 0.18s ease;
 }
 .cookie__btn--ghost {
   background: #fff; color: var(--fora-blue); border: 1px solid var(--fora-blue);
@@ -257,8 +272,30 @@ html[data-a11y-motion='off'] *::after {
 .cookie__btn--solid {
   background: var(--fora-blue); color: #fff; border: 1px solid var(--fora-blue);
 }
-.cookie__btn--solid:hover { background: var(--fora-blue-dark); border-color: var(--fora-blue-dark); }
+.cookie__btn--solid {
+  box-shadow: 0 2px 8px rgba(13, 79, 159, 0.28);
+}
+.cookie__btn--solid:hover {
+  background: var(--fora-blue-dark); border-color: var(--fora-blue-dark);
+  transform: translateY(-1px); box-shadow: 0 5px 14px rgba(13, 79, 159, 0.34);
+}
 .cookie__btn:focus-visible { outline: 3px solid var(--fora-accent); outline-offset: 2px; }
+
+/* Σε υπολογιστή: πιο άνετη κάρτα, ώστε τα τρία ελληνικά κουμπιά να χωράνε
+   άνετα σε ΜΙΑ σειρά (οι ελληνικές ετικέτες είναι αρκετά πιο μακριές από τις
+   αγγλικές του προτύπου). */
+@media (min-width: 1025px) {
+  .cookie {
+    left: 32px; bottom: 32px; width: 470px; padding: 28px 30px;
+  }
+  .cookie__head { gap: 14px; margin-bottom: 14px; }
+  .cookie__icon { width: 42px; height: 42px; }
+  .cookie__icon svg { width: 23px; height: 23px; }
+  .cookie__title { font-size: 1.35rem; }
+  .cookie__text { font-size: 1rem; line-height: 1.6; }
+  .cookie__actions { margin-top: 22px; gap: 12px; flex-wrap: nowrap; }
+  .cookie__btn { padding: 12px 14px; font-size: 0.96rem; }
+}
 
 /* Σε στενές οθόνες: πλήρες πλάτος στο κάτω μέρος, κουμπιά σε στοίβα */
 @media (max-width: 600px) {
