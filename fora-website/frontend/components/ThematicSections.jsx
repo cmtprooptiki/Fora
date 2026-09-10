@@ -26,8 +26,25 @@ function outlookUrl(forum) {
   return `https://outlook.live.com/calendar/0/deeplink/compose?${params.toString()}`;
 }
 
+// Ετικέτα κάθε θεματικής ενότητας.
+//
+// ΤΡΕΧΟΝ Forum: όλες αριθμημένες («Ενότητα 1, 2, 3…»), με την τελευταία
+// «Στρογγυλό Τραπέζι».
+// ΠΡΟΗΓΟΥΜΕΝΑ Fora: μένουν όπως ήταν — 1η «Εναρκτήρια Ομιλία», τελευταία
+// «Στρογγυλό Τραπέζι», ενδιάμεσες «Ενότητα 1, 2…».
+function labelFor(i, total, isCurrent) {
+  if (isCurrent) {
+    if (total > 1 && i === total - 1) return 'Στρογγυλό Τραπέζι';
+    return `Ενότητα ${i + 1}`;
+  }
+  if (i === 0) return 'Εναρκτήρια Ομιλία';
+  if (i === total - 1) return 'Στρογγυλό Τραπέζι';
+  return `Ενότητα ${i}`;
+}
+
 export default function ThematicSections({ forum, intro }) {
   const items = forum?.thematikesEnotites || [];
+  const isCurrent = !!forum?.trexonForum;
   if (items.length === 0) return null;
 
   const pdf = forum?.atzentaPdf?.url ? mediaUrl(forum.atzentaPdf.url) : null;
@@ -45,14 +62,7 @@ export default function ThematicSections({ forum, intro }) {
 
         <ThematicList
           items={items.map((item, i) => ({
-            // 1η: «Εναρκτήρια Ομιλία», τελευταία: «Στρογγυλό Τραπέζι»,
-            // ενδιάμεσες: «Ενότητα 1», «Ενότητα 2», ...
-            label:
-              i === 0
-                ? 'Εναρκτήρια Ομιλία'
-                : i === items.length - 1
-                  ? 'Στρογγυλό Τραπέζι'
-                  : `Ενότητα ${i}`,
+            label: labelFor(i, items.length, isCurrent),
             titlos: item.titlos,
             perigrafi: item.perigrafi,
           }))}

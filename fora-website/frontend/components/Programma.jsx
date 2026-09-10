@@ -25,6 +25,9 @@ const IconPerson = () => (
 
 export default function Programma({ forum }) {
   const sessions = forum?.programma || [];
+  // Στο ΤΡΕΧΟΝ Forum η τελευταία ενότητα λέγεται «Στρογγυλό Τραπέζι» αντί για
+  // «Ενότητα N». Στα προηγούμενα Fora μένουν όλες αριθμημένες, όπως ήταν.
+  const isCurrent = !!forum?.trexonForum;
   // Μόνο μία ενότητα ανοιχτή κάθε φορά (η 1η αρχικά)
   const [openIndex, setOpenIndex] = useState(0);
 
@@ -50,6 +53,10 @@ export default function Programma({ forum }) {
           {sessions.map((s, i) => {
             const isOpen = openIndex === i;
             const items = s.stoixeia || [];
+            const headLabel =
+              isCurrent && sessions.length > 1 && i === sessions.length - 1
+                ? 'Στρογγυλό Τραπέζι'
+                : `Ενότητα ${i + 1}`;
             return (
               <div className={`prog__group ${isOpen ? 'is-open' : ''}`} key={i}>
                 <button
@@ -60,7 +67,7 @@ export default function Programma({ forum }) {
                 >
                   <span className="prog__num">{i + 1}</span>
                   <span className="prog__head-title">
-                    Ενότητα {i + 1}: {s.titlos}
+                    {headLabel}: {s.titlos}
                   </span>
                   <span className="prog__head-meta">
                     {s.xronikoBlok && <span className="prog__head-time">{s.xronikoBlok}</span>}
