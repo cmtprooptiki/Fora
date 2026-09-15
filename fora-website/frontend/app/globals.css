@@ -23,7 +23,30 @@
     local("Segoe UI"), local("Helvetica Neue"), local("Helvetica"),
     local("Arial"), local("Roboto"), local("Noto Sans"), local("Tahoma");
   unicode-range: U+0398, U+03B8; /* Θ, θ */
-  font-weight: 100 900;
+  /* Μόνο ως το 500. Αν εδώ γράφαμε «100 900», ο browser θα θεωρούσε ότι αυτή
+     η ΚΑΝΟΝΙΚΗ γραμματοσειρά καλύπτει και τα έντονα βάρη, οπότε το θ θα έμενε
+     λεπτό μέσα σε bold τίτλους. Τα έντονα τα αναλαμβάνει ο επόμενος κανόνας. */
+  font-weight: 100 500;
+  font-style: normal;
+}
+
+/* Έντονο θ/Θ: για βάρη 600+ ζητάμε ρητά τις BOLD εκδόσεις των ίδιων
+   γραμματοσειρών, ώστε μέσα σε τίτλους (π.χ. «ΘΕΜΑΤΙΚΕΣ» σε 800) το θ να έχει
+   πάχος αντίστοιχο με τα υπόλοιπα γράμματα.
+   Στο τέλος μπαίνουν και οι κανονικές ως δικλείδα: αν λείπει η bold έκδοση,
+   το θ θα φανεί απλώς λεπτότερο — ποτέ κενό. */
+@font-face {
+  font-family: "GreekThetaFix";
+  src:
+    local("Segoe UI Bold"), local("SegoeUI-Bold"),
+    local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"),
+    local("Helvetica Bold"), local("Helvetica-Bold"),
+    local("Arial Bold"), local("Arial-BoldMT"), local("Arial Black"),
+    local("Roboto Bold"), local("Roboto-Bold"),
+    local("Noto Sans Bold"), local("NotoSans-Bold"), local("Tahoma Bold"),
+    local("Segoe UI"), local("Helvetica"), local("Arial");
+  unicode-range: U+0398, U+03B8; /* Θ, θ */
+  font-weight: 600 900;
   font-style: normal;
 }
 
