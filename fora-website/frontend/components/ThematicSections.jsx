@@ -26,6 +26,35 @@ function outlookUrl(forum) {
   return `https://outlook.live.com/calendar/0/deeplink/compose?${params.toString()}`;
 }
 
+// Μετατρέπει τα τακτικά αριθμητικά «5ο», «3ο» κ.λπ. ώστε το «ο» να μπαίνει
+// ΕΚΘΕΤΗΣ — πάνω-δεξιά από τον αριθμό (5ᵒ). Το κείμενο έρχεται από το Strapi
+// ως απλό κείμενο, οπότε η αντικατάσταση γίνεται εδώ, κατά την απόδοση.
+//
+// Το «ο» μπορεί να είναι είτε ελληνικό όμικρον (ο) είτε λατινικό «o» — και τα
+// δύο καλύπτονται. Ο έλεγχος «να μη follow-άρει γράμμα ή ψηφίο» αποτρέπει
+// λανθασμένα ταιριάσματα μέσα σε λέξεις (π.χ. «100ος» δεν σπάει στη μέση).
+function withOrdinals(text) {
+  if (!text) return text;
+  const re = /(\d+)([οo])(?![\p{L}\p{N}])/gu;
+  const out = [];
+  let last = 0;
+  let m;
+  let k = 0;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) out.push(text.slice(last, m.index));
+    out.push(
+      <span key={`ord-${k++}`}>
+        {m[1]}
+        <sup className="ordinal">{m[2]}</sup>
+      </span>
+    );
+    last = m.index + m[0].length;
+  }
+  if (out.length === 0) return text;
+  if (last < text.length) out.push(text.slice(last));
+  return out;
+}
+
 // Ετικέτα κάθε θεματικής ενότητας.
 //
 // ΤΡΕΧΟΝ Forum: όλες αριθμημένες («Ενότητα 1, 2, 3…»), με την τελευταία
@@ -58,7 +87,7 @@ export default function ThematicSections({ forum, intro }) {
           <span>Ενότητες</span>
         </div>
 
-        {intro && <p className="thematics__intro">{intro}</p>}
+        {intro && <p className="thematics__intro">{withOrdinals(intro)}</p>}
 
         <ThematicList
           items={items.map((item, i) => ({

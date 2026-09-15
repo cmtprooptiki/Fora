@@ -1334,6 +1334,12 @@ main { min-height: 40vh; }
   color: var(--fora-text); font-size: 1.05rem; line-height: 1.6;
   max-width: 52ch; margin: 22px 0 0;
 }
+/* Τακτικό αριθμητικό: το «ο» πάνω-δεξιά από τον αριθμό (5ᵒ).
+   Το line-height:0 εμποδίζει τον εκθέτη να «ανοίξει» τη γραμμή. */
+.ordinal {
+  font-size: 0.6em; line-height: 0;
+  vertical-align: super; margin-left: 0.04em;
+}
 .thematics__list { margin-top: clamp(40px, 6vw, 80px); }
 .thematics__actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: clamp(28px, 4vw, 48px); }
 
