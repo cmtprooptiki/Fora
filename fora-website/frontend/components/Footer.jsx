@@ -5,9 +5,9 @@ export default function Footer({ settings }) {
     settings?.keimenoFooter || '© 2025 CMT Prooptiki All Rights Reserved.';
   const mailHref = email ? `mailto:${email}` : '#';
   const telHref = phone ? `tel:${phone.replace(/\s+/g, '')}` : '#';
-  const joinHref = email
-    ? `mailto:${email}?subject=${encodeURIComponent('Εγγραφή στο Newsletter')}`
-    : '#';
+  // Το «Γίνετε Μέλος» οδηγεί στη σελίδα εγγραφής με τη φόρμα του Mailchimp.
+  // (Πριν άνοιγε το πρόγραμμα email του επισκέπτη με έτοιμο μήνυμα.)
+  const joinHref = '/newsletter/';
 
   return (
     <footer className="site-footer">
