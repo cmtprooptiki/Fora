@@ -8,12 +8,14 @@
    γράμματα παραμένουν στη Hagrid (μέσω του unicode-range). */
 @font-face {
   font-family: "GreekThetaFix";
-  /* ΜΟΝΟ για το θ/Θ (η Hagrid το αποδίδει ίδιο με "ο"). Προτεραιότητα σε
-     γεωμετρική γραμματοσειρά που ταιριάζει με τη Hagrid· η Lato (web) ως
-     εγγυημένο fallback ώστε κάθε επισκέπτης να βλέπει σωστό θ με μπάρα. */
+  /* ΜΟΝΟ για το θ/Θ (η Hagrid το αποδίδει ίδιο με "ο").
+     Πρώτη η Lato από το web: η ΙΔΙΑ γραμματοσειρά για κάθε επισκέπτη και
+     αναλογίες κοντά στα υπόλοιπα γράμματα.
+     ΑΦΑΙΡΕΘΗΚΑΝ οι local("Century Gothic") / local("Futura"): ήταν πρώτες στη
+     σειρά, οπότε σε υπολογιστές με Office το Θ ερχόταν από την Century Gothic
+     — πολύ πιο πλατύ και κυκλικό από τη Hagrid, γι' αυτό «ξεχώριζε». Επιπλέον
+     το γράμμα άλλαζε όψη ανά επισκέπτη, ανάλογα με το τι είχε εγκατεστημένο. */
   src:
-    local("Century Gothic Bold"), local("CenturyGothic-Bold"),
-    local("Century Gothic"), local("CenturyGothic"), local("Futura"),
     url(https://fonts.gstatic.com/s/lato/v25/S6u9w4BMUTPHh6UVew8.ttf) format("truetype"),
     local("Segoe UI"), local("Tahoma"), local("Arial");
   unicode-range: U+0398, U+03B8; /* Θ, θ */
