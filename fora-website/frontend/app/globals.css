@@ -1848,6 +1848,14 @@ body:has(.draft-banner) .site-header { top: 80px; }
 .draft-note__star {
   flex: 0 0 auto; font-family: var(--font-body); font-size: 32px; line-height: 1;
 }
+/* Παραλλαγή με στοίχιση αριστερά (π.χ. κάτω από τους συνεργάτες), όπου το
+   κείμενο πιάνει δύο γραμμές και ο αστερίσκος «κρέμεται» στην αρχή. */
+.draft-note--start {
+  justify-content: flex-start; align-items: flex-start;
+  text-align: left; gap: 22px;
+  margin-top: clamp(28px, 4vw, 48px); margin-bottom: 0;
+}
+.draft-note--start .draft-note__star { line-height: 1.1; }
 @media (max-width: 1024px) {
   .draft-note { padding: 20px 0; font-size: 18px; }
   .draft-note__star { font-size: 24px; }

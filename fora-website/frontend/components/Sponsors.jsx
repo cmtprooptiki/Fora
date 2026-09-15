@@ -2,6 +2,9 @@ import { mediaUrl } from '../lib/strapi';
 
 export default function Sponsors({ forum }) {
   const groups = forum?.synergates || [];
+  // «Υπό διαμόρφωση» — ίδιο πεδίο με τη λωρίδα κορυφής και την υποσημείωση
+  // στους ομιλητές, ώστε όλα τα μηνύματα προσχεδίου να κλείνουν μαζί.
+  const isDraft = !!forum?.mynimaKorifis?.trim();
   if (groups.length === 0) return null;
 
   return (
@@ -42,6 +45,18 @@ export default function Sponsors({ forum }) {
             </div>
           </div>
         ))}
+
+        {/* Υποσημείωση προσχεδίου, κάτω από τις κατηγορίες και τα λογότυπα.
+            Ίδιος διακόπτης με τα υπόλοιπα μηνύματα «υπό διαμόρφωση»: εμφανίζεται
+            όσο έχει κείμενο το «Μήνυμα Κορυφής» (mynimaKorifis) στο Strapi. */}
+        {isDraft && (
+          <p className="draft-note draft-note--start">
+            <span className="draft-note__star" aria-hidden="true">*</span>
+            Οι παρακάτω συνεργάτες έχουν ήδη επιβεβαιωθεί, ενώ η ενότητα θα
+            επικαιροποιείται σταδιακά με νέες αιγίδες, επιστημονικούς υποστηρικτές
+            και χορηγούς της διοργάνωσης.
+          </p>
+        )}
       </div>
     </section>
   );
