@@ -962,11 +962,19 @@ main { min-height: 40vh; }
     text-wrap: balance;
   }
   .hero__meta { width: 100%; padding-left: 0; text-align: center; }
-  /* Ημερομηνία: μεγαλύτερη και ημίπαχη, ώστε να ξεχωρίζει από τον χώρο */
-  .hero__date { font-weight: 600; font-size: clamp(1.2rem, 1.8vw, 33px); }
 }
 .hero__date { font-weight: 400; font-size: clamp(1.05rem, 1.5vw, 27px); color: #fff; margin: 0 0 10px; }
 .hero__place { margin: 0; line-height: 1.6; max-width: 100%; font-size: clamp(1.05rem, 1.5vw, 27px); }
+
+/* Ημερομηνία σε υπολογιστή: μεγαλύτερη και ημίπαχη, ώστε να ξεχωρίζει από τον
+   χώρο διεξαγωγής (33px έναντι 27px).
+   ΠΡΟΣΟΧΗ ΣΤΗ ΣΕΙΡΑ: ο κανόνας πρέπει να μπει ΜΕΤΑ το «.hero__date» πιο πάνω.
+   Το @media ΔΕΝ προσθέτει ειδικότητα — όταν ήταν πιο πάνω, ο απλός κανόνας
+   (ίδια ειδικότητα, μεγαλύτερη σειρά) τον ακύρωνε και η ημερομηνία έμενε 27px.
+   Τα μπλοκ για κινητά/tablet ακολουθούν παρακάτω, άρα υπερισχύουν εκεί. */
+@media (min-width: 901px) {
+  .hero__date { font-weight: 600; font-size: clamp(1.2rem, 1.8vw, 33px); }
+}
 
 @media (max-width: 900px) {
   .hero__inner {
