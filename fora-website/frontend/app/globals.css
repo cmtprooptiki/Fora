@@ -1334,6 +1334,12 @@ main { min-height: 40vh; }
   color: var(--fora-text); font-size: 1.05rem; line-height: 1.6;
   max-width: 52ch; margin: 22px 0 0;
 }
+/* Σε υπολογιστή η εισαγωγική παράγραφος των «Θεματικών Ενοτήτων» στα 24px.
+   Το μπλοκ για tablet (601–1024px) και κινητά (≤600px) ορίζει δικό του μέγεθος
+   πιο κάτω, οπότε αυτό ισχύει μόνο από 1025px και πάνω. */
+@media (min-width: 1025px) {
+  #thematikes .thematics__intro { font-size: 24px; }
+}
 /* Τακτικό αριθμητικό: το «ο» πάνω-δεξιά από τον αριθμό (5ᵒ).
    Το line-height:0 εμποδίζει τον εκθέτη να «ανοίξει» τη γραμμή. */
 .ordinal {
