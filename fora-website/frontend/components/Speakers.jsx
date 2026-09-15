@@ -21,7 +21,12 @@ export default function Speakers({ forum }) {
     return () => document.removeEventListener('keydown', onKey);
   }, []);
 
-  if (speakers.length === 0) return null;
+  // Χωρίς ομιλητές:
+  //  • στο ΤΡΕΧΟΝ Forum η ενότητα παραμένει και δείχνει μήνυμα αναμονής,
+  //  • σε προηγούμενο Forum δεν έχει νόημα («θα ανακοινωθούν») και κρύβεται.
+  const isCurrent = !!forum?.trexonForum;
+  const hasSpeakers = speakers.length > 0;
+  if (!hasSpeakers && !isCurrent) return null;
 
   const activePhoto = active?.fotografia?.url ? mediaUrl(active.fotografia.url) : null;
 
@@ -40,6 +45,17 @@ export default function Speakers({ forum }) {
           εκσυγχρονισμό των νοσοκομείων.
         </p>
 
+        {!hasSpeakers && (
+          <div className="spk-empty">
+            <span className="spk-empty__icon" aria-hidden="true">i</span>
+            <p className="spk-empty__title">Οι ομιλητές θα ανακοινωθούν σύντομα</p>
+            <p className="spk-empty__text">
+              Το πρόγραμμα βρίσκεται υπό διαμόρφωση. Μείνετε συντονισμένοι!
+            </p>
+          </div>
+        )}
+
+        {hasSpeakers && (
         <div className="grid speakers">
           {speakers.map((sp, i) => {
             const photo = sp.fotografia?.url ? mediaUrl(sp.fotografia.url) : null;
@@ -89,6 +105,7 @@ export default function Speakers({ forum }) {
             );
           })}
         </div>
+        )}
       </div>
 
       {active && (

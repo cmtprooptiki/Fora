@@ -1807,6 +1807,37 @@ body:has(.draft-banner) .site-header { top: 80px; }
    ΟΜΙΛΗΤΕΣ
    ========================================================================== */
 .speakers { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); margin-top: clamp(36px, 5vw, 60px); }
+
+/* Μήνυμα όταν δεν έχουν οριστεί ακόμη ομιλητές (Figma «speakers-placeholder»).
+   Εμφανίζεται μόνο στο τρέχον Forum· μόλις προστεθεί ο πρώτος ομιλητής στο
+   Strapi, αντικαθίσταται αυτόματα από τις κάρτες. */
+.spk-empty {
+  margin-top: clamp(36px, 5vw, 60px);
+  background: #f7f7fa; border-radius: 16px;
+  padding: 80px 60px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 20px; text-align: center;
+}
+.spk-empty__icon {
+  flex: 0 0 auto; width: 72px; height: 72px; border-radius: 50%;
+  background: #1f4a91; color: #fff;
+  display: grid; place-items: center;
+  font-family: var(--font-body); font-weight: 700; font-size: 32px; line-height: 1;
+}
+.spk-empty__title {
+  margin: 0; font-family: var(--font-heading); font-weight: 700;
+  font-size: 28px; line-height: 1.25; color: #1f4a91;
+}
+.spk-empty__text {
+  margin: 0; font-family: var(--font-heading); font-weight: 400;
+  font-size: 18px; line-height: 1.4; color: #80808c;
+}
+@media (max-width: 600px) {
+  .spk-empty { padding: 48px 24px; gap: 16px; border-radius: 12px; }
+  .spk-empty__icon { width: 56px; height: 56px; font-size: 26px; }
+  .spk-empty__title { font-size: 20px; }
+  .spk-empty__text { font-size: 15px; }
+}
 /* Το φόντο του τμήματος είναι λευκό· ο γκρι τόνος μπαίνει στις ΚΑΡΤΕΣ. */
 .speaker {
   background: var(--fora-section-tint); border-radius: 14px; padding: 24px 22px;
