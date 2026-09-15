@@ -430,6 +430,105 @@ main { min-height: 40vh; }
 .grid { display: grid; gap: 24px; }
 
 /* ==========================================================================
+   ΣΕΛΙΔΑ ΕΓΓΡΑΦΗΣ NEWSLETTER (Figma «newsletter-form»)
+   Μπλε φόντο, ημιδιάφανη κάρτα 720px στο κέντρο, φόρμα Mailchimp.
+   ========================================================================== */
+.nlp {
+  background: linear-gradient(135deg, #2874af 0%, #0d4f9f 55%, #0a3d7a 100%);
+  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 48px);
+  display: flex; justify-content: center;
+}
+.nlp__card {
+  width: 100%; max-width: 720px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 48px) clamp(32px, 4vw, 48px);
+}
+.nlp__logo {
+  display: block; width: 268px; max-width: 70%; height: auto;
+  margin: 0 auto clamp(36px, 5vw, 68px);
+  /* Το λογότυπο του Strapi είναι μπλε — εδώ χρειάζεται λευκό */
+  filter: brightness(0) invert(1);
+}
+.nlp__form { display: flex; flex-direction: column; gap: 28px; }
+.nlp__title {
+  margin: 0; text-align: center; color: #fafafa;
+  font-family: var(--font-heading); font-weight: 400;
+  font-size: clamp(1.6rem, 3.4vw, 37px); line-height: 1.2; letter-spacing: -0.03em;
+}
+.nlp__title strong { font-weight: 700; }
+
+.nlp__fields { display: flex; flex-direction: column; gap: 16px; }
+.nlp__row { display: flex; align-items: center; gap: 12px; }
+.nlp__label {
+  flex: 0 0 140px; color: #fff;
+  font-family: var(--font-body); font-weight: 700; font-size: 16px; line-height: 24px;
+}
+.nlp__input {
+  flex: 1 1 auto; min-width: 0; height: 40px; padding: 0 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px;
+  color: #fff; font-family: var(--font-body); font-size: 14px;
+}
+.nlp__input::placeholder { color: rgba(255, 255, 255, 0.7); }
+.nlp__input:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 1px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.nlp__perm { display: flex; flex-direction: column; gap: 14px; }
+.nlp__perm-head { display: flex; flex-direction: column; gap: 6px; }
+.nlp__perm-title {
+  margin: 0; color: #fff;
+  font-family: var(--font-body); font-weight: 700; font-size: 18px; line-height: 26px;
+}
+.nlp__perm-desc {
+  margin: 0; color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-body); font-size: 16px; line-height: 22px;
+}
+.nlp__check {
+  display: flex; align-items: center; gap: 12px; padding: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px;
+  color: #fff; font-family: var(--font-body); font-weight: 700; font-size: 15px;
+  line-height: 22px; cursor: pointer;
+}
+.nlp__checkbox {
+  flex: 0 0 auto; width: 18px; height: 18px; margin: 0;
+  accent-color: #fff; cursor: pointer;
+}
+
+.nlp__legal { display: flex; flex-direction: column; gap: 16px; }
+.nlp__legal p {
+  margin: 0; color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-body); font-size: 13px; line-height: 20px;
+}
+.nlp__legal a { color: #fff; text-decoration: underline; }
+
+/* Το κρυφό πεδίο κατά των bot — εκτός οθόνης, όχι display:none (τα bot το
+   αναγνωρίζουν) */
+.nlp__hp { position: absolute; left: -5000px; }
+
+.nlp__submit {
+  width: 100%; padding: 24px; border: 0; border-radius: 8px; cursor: pointer;
+  background: #fff; color: #231f20;
+  font-family: var(--font-heading); font-weight: 400; font-size: 20px;
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.1);
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.nlp__submit:hover { background: #eef3fb; transform: translateY(-1px); }
+.nlp__submit:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* Σε στενές οθόνες: ετικέτα πάνω από το πεδίο */
+@media (max-width: 640px) {
+  .nlp__row { flex-direction: column; align-items: stretch; gap: 6px; }
+  .nlp__label { flex: 0 0 auto; font-size: 15px; }
+  .nlp__perm-desc { font-size: 15px; }
+  .nlp__submit { padding: 18px; font-size: 18px; }
+}
+
+/* ==========================================================================
    ΛΩΡΙΔΑ ΑΝΑΚΟΙΝΩΣΗΣ (Figma «Draft-Banner») — πάνω από τη μπάρα πλοήγησης
    ==========================================================================
    Η μπάρα πλοήγησης είναι position:fixed, οπότε η λωρίδα μπαίνει κι αυτή
