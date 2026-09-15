@@ -967,7 +967,9 @@ main { min-height: 40vh; }
      αυτό το μπλοκ είναι αργότερα στο αρχείο). */
   .hero__title {
     font-size: var(--hero-sub-size);
-    font-weight: 600;
+    /* 500 (Medium) — όπως το θέμα στο σχέδιο Figma. Αν δεν φανεί διαφορά,
+       το Typekit ίσως δεν περιλαμβάνει το Hagrid Medium και πέφτει στο 400. */
+    font-weight: 500;
   }
 
   .hero__tagline {
