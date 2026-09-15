@@ -1343,7 +1343,8 @@ main { min-height: 40vh; }
 /* Τακτικό αριθμητικό: το «ο» πάνω-δεξιά από τον αριθμό (5ᵒ).
    Το line-height:0 εμποδίζει τον εκθέτη να «ανοίξει» τη γραμμή. */
 .ordinal {
-  font-size: 0.6em; line-height: 0;
+  /* Μέγεθος του εκθέτη σε σχέση με τον αριθμό — ένας αριθμός για ρύθμιση. */
+  font-size: 0.75em; line-height: 0;
   vertical-align: super; margin-left: 0.04em;
 }
 .thematics__list { margin-top: clamp(40px, 6vw, 80px); }
