@@ -401,6 +401,62 @@ main { min-height: 40vh; }
 .grid { display: grid; gap: 24px; }
 
 /* ==========================================================================
+   ΛΩΡΙΔΑ ΑΝΑΚΟΙΝΩΣΗΣ (Figma «Draft-Banner») — πάνω από τη μπάρα πλοήγησης
+   ==========================================================================
+   Η μπάρα πλοήγησης είναι position:fixed, οπότε η λωρίδα μπαίνει κι αυτή
+   fixed στην κορυφή και η μπάρα κατεβαίνει κατά το ύψος της. Το ίδιο ύψος
+   μπαίνει ως padding-top στο <body>, ώστε να μη «κρυφτεί» η κορυφή της
+   σελίδας κάτω από τη λωρίδα.
+   Το ύψος ορίζεται μία φορά (--draft-h) και το χρησιμοποιούν και τα τρία. */
+.draft-banner {
+  --draft-h: 80px;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 110;
+  height: var(--draft-h);
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; padding-inline: clamp(16px, 5vw, 96px);
+  /* Λευκό 10% πάνω στη μπλε διαβάθμιση της μάρκας — όπως στο σχέδιο */
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.1), rgba(250, 250, 250, 0.1)),
+    linear-gradient(90deg, #2874af 0%, #0d4f9f 100%);
+}
+.draft-banner__icon {
+  flex: 0 0 auto; width: 32px; height: 32px; border-radius: 50%;
+  background: #fafafa; color: var(--fora-blue);
+  display: grid; place-items: center;
+  font-family: var(--font-body); font-weight: 700; font-size: 24px; line-height: 1;
+}
+.draft-banner__text {
+  margin: 0; color: #fafafa;
+  font-family: var(--font-heading); font-weight: 400;
+  font-size: 20px; line-height: 1.25; text-transform: uppercase;
+}
+/* Σε μεγάλες οθόνες το κείμενο ξεκινά αριστερά (96px), όπως στο σχέδιο· σε
+   μικρότερες κεντράρεται και «σπάει» σε δύο γραμμές. */
+@media (min-width: 1025px) {
+  .draft-banner { justify-content: flex-start; }
+}
+@media (max-width: 1024px) {
+  .draft-banner__text { font-size: 16px; text-align: left; }
+}
+@media (max-width: 600px) {
+  .draft-banner { --draft-h: 76px; gap: 12px; }
+  .draft-banner__icon { width: 26px; height: 26px; font-size: 19px; }
+  .draft-banner__text { font-size: 12.5px; }
+}
+
+/* Όταν υπάρχει λωρίδα: κατεβαίνουν το περιεχόμενο και η μπάρα πλοήγησης. */
+body:has(.draft-banner) { padding-top: 80px; }
+body:has(.draft-banner) .site-header { top: 80px; }
+@media (max-width: 600px) {
+  body:has(.draft-banner) { padding-top: 76px; }
+  body:has(.draft-banner) .site-header { top: 76px; }
+}
+/* Η κεφαλίδα γεμίζει την οθόνη μείον τη λωρίδα, ώστε να μη «ξεχειλίζει». */
+@media (min-width: 901px) {
+  body:has(.draft-banner) .hero__inner { min-height: calc(100vh - 80px); }
+}
+
+/* ==========================================================================
    HEADER
    ========================================================================== */
 .site-header {

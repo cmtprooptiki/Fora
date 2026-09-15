@@ -106,6 +106,9 @@
       "default": false,
       "required": true
     },
+    "mynimaKorifis": {
+      "type": "string"
+    },
     "syndesmoEggrafis": {
       "type": "string"
     },

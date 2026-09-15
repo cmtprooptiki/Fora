@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AccessibilityWidget from '../components/AccessibilityWidget';
 import CookieConsent from '../components/CookieConsent';
+import DraftBanner from '../components/DraftBanner';
 import { getSiteSettings, getAllForums } from '../lib/strapi';
 
 // Κωδικός Google Analytics (GA4). Δεν είναι μυστικό — φαίνεται ούτως ή άλλως
@@ -30,6 +31,10 @@ export default async function RootLayout({ children }) {
   const archive = forums
     .slice()
     .sort((a, b) => (b.etos || 0) - (a.etos || 0));
+  // Μήνυμα λωρίδας κορυφής: διαβάζεται από το ΤΡΕΧΟΝ Forum. Κενό πεδίο = καμία
+  // λωρίδα, οπότε κλείνει από το Strapi χωρίς νέα έκδοση του ιστότοπου.
+  const draftMessage =
+    forums.find((f) => f.trexonForum)?.mynimaKorifis?.trim() || null;
   const typekit =
     process.env.NEXT_PUBLIC_TYPEKIT_URL || 'https://use.typekit.net/njw0ocx.css';
 
@@ -49,6 +54,9 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body>
+        {/* Λωρίδα ανακοίνωσης — πάνω από τη μπάρα πλοήγησης, μόνο για το
+            τρέχον Forum (πεδίο «Μήνυμα Κορυφής» στο Strapi). */}
+        <DraftBanner text={draftMessage} />
         <Header settings={settings} archive={archive} />
         <main>{children}</main>
         <Footer settings={settings} />
