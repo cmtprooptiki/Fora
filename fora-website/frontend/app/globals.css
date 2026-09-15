@@ -969,6 +969,10 @@ main { min-height: 40vh; }
   .hero__meta {
     width: fit-content; max-width: 100%;
     margin-inline: auto; padding-left: 0; text-align: left;
+    /* Μικρή μετατόπιση ΟΛΟΥ του μπλοκ προς τα δεξιά (ημερομηνία + χώρος μαζί).
+       Με «translate» δεν αλλάζει η διάταξη, μόνο η οπτική θέση — αν θέλετε
+       περισσότερο/λιγότερο, αλλάξτε μόνο αυτόν τον αριθμό. */
+    translate: clamp(20px, 3.5vw, 64px);
   }
 }
 .hero__date { font-weight: 400; font-size: clamp(1.05rem, 1.5vw, 27px); color: #fff; margin: 0 0 10px; }
