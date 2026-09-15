@@ -961,7 +961,15 @@ main { min-height: 40vh; }
     max-width: 20em;
     text-wrap: balance;
   }
-  .hero__meta { width: 100%; padding-left: 0; text-align: center; }
+  /* Ημερομηνία + χώρος: το ΜΠΛΟΚ μένει κεντραρισμένο στη δεξιά στήλη, αλλά το
+     κείμενο μέσα του στοιχίζεται ΑΡΙΣΤΕΡΑ. Έτσι η «5 Νοεμβρίου 2026» ξεκινά
+     από το ίδιο σημείο με τις γραμμές του χώρου από κάτω.
+     (Με width:100% + text-align:center κάθε γραμμή κεντραριζόταν χωριστά, γι'
+     αυτό η πιο κοντή ημερομηνία «έπεφτε» πιο μέσα.) */
+  .hero__meta {
+    width: fit-content; max-width: 100%;
+    margin-inline: auto; padding-left: 0; text-align: left;
+  }
 }
 .hero__date { font-weight: 400; font-size: clamp(1.05rem, 1.5vw, 27px); color: #fff; margin: 0 0 10px; }
 .hero__place { margin: 0; line-height: 1.6; max-width: 100%; font-size: clamp(1.05rem, 1.5vw, 27px); }
