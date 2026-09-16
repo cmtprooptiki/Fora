@@ -19,9 +19,13 @@
      Οι παρακάτω είναι ουδέτερες, υπάρχουν σχεδόν παντού και ταιριάζουν
      καλύτερα στο υπόλοιπο κείμενο. Αν δεν βρεθεί καμία, ο κανόνας αγνοείται
      και το θ επιστρέφει στη Hagrid — δηλαδή ποτέ κενό. */
+  /* Σειρά προτίμησης: πρώτα Verdana/Tahoma. Είναι πιο ΦΑΡΔΙΕΣ και «στιβαρές»
+     από τη Segoe UI/Arial, άρα το Θ δεν φαίνεται λεπτό και στενό ανάμεσα στα
+     γεωμετρικά κεφαλαία της Hagrid — ιδίως σε κείμενα κανονικού βάρους. */
   src:
+    local("Verdana"), local("Tahoma"), local("DejaVu Sans"),
     local("Segoe UI"), local("Helvetica Neue"), local("Helvetica"),
-    local("Arial"), local("Roboto"), local("Noto Sans"), local("Tahoma");
+    local("Arial"), local("Roboto"), local("Noto Sans");
   unicode-range: U+0398, U+03B8; /* Θ, θ */
   /* Μόνο ως το 500. Αν εδώ γράφαμε «100 900», ο browser θα θεωρούσε ότι αυτή
      η ΚΑΝΟΝΙΚΗ γραμματοσειρά καλύπτει και τα έντονα βάρη, οπότε το θ θα έμενε
@@ -38,13 +42,15 @@
 @font-face {
   font-family: "GreekThetaFix";
   src:
+    local("Verdana Bold"), local("Verdana-Bold"),
+    local("Tahoma Bold"), local("Tahoma-Bold"),
     local("Segoe UI Bold"), local("SegoeUI-Bold"),
     local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"),
     local("Helvetica Bold"), local("Helvetica-Bold"),
     local("Arial Bold"), local("Arial-BoldMT"), local("Arial Black"),
     local("Roboto Bold"), local("Roboto-Bold"),
-    local("Noto Sans Bold"), local("NotoSans-Bold"), local("Tahoma Bold"),
-    local("Segoe UI"), local("Helvetica"), local("Arial");
+    local("Noto Sans Bold"), local("NotoSans-Bold"),
+    local("Verdana"), local("Tahoma"), local("Arial");
   unicode-range: U+0398, U+03B8; /* Θ, θ */
   font-weight: 600 900;
   font-style: normal;
