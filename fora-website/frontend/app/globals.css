@@ -430,6 +430,115 @@ main { min-height: 40vh; }
 .grid { display: grid; gap: 24px; }
 
 /* ==========================================================================
+   ΑΝΑΔΥΟΜΕΝΟ ΠΑΡΑΘΥΡΟ ΑΝΤΙΣΤΡΟΦΗΣ ΜΕΤΡΗΣΗΣ (Figma «popup-countdown»)
+   Κάρτα 640px: λευκό επάνω μέρος + μπλε ζώνη με το κουμπί στο κάτω.
+   ========================================================================== */
+.cdp-overlay {
+  position: fixed; inset: 0; z-index: 1400;
+  background: rgba(10, 20, 35, 0.62);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; overflow-y: auto;
+  animation: cdp-fade 0.18s ease;
+}
+@keyframes cdp-fade { from { opacity: 0; } to { opacity: 1; } }
+.cdp {
+  position: relative; width: 100%; max-width: 640px;
+  background: #fff; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 24px 60px rgba(16, 24, 40, 0.35);
+  animation: cdp-in 0.24s ease both;
+}
+@keyframes cdp-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.cdp__close {
+  position: absolute; top: 24px; right: 24px; z-index: 2;
+  width: 24px; height: 24px; padding: 0;
+  background: none; border: 0; cursor: pointer; color: #6b7280;
+}
+.cdp__close svg { width: 24px; height: 24px; display: block; }
+.cdp__close:hover { color: var(--fora-black); }
+
+.cdp__body { padding: 72px 32px 0; }
+.cdp__title {
+  margin: 0; text-align: center; color: var(--fora-blue);
+  font-family: var(--font-heading); font-weight: 400;
+  font-size: 40px; line-height: 1.45;
+}
+.cdp__title strong { font-weight: 700; }
+
+/* Μπλε ταμπέλα «Οι εγγραφές είναι ανοιχτές.» */
+.cdp__pill {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  margin: 24px 0 0; height: 48px; border-radius: 8px;
+  background: linear-gradient(90deg, #2874af 0%, #0d4f9f 100%);
+  color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 16px;
+}
+.cdp__pill svg { width: 20px; height: 20px; flex: 0 0 auto; }
+
+.cdp__sub {
+  margin: 24px 0 0; text-align: center; color: var(--fora-text);
+  font-family: var(--font-body); font-size: 16px; line-height: 24px;
+}
+
+/* Τέσσερα κουτάκια 132×93 με κενό 16px */
+.cdp__timer {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  margin-top: 40px;
+}
+.cdp__box {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; min-height: 93px; padding: 12px 6px;
+  background: #fafbfc; border: 1px solid var(--fora-border); border-radius: 8px;
+}
+.cdp__num {
+  font-family: var(--font-heading); font-weight: 700; font-size: 36px; line-height: 1;
+  color: var(--fora-blue);
+}
+.cdp__label {
+  font-family: var(--font-body); font-weight: 700; font-size: 11px; line-height: 1;
+  letter-spacing: 0.04em; color: var(--fora-text-soft); text-align: center;
+}
+
+.cdp__details {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 40px 0 0; padding: 16px 0 0;
+  border-top: 1px solid var(--fora-border);
+  color: var(--fora-blue);
+  font-family: var(--font-body); font-size: 15px; line-height: 20px; text-align: center;
+}
+.cdp__details svg { width: 16px; height: 16px; flex: 0 0 auto; }
+
+/* Μπλε ζώνη με το λευκό κουμπί */
+.cdp__actions {
+  margin-top: 32px; padding: 40px 32px;
+  background: linear-gradient(90deg, #2874af 0%, #0d4f9f 100%);
+}
+.cdp__cta {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  min-height: 88px; padding: 24px; border-radius: 8px;
+  background: #fff; color: #231f20; text-decoration: none;
+  font-family: var(--font-heading); font-weight: 400; font-size: 20px;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.cdp__cta:hover { background: #eef3fb; color: #231f20; transform: translateY(-1px); }
+
+@media (max-width: 600px) {
+  .cdp-overlay { padding: 12px; align-items: flex-start; }
+  .cdp__body { padding: 60px 20px 0; }
+  .cdp__title { font-size: 26px; line-height: 1.3; }
+  .cdp__pill { height: auto; padding: 12px 14px; font-size: 14px; gap: 8px; }
+  .cdp__sub { font-size: 14px; line-height: 21px; margin-top: 18px; }
+  .cdp__timer { gap: 8px; margin-top: 28px; }
+  .cdp__box { min-height: 74px; padding: 10px 4px; }
+  .cdp__num { font-size: 26px; }
+  .cdp__label { font-size: 9px; letter-spacing: 0.02em; }
+  .cdp__details { margin-top: 24px; font-size: 13px; flex-wrap: wrap; }
+  .cdp__actions { margin-top: 24px; padding: 20px; }
+  .cdp__cta { min-height: 64px; padding: 18px; font-size: 17px; }
+}
+
+/* ==========================================================================
    ΣΕΛΙΔΑ ΕΓΓΡΑΦΗΣ NEWSLETTER (Figma «newsletter-form»)
    Μπλε φόντο, ημιδιάφανη κάρτα 720px στο κέντρο, φόρμα Mailchimp.
    ========================================================================== */

@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import AccessibilityWidget from '../components/AccessibilityWidget';
 import CookieConsent from '../components/CookieConsent';
 import DraftBanner from '../components/DraftBanner';
+import CountdownPopup from '../components/CountdownPopup';
 import { getSiteSettings, getAllForums } from '../lib/strapi';
 
 // Κωδικός Google Analytics (GA4). Δεν είναι μυστικό — φαίνεται ούτως ή άλλως
@@ -75,6 +76,16 @@ export default async function RootLayout({ children }) {
         {/* Μπάρα cookies (κάτω αριστερά). Φορτώνει το Google Analytics ΜΟΝΟ
             αφού ο επισκέπτης συναινέσει — γι' αυτό ο κωδικός GA δίνεται εδώ. */}
         <CookieConsent gaId={GA_ID} />
+
+        {/* Αντίστροφη μέτρηση για τη διοργάνωση. Εμφανίζεται μία φορά ανά
+            επίσκεψη και μόνο εφόσον η ημερομηνία έναρξης δεν έχει περάσει. */}
+        <CountdownPopup
+          arithmos={current?.arithmos}
+          targetIso={current?.imerominiaEnarksis || null}
+          imerominia={current?.imerominia}
+          xoros={current?.xoros}
+          registerHref={registerHref}
+        />
       </body>
     </html>
   );
