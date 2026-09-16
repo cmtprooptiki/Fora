@@ -33,8 +33,16 @@ export default async function RootLayout({ children }) {
     .sort((a, b) => (b.etos || 0) - (a.etos || 0));
   // Μήνυμα λωρίδας κορυφής: διαβάζεται από το ΤΡΕΧΟΝ Forum. Κενό πεδίο = καμία
   // λωρίδα, οπότε κλείνει από το Strapi χωρίς νέα έκδοση του ιστότοπου.
-  const draftMessage =
-    forums.find((f) => f.trexonForum)?.mynimaKorifis?.trim() || null;
+  const current = forums.find((f) => f.trexonForum) || null;
+  const draftMessage = current?.mynimaKorifis?.trim() || null;
+  // Σύνδεσμος του κουμπιού «Εγγραφείτε τώρα» στη μπάρα πλοήγησης.
+  // Διαβάζεται από το πεδίο «Σύνδεσμος Εγγραφής» (syndesmoEggrafis) του
+  // τρέχοντος Forum — το ίδιο που χρησιμοποιεί και το κουμπί «Εγγραφή» στην
+  // κεφαλίδα. Αν κάποτε μείνει κενό, κρατάμε τον σύνδεσμο του 2026 ως εφεδρεία
+  // ώστε το κουμπί να μη «σπάσει».
+  const registerHref =
+    current?.syndesmoEggrafis?.trim() ||
+    'https://projector-web.gr/cmt-prooptiki/gr/5rd-hybrid-forum-fora-2026/registration';
   const typekit =
     process.env.NEXT_PUBLIC_TYPEKIT_URL || 'https://use.typekit.net/njw0ocx.css';
 
@@ -57,7 +65,7 @@ export default async function RootLayout({ children }) {
         {/* Λωρίδα ανακοίνωσης — πάνω από τη μπάρα πλοήγησης, μόνο για το
             τρέχον Forum (πεδίο «Μήνυμα Κορυφής» στο Strapi). */}
         <DraftBanner text={draftMessage} />
-        <Header settings={settings} archive={archive} />
+        <Header settings={settings} archive={archive} registerHref={registerHref} />
         <main>{children}</main>
         <Footer settings={settings} />
 

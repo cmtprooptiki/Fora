@@ -614,7 +614,9 @@ body:has(.draft-banner) .site-header { top: 80px; }
 .site-header.is-scrolled .site-nav > a:not(.site-nav__cta) { color: var(--fora-text); }
 .site-header.is-scrolled .site-nav > a:not(.site-nav__cta):hover { color: var(--fora-blue); }
 /* Κουμπί «Επικοινωνία»: λευκό με μπλε κείμενο πάνω στο hero· στο scroll γίνεται μπλε */
-.site-nav__cta { padding: 10px 24px; }
+/* Το κείμενο του κουμπιού αλλάζει («Επικοινωνία» / «Εγγραφείτε τώρα»),
+   οπότε δεν πρέπει να σπάει σε δύο γραμμές στα ενδιάμεσα πλάτη. */
+.site-nav__cta { padding: 10px 24px; white-space: nowrap; }
 .site-header.is-scrolled .site-nav__cta { background: var(--fora-blue); color: #fff; }
 .site-header.is-scrolled .site-nav__cta:hover { background: var(--fora-blue-dark); color: #fff; }
 

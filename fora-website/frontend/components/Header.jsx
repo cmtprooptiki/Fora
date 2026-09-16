@@ -9,7 +9,7 @@ function mediaUrl(url) {
   return url.startsWith('http') ? url : `${STRAPI_URL}${url}`;
 }
 
-export default function Header({ settings, archive = [] }) {
+export default function Header({ settings, archive = [], registerHref }) {
   const logo = settings?.logotypo?.url ? mediaUrl(settings.logotypo.url) : null;
   const [scrolled, setScrolled] = useState(false);
   // Σε κινητά/tablet: το «Σχετικά με τα Forum» ανοίγει/κλείνει με κλικ.
@@ -26,6 +26,17 @@ export default function Header({ settings, archive = [] }) {
   const pathname = usePathname() || '/';
   const forumPath = pathname.match(/^\/forum\/[^/]+/);
   const base = forumPath ? `${forumPath[0]}/` : '/';
+
+  // Κουμπί της μπάρας: στη σελίδα του ΤΡΕΧΟΝΤΟΣ Forum (αρχική) δείχνει
+  // «Εγγραφείτε τώρα» και οδηγεί στη φόρμα εγγραφής της διοργάνωσης.
+  // Σε κάθε άλλη σελίδα μένει «Επικοινωνία», όπως ήταν.
+  const showRegister = pathname === '/' && !!registerHref;
+  const cta = showRegister
+    ? { href: registerHref, label: 'Εγγραφείτε τώρα', external: true }
+    : { href: `${base}#epikoinonia`, label: 'Επικοινωνία', external: false };
+  const ctaLinkProps = cta.external
+    ? { target: '_blank', rel: 'noopener noreferrer' }
+    : {};
   const email = settings?.emailEpikoinonias;
   const emailEtaireias = settings?.emailEtaireias;
   const facebook = settings?.facebookUrl;
@@ -108,8 +119,8 @@ export default function Header({ settings, archive = [] }) {
           {/* Μόνο σε κινητά/tablet: μπλε μπλοκ με λευκό κουμπί «Επικοινωνία»
               (στον υπολογιστή εμφανίζεται ως κουμπί δεξιά στη μπάρα). */}
           <div className="site-nav__ctawrap">
-            <a href={`${base}#epikoinonia`} className="btn btn--white site-nav__cta-m">
-              Επικοινωνία
+            <a href={cta.href} className="btn btn--white site-nav__cta-m" {...ctaLinkProps}>
+              {cta.label}
             </a>
           </div>
 
@@ -171,8 +182,8 @@ export default function Header({ settings, archive = [] }) {
 
         {/* Το CTA είναι ξεχωριστό ώστε το μενού να «απλώνεται» ανάμεσα
             στο λογότυπο (αριστερά) και στο κουμπί (δεξιά) — όπως στο σχέδιο. */}
-        <a href={`${base}#epikoinonia`} className="btn btn--white site-nav__cta">
-          Επικοινωνία
+        <a href={cta.href} className="btn btn--white site-nav__cta" {...ctaLinkProps}>
+          {cta.label}
         </a>
       </div>
     </header>
