@@ -698,9 +698,16 @@ body:has(.draft-banner) .site-header { top: 80px; }
    ========================================================================== */
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  /* Εφέ «γυαλιού» ΚΑΙ στην κορυφή της σελίδας. Εδώ η μπάρα βρίσκεται πάνω στη
+     μπλε κεφαλίδα και τα γράμματα είναι ΛΕΥΚΑ, γι' αυτό το πέπλο είναι μόλις
+     10% λευκό: αρκετό για να φανεί το θόλωμα, αλλά το φόντο μένει σκούρο και
+     το κείμενο ευανάγνωστο. (Ανοιχτό γυαλί εδώ θα «έσβηνε» τα λευκά γράμματα.) */
+  background: rgba(255, 255, 255, 0.10);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease,
+              border-color 0.25s ease, backdrop-filter 0.25s ease;
 }
 /* Στο scroll: εφέ «γυαλιού» (ημιδιάφανο + θόλωμα του περιεχομένου από κάτω)
    αντί για συμπαγές λευκό. Κρατάμε ανοιχτό τόνο, ώστε τα σκούρα γράμματα να
