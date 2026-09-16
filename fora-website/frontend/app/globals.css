@@ -445,12 +445,6 @@ main { min-height: 40vh; }
   border-radius: 16px;
   padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 48px) clamp(32px, 4vw, 48px);
 }
-.nlp__logo {
-  display: block; width: 268px; max-width: 70%; height: auto;
-  margin: 0 auto clamp(36px, 5vw, 68px);
-  /* Το λογότυπο του Strapi είναι μπλε — εδώ χρειάζεται λευκό */
-  filter: brightness(0) invert(1);
-}
 .nlp__form { display: flex; flex-direction: column; gap: 28px; }
 .nlp__title {
   margin: 0; text-align: center; color: #fafafa;

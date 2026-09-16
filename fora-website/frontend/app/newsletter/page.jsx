@@ -1,6 +1,3 @@
-import { getSiteSettings } from '../../lib/strapi';
-import { mediaUrl } from '../../lib/strapi';
-
 export const metadata = {
   title: 'Εγγραφή στο Newsletter | FORA',
   description:
@@ -17,17 +14,11 @@ const MAILCHIMP_ACTION =
 // Το όνομά του είναι συγκεκριμένο για τη λίστα και ΔΕΝ πρέπει να αλλάξει.
 const HONEYPOT = 'b_b51df3af774349fd3c01f5069_0f59b3d064';
 
-export default async function NewsletterPage() {
-  const settings = await getSiteSettings();
-  const logo = settings?.logotypo?.url ? mediaUrl(settings.logotypo.url) : null;
-
+export default function NewsletterPage() {
   return (
     <section className="nlp">
       <div className="nlp__card">
-        {logo && (
-          <img className="nlp__logo" src={logo} alt="FORA – Innovating Healthcare Management" />
-        )}
-
+        {/* Το λογότυπο δεν επαναλαμβάνεται εδώ — υπάρχει ήδη στη μπάρα πλοήγησης. */}
         <form
           className="nlp__form"
           action={MAILCHIMP_ACTION}
