@@ -109,6 +109,9 @@
     "mynimaKorifis": {
       "type": "string"
     },
+    "xorosSyntomos": {
+      "type": "string"
+    },
     "syndesmoEggrafis": {
       "type": "string"
     },

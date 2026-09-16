@@ -78,12 +78,14 @@ export default async function RootLayout({ children }) {
         <CookieConsent gaId={GA_ID} />
 
         {/* Αντίστροφη μέτρηση για τη διοργάνωση. Εμφανίζεται μία φορά ανά
-            επίσκεψη και μόνο εφόσον η ημερομηνία έναρξης δεν έχει περάσει. */}
+            επίσκεψη και μόνο εφόσον η ημερομηνία έναρξης δεν έχει περάσει.
+            Στο «xoros» δίνεται η ΣΥΝΤΟΜΗ μορφή του χώρου, γιατί στο popup δεν
+            χωράει η πλήρης διεύθυνση με αίθουσα και ώρες. */}
         <CountdownPopup
           arithmos={current?.arithmos}
           targetIso={current?.imerominiaEnarksis || null}
           imerominia={current?.imerominia}
-          xoros={current?.xoros}
+          xoros={current?.xorosSyntomos?.trim() || current?.xoros}
           registerHref={registerHref}
         />
       </body>
