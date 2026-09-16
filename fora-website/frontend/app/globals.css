@@ -960,14 +960,15 @@ body:has(.draft-banner) .site-header { top: 80px; }
 .cta__title {
   margin: 0; font-family: var(--font-heading); font-weight: 700;
   text-transform: uppercase; color: #000;
-  font-size: clamp(2.2rem, 6.25vw, 120px); line-height: 1.1;
+  /* Μικρότερο από το σχέδιο (120px): 90px στα 1920. */
+  font-size: clamp(1.9rem, 4.7vw, 90px); line-height: 1.1;
 }
 /* Η παράγραφος ξεκινά περίπου στο 23% του πλάτους (400px στα 1920) και
    πιάνει έως 688px — έτσι «πέφτει» προς τα δεξιά, όπως στο σχέδιο. */
 .cta__desc {
   margin: 0 0 0 23.2%; max-width: 688px;
   color: #231f20; font-family: var(--font-body); font-weight: 400;
-  font-size: clamp(1rem, 2.19vw, 42px); line-height: 1.2;
+  font-size: clamp(0.95rem, 1.65vw, 32px); line-height: 1.3;
 }
 .cta__buttons {
   display: flex; flex-wrap: wrap; justify-content: flex-end;
@@ -977,7 +978,7 @@ body:has(.draft-banner) .site-header { top: 80px; }
   width: 362px; max-width: 100%; justify-content: center;
   gap: 16px; padding: 12px 24px; border-radius: 8px; border-width: 1px;
   font-family: var(--font-heading); font-weight: 400;
-  font-size: clamp(1rem, 1.67vw, 32px);
+  font-size: clamp(0.95rem, 1.25vw, 24px);
 }
 .cta__buttons .btn--outline { border-color: #231f20; color: #231f20; }
 
