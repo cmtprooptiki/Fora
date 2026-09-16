@@ -702,11 +702,21 @@ body:has(.draft-banner) .site-header { top: 80px; }
   border-bottom: 1px solid transparent;
   transition: background-color 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-/* Στο scroll: λευκό φόντο, μαύρα γράμματα */
+/* Στο scroll: εφέ «γυαλιού» (ημιδιάφανο + θόλωμα του περιεχομένου από κάτω)
+   αντί για συμπαγές λευκό. Κρατάμε ανοιχτό τόνο, ώστε τα σκούρα γράμματα να
+   παραμένουν ευανάγνωστα και πάνω από τη μπλε κεφαλίδα και πάνω από τις
+   λευκές ενότητες. */
 .site-header.is-scrolled {
-  background: #fff;
-  border-bottom-color: var(--fora-border);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  border-bottom-color: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 2px 16px rgba(16, 24, 40, 0.10);
+}
+/* Αν ο browser δεν υποστηρίζει θόλωμα, ανεβάζουμε τη διαφάνεια ώστε να μη
+   «διαβάζεται» το περιεχόμενο μέσα από τη μπάρα. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header.is-scrolled { background: rgba(255, 255, 255, 0.96); }
 }
 .site-header__inner {
   display: flex; align-items: center; justify-content: space-between;
