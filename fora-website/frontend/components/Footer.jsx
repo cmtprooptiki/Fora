@@ -43,7 +43,7 @@ export default function Footer({ settings }) {
             <span className="foot__label">Χρήσιμα Links</span>
             <nav className="foot__nav">
               <a href="/#analytiko-programma">Ατζέντα</a>
-              <a href="/#eggrafi">Εγγραφή</a>
+              <a href="/newsletter/">Εγγραφή</a>
               <a href="/#newsletter">Νέα &amp; Ανακοινώσεις</a>
               <a href="/istoriko/">Σχετικά με το Forum</a>
             </nav>
