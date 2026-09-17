@@ -10,7 +10,8 @@
     "strapi": "strapi",
     "seed": "node scripts/seed.js",
     "update-bios": "node scripts/update-bios.js",
-    "export-content": "node scripts/export-content.js"
+    "export-content": "node scripts/export-content.js",
+    "seed-news": "node scripts/seed-news.js"
   },
   "dependencies": {
     "@strapi/plugin-color-picker": "^5.11.3",
