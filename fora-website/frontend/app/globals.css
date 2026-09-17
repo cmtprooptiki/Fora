@@ -436,6 +436,144 @@ main { min-height: 40vh; }
 .grid { display: grid; gap: 24px; }
 
 /* ==========================================================================
+   ΣΕΛΙΔΑ «ΝΕΑ & ΑΝΑΚΟΙΝΩΣΕΙΣ» (Figma «news-desktop»)
+   ========================================================================== */
+/* Κεφαλίδα σελίδας — μπλε, κάτω από τη (fixed) μπάρα πλοήγησης */
+.nws-hero {
+  background: linear-gradient(135deg, var(--fora-hero-from), var(--fora-hero-to));
+  color: #fff;
+}
+.nws-hero__inner { padding-block: calc(96px + 88px) 96px; }
+.nws-crumbs {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-family: var(--font-body); font-size: 16px; color: #fff;
+}
+.nws-crumbs a { color: rgba(255, 255, 255, 0.85); }
+.nws-crumbs a:hover { color: #fff; }
+.nws-crumbs__current { font-weight: 600; }
+.nws-hero__title {
+  margin: 32px 0 0; color: #fff;
+  font-family: var(--font-heading); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(2rem, 3.4vw, 64px); line-height: 1.15;
+}
+.nws-hero__title--article { text-transform: none; font-size: clamp(1.7rem, 2.6vw, 48px); }
+.nws-hero__sub {
+  margin: 24px 0 0; max-width: 502px;
+  font-family: var(--font-body); font-size: clamp(1rem, 1.3vw, 24px); line-height: 1.4;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* --- Κοινά: ημερομηνία + ετικέτα κατηγορίας --- */
+.nws-meta {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%;
+}
+.nws-meta__date {
+  font-family: var(--font-body); font-size: 14px; color: #737373; white-space: nowrap;
+}
+.nws-tag {
+  flex: 0 0 auto; padding: 4px 12px; border-radius: 6px;
+  background: #e0f2fe; color: var(--fora-blue);
+  font-family: var(--font-body); font-weight: 700; font-size: 12px; white-space: nowrap;
+}
+.nws-tag--solid {
+  padding: 6px 16px; background: var(--fora-blue); color: #fff; font-size: 11px;
+}
+
+/* --- Προβεβλημένο άρθρο: εικόνα 800px αριστερά, κείμενο δεξιά --- */
+.nws-feat {
+  display: flex; align-items: center; gap: 48px;
+  margin-top: clamp(28px, 4vw, 56px);
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden;
+}
+.nws-feat__img {
+  flex: 0 0 auto; width: 800px; max-width: 46%; height: 480px; object-fit: cover;
+}
+.nws-feat__body {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 24px;
+  padding: 48px;
+}
+.nws-feat .nws-meta__date { font-size: 16px; }
+.nws-feat__title {
+  margin: 0; color: #231f20;
+  font-family: var(--font-heading); font-weight: 700;
+  font-size: clamp(1.4rem, 1.9vw, 36px); line-height: 1.25;
+}
+.nws-feat__sum {
+  margin: 0; color: #737373;
+  font-family: var(--font-body); font-size: clamp(1rem, 1.25vw, 24px); line-height: 1.4;
+}
+.nws-feat__action { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.nws-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 32px; border-radius: 8px;
+  background: var(--fora-blue); color: #fff;
+  font-family: var(--font-heading); font-weight: 700; font-size: 18px;
+  transition: background 0.18s ease;
+}
+.nws-btn:hover { background: var(--fora-blue-dark); color: #fff; }
+.nws-feat__time { font-family: var(--font-body); font-size: 16px; color: #737373; }
+
+/* --- Πλέγμα άρθρων: 3 στήλες, κενό 40px --- */
+.nws-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+  margin-top: clamp(28px, 4vw, 56px);
+}
+.nws-card {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.nws-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.nws-card__link { display: block; color: inherit; }
+.nws-card__img { width: 100%; height: 240px; object-fit: cover; display: block; }
+.nws-card__img--empty { background: var(--fora-section-tint); }
+.nws-card__body {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+  padding: 24px;
+}
+.nws-card__title {
+  margin: 0; color: #231f20;
+  font-family: var(--font-heading); font-weight: 700; font-size: 22px; line-height: 1.25;
+}
+.nws-card__sum {
+  margin: 0; color: #737373;
+  font-family: var(--font-body); font-size: 15px; line-height: 22px;
+}
+.nws-card__more {
+  display: inline-flex; align-items: center; gap: 8px; color: var(--fora-blue);
+  font-family: var(--font-heading); font-weight: 700; font-size: 14px;
+}
+.nws-card__more svg { width: 14px; height: 14px; }
+
+/* Η σελιδοποίηση κεντράρεται κάτω από το πλέγμα */
+.nws-all .pager { justify-content: center; margin-top: clamp(32px, 4vw, 56px); }
+
+/* --- Σελίδα άρθρου --- */
+.nws-article { max-width: 860px; }
+.nws-article__img { width: 100%; border-radius: 12px; margin-bottom: 32px; }
+.nws-article__body { color: var(--fora-text); font-size: 18px; line-height: 1.75; }
+.nws-article__back { margin-top: 40px; font-weight: 700; }
+
+@media (max-width: 1024px) {
+  .nws-feat { flex-direction: column; align-items: stretch; gap: 0; }
+  .nws-feat__img { width: 100%; max-width: none; height: clamp(220px, 34vw, 360px); }
+  .nws-feat__body { padding: 32px; gap: 18px; }
+  .nws-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+}
+@media (max-width: 700px) {
+  .nws-hero__inner { padding-block: calc(56px + 88px) 56px; }
+  .nws-hero__title { margin-top: 20px; }
+  .nws-hero__sub { margin-top: 14px; font-size: 15px; }
+  .nws-grid { grid-template-columns: 1fr; gap: 24px; }
+  .nws-feat__body { padding: 22px; }
+  .nws-feat__title { font-size: 20px; }
+  .nws-feat__sum { font-size: 15px; }
+  .nws-btn { padding: 12px 22px; font-size: 16px; }
+  .nws-article__body { font-size: 16px; }
+}
+
+/* ==========================================================================
    ΑΝΑΔΥΟΜΕΝΟ ΠΑΡΑΘΥΡΟ ΑΝΤΙΣΤΡΟΦΗΣ ΜΕΤΡΗΣΗΣ (Figma «popup-countdown»)
    Κάρτα 640px: λευκό επάνω μέρος + μπλε ζώνη με το κουμπί στο κάτω.
    ========================================================================== */

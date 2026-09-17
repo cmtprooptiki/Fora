@@ -44,7 +44,7 @@ export default function Footer({ settings }) {
             <nav className="foot__nav">
               <a href="/#analytiko-programma">Ατζέντα</a>
               <a href="/newsletter/">Εγγραφή</a>
-              <a href="/#newsletter">Νέα &amp; Ανακοινώσεις</a>
+              <a href="/news/">Νέα &amp; Ανακοινώσεις</a>
               <a href="/istoriko/">Σχετικά με το Forum</a>
             </nav>
           </div>

@@ -100,6 +100,31 @@ export async function getForumBySlug(slug) {
   return forums.find((f) => f.slug === slug) || null;
 }
 
+/**
+ * Επιστρέφει τα άρθρα («Νέα & Ανακοινώσεις»), από το νεότερο στο παλαιότερο.
+ * Αν δεν υπάρχει ακόμη περιεχόμενο (ή το Strapi δεν απαντά) επιστρέφει κενή
+ * λίστα, ώστε η σελίδα να μη «σπάει».
+ */
+export async function getArticles() {
+  try {
+    const json = await fetchAPI('arthra', {
+      populate: { eikona: true },
+      sort: ['imerominia:desc'],
+      pagination: { pageSize: 100 },
+    });
+    return json.data || [];
+  } catch (err) {
+    console.warn(`[FORA] Δεν ήταν δυνατή η ανάγνωση των άρθρων: ${err.message}`);
+    return [];
+  }
+}
+
+/** Επιστρέφει ένα άρθρο με βάση το slug του. */
+export async function getArticleBySlug(slug) {
+  const all = await getArticles();
+  return all.find((a) => a.slug === slug) || null;
+}
+
 /** Επιστρέφει τις γενικές ρυθμίσεις του ιστότοπου (λογότυπο, επικοινωνία κ.λπ.). */
 export async function getSiteSettings() {
   try {

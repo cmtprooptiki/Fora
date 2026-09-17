@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "arthra",
+  "info": {
+    "singularName": "arthro",
+    "pluralName": "arthra",
+    "displayName": "Άρθρα (Νέα & Ανακοινώσεις)",
+    "description": "Νέα και ανακοινώσεις που εμφανίζονται στη σελίδα «Νέα & Ανακοινώσεις»."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "titlos": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "titlos",
+      "required": true
+    },
+    "imerominia": {
+      "type": "date",
+      "required": true
+    },
+    "katigoria": {
+      "type": "enumeration",
+      "enum": [
+        "Νέα",
+        "Ανακοίνωση"
+      ],
+      "default": "Νέα",
+      "required": true
+    },
+    "perilipsi": {
+      "type": "text"
+    },
+    "eikona": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "xronosAnagnosis": {
+      "type": "integer"
+    },
+    "keimeno": {
+      "type": "richtext"
+    },
+    "proveblimeno": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
