@@ -698,32 +698,20 @@ body:has(.draft-banner) .site-header { top: 80px; }
    ========================================================================== */
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  /* Εφέ «γυαλιού» ΚΑΙ στην κορυφή της σελίδας. Εδώ η μπάρα βρίσκεται πάνω στη
-     μπλε κεφαλίδα και τα γράμματα είναι ΛΕΥΚΑ, γι' αυτό το πέπλο είναι μόλις
-     10% λευκό: αρκετό για να φανεί το θόλωμα, αλλά το φόντο μένει σκούρο και
-     το κείμενο ευανάγνωστο. (Ανοιχτό γυαλί εδώ θα «έσβηνε» τα λευκά γράμματα.) */
-  background: rgba(255, 255, 255, 0.10);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
+  /* ΙΔΙΟ φόντο με τη λωρίδα ανακοίνωσης από πάνω (.draft-banner): μπλε
+     διαβάθμιση της μάρκας με πέπλο 10% λευκό. Ισχύει ΠΑΝΤΑ — και στην κορυφή
+     και μετά το scroll — ώστε η μπάρα να μοιάζει ενιαία με τη λωρίδα.
+     Επειδή το φόντο μένει σκούρο, τα γράμματα παραμένουν ΛΕΥΚΑ σε κάθε
+     κατάσταση (δεν γίνονται πλέον σκούρα στο scroll). */
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.1), rgba(250, 250, 250, 0.1)),
+    linear-gradient(90deg, #2874af 0%, #0d4f9f 100%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-  transition: background-color 0.25s ease, box-shadow 0.25s ease,
-              border-color 0.25s ease, backdrop-filter 0.25s ease;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
 }
-/* Στο scroll: εφέ «γυαλιού» (ημιδιάφανο + θόλωμα του περιεχομένου από κάτω)
-   αντί για συμπαγές λευκό. Κρατάμε ανοιχτό τόνο, ώστε τα σκούρα γράμματα να
-   παραμένουν ευανάγνωστα και πάνω από τη μπλε κεφαλίδα και πάνω από τις
-   λευκές ενότητες. */
+/* Στο scroll αλλάζει μόνο η σκιά — το χρώμα μένει ίδιο. */
 .site-header.is-scrolled {
-  background: rgba(255, 255, 255, 0.72);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  backdrop-filter: blur(16px) saturate(160%);
-  border-bottom-color: rgba(255, 255, 255, 0.45);
-  box-shadow: 0 2px 16px rgba(16, 24, 40, 0.10);
-}
-/* Αν ο browser δεν υποστηρίζει θόλωμα, ανεβάζουμε τη διαφάνεια ώστε να μη
-   «διαβάζεται» το περιεχόμενο μέσα από τη μπάρα. */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .site-header.is-scrolled { background: rgba(255, 255, 255, 0.96); }
+  box-shadow: 0 2px 16px rgba(16, 24, 40, 0.18);
 }
 .site-header__inner {
   display: flex; align-items: center; justify-content: space-between;
@@ -734,23 +722,18 @@ body:has(.draft-banner) .site-header { top: 80px; }
   filter: brightness(0) invert(1); /* λευκό λογότυπο πάνω στο hero */
   transition: filter 0.25s ease;
 }
-.site-header.is-scrolled .site-header__logo img { filter: none; }
+/* Το λογότυπο μένει λευκό και μετά το scroll — η μπάρα είναι πάντα μπλε. */
 .site-header__wordmark { font-family: var(--font-heading); font-weight: 800; font-size: 1.6rem; color: #fff; }
-.site-header.is-scrolled .site-header__wordmark { color: var(--fora-blue); }
 /* Το μενού «απλώνεται» ανάμεσα στο λογότυπο και στο κουμπί Επικοινωνία */
 .site-nav { display: flex; align-items: center; gap: clamp(24px, 4.6vw, 88px); margin-inline: auto; }
 .site-nav a { font-weight: 600; font-size: 0.98rem; }
 /* Μόνο τα κύρια στοιχεία μενού (άμεσα παιδιά) — ΟΧΙ τα στοιχεία του υπομενού */
 .site-nav > a:not(.site-nav__cta) { color: #fff; }
 .site-nav > a:not(.site-nav__cta):hover { color: #d6e6f8; }
-.site-header.is-scrolled .site-nav > a:not(.site-nav__cta) { color: var(--fora-text); }
-.site-header.is-scrolled .site-nav > a:not(.site-nav__cta):hover { color: var(--fora-blue); }
 /* Κουμπί «Επικοινωνία»: λευκό με μπλε κείμενο πάνω στο hero· στο scroll γίνεται μπλε */
 /* Το κείμενο του κουμπιού αλλάζει («Επικοινωνία» / «Εγγραφείτε τώρα»),
    οπότε δεν πρέπει να σπάει σε δύο γραμμές στα ενδιάμεσα πλάτη. */
 .site-nav__cta { padding: 10px 24px; white-space: nowrap; }
-.site-header.is-scrolled .site-nav__cta { background: var(--fora-blue); color: #fff; }
-.site-header.is-scrolled .site-nav__cta:hover { background: var(--fora-blue-dark); color: #fff; }
 
 /* Υπομενού «Προηγούμενα Fora» */
 .nav-dropdown { position: relative; display: inline-flex; }
@@ -760,8 +743,6 @@ body:has(.draft-banner) .site-header { top: 80px; }
   display: inline-flex; align-items: center; gap: 5px;
 }
 .nav-dropdown__toggle:hover { color: #d6e6f8; }
-.site-header.is-scrolled .nav-dropdown__toggle { color: var(--fora-text); }
-.site-header.is-scrolled .nav-dropdown__toggle:hover { color: var(--fora-blue); }
 .nav-dropdown__caret { font-size: 0.7rem; transition: transform 0.15s ease; }
 .nav-dropdown:hover .nav-dropdown__caret,
 .nav-dropdown:focus-within .nav-dropdown__caret { transform: rotate(180deg); }
@@ -809,7 +790,8 @@ body:has(.draft-banner) .site-header { top: 80px; }
     height: 2px; width: 26px; background: #fff; border-radius: 2px;
     transition: transform 0.25s ease, opacity 0.2s ease, background 0.25s ease;
   }
-  .site-header.is-scrolled .nav-burger span { background: #313131; }
+  /* Το εικονίδιο μενού μένει λευκό στο scroll (η μπάρα είναι πάντα μπλε).
+     Σκουραίνει ΜΟΝΟ όταν ανοίξει το μενού, που έχει λευκό πάνελ. */
   .nav-toggle:checked ~ .nav-burger span { background: #313131; }
   .nav-toggle:checked ~ .nav-burger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
   .nav-toggle:checked ~ .nav-burger span:nth-child(2) { opacity: 0; }
