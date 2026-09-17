@@ -1708,7 +1708,15 @@ body:has(.draft-banner) .site-header { top: 80px; }
 /* Το εφέ αποκάλυψης: λέξεις ξεκινούν ανοιχτόχρωμες και γίνονται σκούρες */
 .thematic-row__title span { color: #c6cad0; transition: color 0.3s ease; }
 .thematic-row__title span.is-on { color: #3a3f45; }
-.thematic-row__desc { color: var(--fora-text-soft); margin: 12px 0 0; max-width: 60ch; line-height: 1.6; }
+/* Η περιγραφή κάτω από τον τίτλο (πεδίο «perigrafi» στο Strapi) ΔΕΝ
+   εμφανίζεται: το περιεχόμενό της επαναλαμβάνει την ετικέτα «Ενότητα N» που
+   παράγεται ήδη αυτόματα και φαίνεται δεξιά.
+   Ήταν ήδη κρυφή σε κινητά και tablet (σύμφωνα με το Figma) — τώρα και σε
+   υπολογιστή, δηλαδή παντού. */
+.thematic-row__desc {
+  display: none;
+  color: var(--fora-text-soft); margin: 12px 0 0; max-width: 60ch; line-height: 1.6;
+}
 .thematic-row__label {
   flex: 0 0 auto; color: var(--fora-text-soft);
   font-size: 1rem; font-weight: 600; white-space: nowrap; padding-top: 6px;
