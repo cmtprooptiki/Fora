@@ -11,7 +11,6 @@ export default function Sponsors({ forum }) {
     <section className="section" id="synergates">
       <div className="container">
         <div className="section__head">
-          <span className="section__eyebrow">Συνεργάτες</span>
           <h2>Συνεργάτες του Forum</h2>
           <p className="section__intro">
             Μαζί διαμορφώνουμε το μέλλον της υγείας, με τη στήριξη επιστημονικών
