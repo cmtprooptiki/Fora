@@ -210,6 +210,8 @@ html[data-a11y-contrast='high'] h1,
 html[data-a11y-contrast='high'] h2,
 html[data-a11y-contrast='high'] h3,
 html[data-a11y-contrast='high'] .thematics__head,
+html[data-a11y-contrast='high'] .nws-head,
+html[data-a11y-contrast='high'] .nws-head > span,
 html[data-a11y-contrast='high'] .thematic-row__title span { color: #ff0 !important; }
 html[data-a11y-contrast='high'] a,
 html[data-a11y-contrast='high'] .prog__head-title,
@@ -485,6 +487,19 @@ main { min-height: 40vh; }
   font-family: var(--font-body); font-size: clamp(1rem, 1.3vw, 24px); line-height: 1.21;
   color: rgba(255, 255, 255, 0.92);
 }
+
+/* --- Επικεφαλίδα ενότητας νέων (Figma «Heading» 2464:60) ---
+   Οι δύο λέξεις δίπλα-δίπλα με κενό 24px (όχι στις δύο άκρες όπως αλλού),
+   Hagrid Medium 96px, η πρώτη μαύρη και η δεύτερη στο μπλε της ταυτότητας. */
+.nws-head {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: clamp(10px, 1.25vw, 24px);
+  margin: 0;
+  font-family: var(--font-heading); font-weight: 500; text-transform: uppercase;
+  font-size: clamp(2.25rem, 5vw, 96px); line-height: 1;
+  color: var(--fora-black);
+}
+.nws-head > span:last-child { color: var(--fora-blue); }
 
 /* --- Κοινά: ημερομηνία + ετικέτα κατηγορίας --- */
 .nws-meta {

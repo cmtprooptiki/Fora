@@ -101,10 +101,10 @@ export default async function NewsPage() {
           {featured && (
             <section className="section nws-featured">
               <div className="container">
-                <div className="thematics__head">
+                <h2 className="nws-head">
                   <span>Πρόσφατα</span>
                   <span>Νέα</span>
-                </div>
+                </h2>
 
                 <article className="nws-feat">
                   {featImg && (
