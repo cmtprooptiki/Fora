@@ -37,9 +37,45 @@ export default async function NewsPage() {
       {/* Κεφαλίδα σελίδας */}
       <section className="nws-hero">
         <div className="container nws-hero__inner">
+          {/* Διακοσμητικός κύκλος (Figma «Group», 220×220) — σβήνει προς τα δεξιά */}
+          <span className="nws-hero__arc" aria-hidden="true">
+            <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient
+                  id="foraHeroArc"
+                  x1="0"
+                  y1="110"
+                  x2="220"
+                  y2="110"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop offset="0" stopColor="#ffffff" stopOpacity="0.62" />
+                  <stop offset="0.42" stopColor="#ffffff" stopOpacity="0.16" />
+                  <stop offset="0.78" stopColor="#ffffff" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <circle cx="110" cy="110" r="109" stroke="url(#foraHeroArc)" strokeWidth="2" />
+            </svg>
+          </span>
+
           <nav className="nws-crumbs" aria-label="Διαδρομή">
             <a href="/">Αρχική</a>
-            <span aria-hidden="true">›</span>
+            <svg
+              className="nws-crumbs__sep"
+              width="6"
+              height="10"
+              viewBox="0 0 6 10"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M1 1L5 5L1 9"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
             <span className="nws-crumbs__current">Νέα &amp; Ανακοινώσεις</span>
           </nav>
           <h1 className="nws-hero__title">Νέα &amp; Ανακοινώσεις</h1>

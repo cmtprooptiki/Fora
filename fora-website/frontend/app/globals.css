@@ -440,26 +440,49 @@ main { min-height: 40vh; }
    ========================================================================== */
 /* Κεφαλίδα σελίδας — μπλε, κάτω από τη (fixed) μπάρα πλοήγησης */
 .nws-hero {
+  position: relative;
+  overflow: hidden;              /* ώστε ο διακοσμητικός κύκλος να μη δημιουργεί οριζόντια κύλιση */
   background: linear-gradient(135deg, var(--fora-hero-from), var(--fora-hero-to));
   color: #fff;
 }
-.nws-hero__inner { padding-block: calc(96px + 88px) 96px; }
+.nws-hero__inner { position: relative; padding-block: calc(96px + 88px) 96px; }
+
+/* Διακοσμητικός κύκλος 220×220 (Figma «Group»): κέντρο 49px δεξιά από το
+   αριστερό όριο του container, κατακόρυφα στο κέντρο του περιεχομένου.
+   Το +44px αντισταθμίζει το ασύμμετρο padding λόγω της σταθερής μπάρας (88px/2). */
+.nws-hero__arc {
+  position: absolute;
+  top: calc(50% + 44px);
+  left: calc(clamp(20px, 5vw, 96px) - 61px);
+  width: 220px; height: 220px;
+  translate: 0 -50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.nws-hero__arc svg { display: block; width: 100%; height: 100%; }
+
 .nws-crumbs {
+  position: relative; z-index: 1;
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
   font-family: var(--font-body); font-size: 16px; color: #fff;
 }
 .nws-crumbs a { color: rgba(255, 255, 255, 0.85); }
 .nws-crumbs a:hover { color: #fff; }
+.nws-crumbs__sep { flex: none; color: rgba(255, 255, 255, 0.85); }
 .nws-crumbs__current { font-weight: 600; }
 .nws-hero__title {
-  margin: 32px 0 0; color: #fff;
+  position: relative; z-index: 1;
+  margin: 28px 0 0; color: #fff;
   font-family: var(--font-heading); font-weight: 700; text-transform: uppercase;
-  font-size: clamp(2rem, 3.4vw, 64px); line-height: 1.15;
+  font-size: clamp(2rem, 3.4vw, 64px); line-height: 1;
 }
-.nws-hero__title--article { text-transform: none; font-size: clamp(1.7rem, 2.6vw, 48px); }
+.nws-hero__title--article {
+  text-transform: none; font-size: clamp(1.7rem, 2.6vw, 48px); line-height: 1.2;
+}
 .nws-hero__sub {
-  margin: 24px 0 0; max-width: 502px;
-  font-family: var(--font-body); font-size: clamp(1rem, 1.3vw, 24px); line-height: 1.4;
+  position: relative; z-index: 1;
+  margin: 16px 0 0; max-width: 502px;
+  font-family: var(--font-body); font-size: clamp(1rem, 1.3vw, 24px); line-height: 1.21;
   color: rgba(255, 255, 255, 0.92);
 }
 
@@ -563,8 +586,10 @@ main { min-height: 40vh; }
 }
 @media (max-width: 700px) {
   .nws-hero__inner { padding-block: calc(56px + 88px) 56px; }
-  .nws-hero__title { margin-top: 20px; }
-  .nws-hero__sub { margin-top: 14px; font-size: 15px; }
+  .nws-hero__title { margin-top: 20px; line-height: 1.06; }
+  .nws-hero__title--article { line-height: 1.25; }
+  .nws-hero__sub { margin-top: 14px; font-size: 15px; line-height: 1.35; }
+  .nws-hero__arc { width: 150px; height: 150px; left: calc(clamp(20px, 5vw, 96px) - 42px); }
   .nws-grid { grid-template-columns: 1fr; gap: 24px; }
   .nws-feat__body { padding: 22px; }
   .nws-feat__title { font-size: 20px; }
