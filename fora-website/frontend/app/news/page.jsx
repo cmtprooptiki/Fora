@@ -141,10 +141,10 @@ export default async function NewsPage() {
           {rest.length > 0 && (
             <section className="section nws-all">
               <div className="container">
-                <div className="thematics__head">
+                <h2 className="nws-head nws-head--sm">
                   <span>Όλες οι</span>
                   <span>Ανακοινώσεις</span>
-                </div>
+                </h2>
                 <NewsGrid articles={rest} />
               </div>
             </section>

@@ -500,6 +500,8 @@ main { min-height: 40vh; }
   color: var(--fora-black);
 }
 .nws-head > span:last-child { color: var(--fora-blue); }
+/* Η επικεφαλίδα «ΟΛΕΣ ΟΙ ΑΝΑΚΟΙΝΩΣΕΙΣ» είναι 80px αντί για 96px (Figma 2464:77) */
+.nws-head--sm { font-size: clamp(2rem, 4.17vw, 80px); }
 
 /* --- Κοινά: ημερομηνία + ετικέτα κατηγορίας --- */
 .nws-meta {
