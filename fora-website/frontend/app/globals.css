@@ -889,7 +889,15 @@ body:has(.draft-banner) .site-header { top: 80px; }
   -webkit-backdrop-filter: blur(16px) saturate(150%);
   backdrop-filter: blur(16px) saturate(150%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, translate 0.32s ease;
+  will-change: translate;
+}
+/* Κρύβεται όταν κατεβαίνουμε στη σελίδα και ξαναεμφανίζεται μόλις ανέβουμε.
+   Το -100% είναι το ύψος της ΙΔΙΑΣ της μπάρας, οπότε δουλεύει είτε ξεκινά από
+   την κορυφή (top: 0) είτε κάτω από τη λωρίδα ανακοίνωσης (top: 80px). */
+.site-header.is-hidden { translate: 0 -100%; }
+@media (prefers-reduced-motion: reduce) {
+  .site-header { transition: box-shadow 0.25s ease, border-color 0.25s ease; }
 }
 /* Χωρίς υποστήριξη θολώματος: σχεδόν αδιαφανές μπλε, ώστε να μη «διαβάζεται»
    το περιεχόμενο μέσα από τη μπάρα. */

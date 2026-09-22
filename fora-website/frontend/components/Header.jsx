@@ -12,6 +12,8 @@ function mediaUrl(url) {
 export default function Header({ settings, archive = [], registerHref }) {
   const logo = settings?.logotypo?.url ? mediaUrl(settings.logotypo.url) : null;
   const [scrolled, setScrolled] = useState(false);
+  // Κρυμμένη μπάρα όταν κατεβαίνουμε στη σελίδα (εμφανίζεται στο scroll προς τα πάνω)
+  const [hidden, setHidden] = useState(false);
   // Σε κινητά/tablet: το «Σχετικά με τα Forum» ανοίγει/κλείνει με κλικ.
   // Στον υπολογιστή το υπομενού συνεχίζει να ανοίγει με hover (CSS).
   const [forumsOpen, setForumsOpen] = useState(false);
@@ -43,16 +45,52 @@ export default function Header({ settings, archive = [], registerHref }) {
   const linkedin = settings?.linkedinUrl;
   const youtube = settings?.youtubeUrl;
 
-  // Στο scroll: λευκό φόντο + μαύρα γράμματα. Στην κορυφή: διάφανο + λευκά.
+  // Η μπάρα κρύβεται όταν ο επισκέπτης κατεβαίνει στη σελίδα και εμφανίζεται
+  // ξανά μόλις αρχίσει να ανεβαίνει (ή όταν βρίσκεται κοντά στην κορυφή).
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const y = window.scrollY;
+      setScrolled(y > 20);
+
+      // Με το μενού ανοιχτό (κινητά/tablet) η μπάρα μένει πάντα ορατή.
+      if (menuOpen) {
+        setHidden(false);
+        lastY = y;
+        return;
+      }
+
+      const delta = y - lastY;
+      // Αγνοούμε πολύ μικρές μετακινήσεις ώστε να μην «τρεμοπαίζει».
+      if (Math.abs(delta) < 6) return;
+
+      if (y < 140) {
+        setHidden(false);        // κοντά στην κορυφή: πάντα ορατή
+      } else {
+        setHidden(delta > 0);    // προς τα κάτω = κρύψιμο, προς τα πάνω = εμφάνιση
+      }
+      lastY = y;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    };
+
+    update();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [menuOpen]);
 
   return (
-    <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
+    <header
+      className={`site-header ${scrolled ? 'is-scrolled' : ''} ${hidden ? 'is-hidden' : ''}`}
+    >
       <div className="container site-header__inner">
         <a href="/" className="site-header__logo" aria-label="FORA – Αρχική">
           {logo ? (
