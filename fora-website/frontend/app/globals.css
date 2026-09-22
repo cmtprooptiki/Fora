@@ -835,6 +835,9 @@ main { min-height: 40vh; }
   background:
     linear-gradient(rgba(250, 250, 250, 0.1), rgba(250, 250, 250, 0.1)),
     linear-gradient(90deg, #2874af 0%, #0d4f9f 100%);
+  /* Γλιστράει μαζί με τη μπάρα πλοήγησης στο scroll (βλ. [data-nav-hidden]) */
+  transition: translate 0.32s ease;
+  will-change: translate;
 }
 .draft-banner__icon {
   flex: 0 0 auto; width: 32px; height: 32px; border-radius: 50%;
@@ -892,12 +895,26 @@ body:has(.draft-banner) .site-header { top: 80px; }
   transition: box-shadow 0.25s ease, border-color 0.25s ease, translate 0.32s ease;
   will-change: translate;
 }
-/* Κρύβεται όταν κατεβαίνουμε στη σελίδα και ξαναεμφανίζεται μόλις ανέβουμε.
-   Το -100% είναι το ύψος της ΙΔΙΑΣ της μπάρας, οπότε δουλεύει είτε ξεκινά από
-   την κορυφή (top: 0) είτε κάτω από τη λωρίδα ανακοίνωσης (top: 80px). */
-.site-header.is-hidden { translate: 0 -100%; }
+
+/* --- Απόκρυψη στο scroll προς τα κάτω ---------------------------------------
+   Η μπάρα ΚΑΙ η λωρίδα ανακοίνωσης από πάνω της κρύβονται μαζί όταν ο
+   επισκέπτης κατεβαίνει, και επανέρχονται μαζί μόλις ανέβει. Ο διακόπτης
+   μπαίνει στο <html> από το Header.jsx, ώστε να τον «βλέπουν» και τα δύο. */
+html[data-nav-hidden='1'] .site-header,
+html[data-nav-hidden='1'] .draft-banner { translate: 0 -100%; }
+/* Όταν υπάρχει λωρίδα, η μπάρα πρέπει να ανέβει και το ύψος της λωρίδας·
+   αλλιώς θα φαινόταν στη θέση που άφησε η λωρίδα φεύγοντας. */
+html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
+  translate: 0 calc(-100% - 80px);
+}
+@media (max-width: 600px) {
+  html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
+    translate: 0 calc(-100% - 76px);
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .site-header { transition: box-shadow 0.25s ease, border-color 0.25s ease; }
+  .draft-banner { transition: none; }
 }
 /* Χωρίς υποστήριξη θολώματος: σχεδόν αδιαφανές μπλε, ώστε να μη «διαβάζεται»
    το περιεχόμενο μέσα από τη μπάρα. */
