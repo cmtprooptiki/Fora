@@ -1329,7 +1329,7 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
    στους αριθμούς («400+ Συμμετέχοντες…»). Σε tablet/κινητά το κενό ορίζεται
    στα αντίστοιχα μπλοκ πιο κάτω, οπότε δεν τα επηρεάζει. */
 @media (min-width: 1025px) {
-  .hero__below { padding-top: clamp(32px, 4vw, 72px); }
+  .hero__below { padding-top: clamp(80px, 10vw, 190px); }
 }
 /* Αριθμοί/στατιστικά — Figma Frame 10 */
 .hero__stats {
