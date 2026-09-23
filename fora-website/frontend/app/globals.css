@@ -652,6 +652,12 @@ main { min-height: 40vh; }
   font-size: 40px; line-height: 1.45;
 }
 .cdp__title strong { font-weight: 700; }
+/* Τακτικό αριθμητικό «5ο»: το «ο» ανεβαίνει πάνω-δεξιά από τον αριθμό.
+   Το line-height:0 εμποδίζει τον εκθέτη να «ανοίξει» τη γραμμή του τίτλου. */
+.cdp__ord {
+  font-size: 0.6em; line-height: 0;
+  vertical-align: 0.62em; margin-left: 0.04em;
+}
 
 /* Μπλε ταμπέλα «Οι εγγραφές είναι ανοιχτές.» */
 .cdp__pill {

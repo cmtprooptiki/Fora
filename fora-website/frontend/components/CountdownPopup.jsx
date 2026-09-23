@@ -115,7 +115,13 @@ export default function CountdownPopup({
             Μην χάσετε το
             <br />
             <strong>
-              {arithmos ? `${arithmos}ο ` : ''}Υβριδικό Forum!
+              {arithmos ? (
+                <>
+                  {arithmos}
+                  <sup className="cdp__ord">ο</sup>{' '}
+                </>
+              ) : null}
+              Υβριδικό Forum!
             </strong>
           </h2>
 
