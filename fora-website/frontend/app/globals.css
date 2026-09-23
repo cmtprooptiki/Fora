@@ -1440,7 +1440,23 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   width: 56px; height: 3px; background: #fff;
   transform: scaleX(0); transform-origin: left; transition: transform 0.25s ease;
 }
-.istoria__tab.is-active .istoria__tab-title::after { transform: scaleX(1); }
+/* Η μπάρα της ενεργής διοργάνωσης λειτουργεί ως χρονόμετρο: ξεκινά γεμάτη και
+   μικραίνει προς τα αριστερά· μόλις εξαφανιστεί, το component περνά στην
+   επόμενη διοργάνωση. Επειδή η κλάση «is-active» μετακινείται σε άλλο στοιχείο,
+   η κίνηση ξεκινά από την αρχή σε κάθε εναλλαγή. */
+.istoria__tab.is-active .istoria__tab-title::after {
+  transform: scaleX(1);
+  animation: istoria-bar var(--istoria-dur, 4500ms) linear forwards;
+}
+@keyframes istoria-bar {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+/* Παγώνει μαζί με το χρονόμετρο: εκτός οθόνης ή με τον δείκτη στους επιλογείς. */
+.istoria[data-running='0'] .istoria__tab-title::after { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .istoria__tab.is-active .istoria__tab-title::after { animation: none; }
+}
 .istoria__tab-sub {
   display: block; margin-top: 12px; font-size: 0.98rem; line-height: 1.4; max-width: 32ch;
 }

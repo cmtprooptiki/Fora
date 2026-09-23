@@ -35,6 +35,17 @@ export default function PastForaCarousel({ forums = [], title = 'Η Ιστορί
   const sectionRef = useRef(null);
 
   const total = past.length;
+  // Χρόνος που απομένει στην τρέχουσα διοργάνωση. Κρατιέται σε ref ώστε, όταν
+  // ο χρήστης σταματήσει προσωρινά την εναλλαγή, να συνεχίσει από εκεί που
+  // έμεινε — ακριβώς όπως και η μπάρα, που απλώς «παγώνει».
+  const ypoloipoRef = useRef(DIARKEIA);
+  const arxiRef = useRef(0);
+
+  // Κάθε φορά που αλλάζει η ενεργή διοργάνωση, ο χρόνος μηδενίζεται.
+  // (Τρέχει ΜΕΤΑ το cleanup του επόμενου effect, οπότε δεν «τρώγεται».)
+  useEffect(() => {
+    ypoloipoRef.current = DIARKEIA;
+  }, [active]);
 
   // Αυτόματη εναλλαγή: κάθε διοργάνωση μένει λίγα δευτερόλεπτα και μετά
   // περνάει στην επόμενη, κυκλικά (…4ο → 1ο → 2ο…).
@@ -44,11 +55,19 @@ export default function PastForaCarousel({ forums = [], title = 'Η Ιστορί
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
       return undefined;
     }
-    const id = setInterval(() => {
+
+    arxiRef.current = Date.now();
+    const id = setTimeout(() => {
       setActive((i) => (i + 1) % total);
-    }, DIARKEIA);
-    return () => clearInterval(id);
-  }, [total, paused, visible]);
+    }, ypoloipoRef.current);
+
+    return () => {
+      clearTimeout(id);
+      // Αν σταματήσαμε λόγω παύσης, κρατάμε τον χρόνο που απέμεινε.
+      const perase = Date.now() - arxiRef.current;
+      ypoloipoRef.current = Math.max(400, ypoloipoRef.current - perase);
+    };
+  }, [active, total, paused, visible]);
 
   // Ξεκινάει μόνο όταν η ενότητα μπει στο οπτικό πεδίο.
   useEffect(() => {
@@ -58,9 +77,11 @@ export default function PastForaCarousel({ forums = [], title = 'Η Ιστορί
       setVisible(true);
       return undefined;
     }
+    // Χωρίς κατώφλι ποσοστού (η ενότητα μπορεί να είναι ψηλότερη από την
+    // οθόνη): μετράει αν πιάνει το μεσαίο 70% του παραθύρου.
     const io = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
-      { threshold: 0.2 },
+      { rootMargin: '-15% 0px -15% 0px' },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -68,8 +89,18 @@ export default function PastForaCarousel({ forums = [], title = 'Η Ιστορί
 
   if (total === 0) return null;
 
+  // «Τρέχει» = η μπάρα μικραίνει. Όταν είναι 0, η μπάρα παγώνει εκεί που βρίσκεται
+  // (εκτός οθόνης, με τον δείκτη πάνω στους επιλογείς, ή με μία μόνο διοργάνωση).
+  const running = total > 1 && visible && !paused;
+
   return (
-    <section className="istoria" id="proigoumena-fora" ref={sectionRef}>
+    <section
+      className="istoria"
+      id="proigoumena-fora"
+      ref={sectionRef}
+      data-running={running ? '1' : '0'}
+      style={{ '--istoria-dur': `${DIARKEIA}ms` }}
+    >
       {/* Μία στρώση φόντου ανά διοργάνωση: η ενεργή γίνεται ορατή και οι
           υπόλοιπες σβήνουν, ώστε η αλλαγή να γίνεται με ομαλό σβήσιμο αντί
           για απότομη εναλλαγή εικόνας. */}
