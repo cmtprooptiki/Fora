@@ -1386,7 +1386,9 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .istoria__bg {
   position: absolute; inset: 0; z-index: 0;
   background-size: cover; background-position: center;
-  transition: opacity 0.6s ease;
+  /* Σύντομο σβήσιμο, ώστε με τον γρήγορο κύκλο (1,5s) κάθε εικόνα να προλαβαίνει
+     να φανεί καθαρά πριν περάσει η επόμενη. */
+  transition: opacity 0.4s ease;
 }
 @media (prefers-reduced-motion: reduce) {
   .istoria__bg { transition: none; }
@@ -1447,7 +1449,7 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
    μετακινείται σε άλλο στοιχείο, η κίνηση ξεκινά από την αρχή κάθε φορά. */
 .istoria__tab.is-active .istoria__tab-title::after {
   transform: scaleX(1);
-  animation: istoria-bar var(--istoria-dur, 4500ms) linear forwards;
+  animation: istoria-bar var(--istoria-dur, 1500ms) linear forwards;
 }
 @keyframes istoria-bar {
   from { transform: scaleX(0); }

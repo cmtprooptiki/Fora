@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { mediaUrl } from '../lib/strapi';
 
 // Πόσο μένει κάθε διοργάνωση στην οθόνη πριν περάσει στην επόμενη.
-const DIARKEIA = 4500;
+const DIARKEIA = 1500;
 
 // Εικόνα φόντου ανά διοργάνωση: πρώτα η εικόνα κεφαλίδας (φωτογραφία), μετά η
 // 1η φωτογραφία της γκαλερί και τέλος η ειδική «eikonaKarouzel».
