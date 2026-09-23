@@ -6,6 +6,16 @@ import { mediaUrl } from '../lib/strapi';
 // Πόσο μένει κάθε διοργάνωση στην οθόνη πριν περάσει στην επόμενη.
 const DIARKEIA = 1500;
 
+// Υπότιτλος κάθε διοργάνωσης, κάτω από τη μπάρα. Κλειδί = ο αριθμός του Forum.
+// Το «\n» σπάει τη γραμμή. Αν κάποιο Forum δεν υπάρχει εδώ, εμφανίζεται το
+// θέμα του όπως είναι καταχωρημένο στο Strapi.
+const YPOTITLOI = {
+  1: 'Σύγχρονες μορφές Οργάνωσης & Διοίκησης Νοσοκομειακών Μονάδων',
+  2: 'Προκλήσεις στην Οργάνωση & Διοίκηση των Νοσοκομείων',
+  3: 'Σταθμός σημαντικών αλλαγών στα νοσοκομεία του ΕΣΥ',
+  4: 'Το Νοσοκομείο σε Μετάβαση:\nΓια ένα Νέο Οικοσύστημα\nστη Σύγχρονη Διοίκηση',
+};
+
 // Εικόνα φόντου ανά διοργάνωση: πρώτα η εικόνα κεφαλίδας (φωτογραφία), μετά η
 // 1η φωτογραφία της γκαλερί και τέλος η ειδική «eikonaKarouzel».
 function bgFor(f) {
@@ -147,26 +157,39 @@ export default function PastForaCarousel({ forums = [], title = 'Η Ιστορί
           onFocusCapture={() => setPaused(true)}
           onBlurCapture={() => setPaused(false)}
         >
-          {past.map((f, i) => (
-            <a
-              key={f.id}
-              href={`/forum/${f.slug}/`}
-              className={`istoria__tab ${i === active ? 'is-active' : ''}`}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
-            >
-              <span className="istoria__tab-title">
-                {f.arithmos ? (
-                  <>
-                    {f.arithmos}
-                    <sup>ο</sup>
-                  </>
-                ) : null}{' '}
-                FORUM — {f.etos}
-              </span>
-              {f.thema && <span className="istoria__tab-sub">{f.thema}</span>}
-            </a>
-          ))}
+          {past.map((f, i) => {
+            const ypotitlos = YPOTITLOI[f.arithmos] || f.thema;
+            return (
+              <a
+                key={f.id}
+                href={`/forum/${f.slug}/`}
+                className={`istoria__tab ${i === active ? 'is-active' : ''}`}
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+              >
+                <span className="istoria__tab-title">
+                  {f.arithmos ? (
+                    <>
+                      {f.arithmos}
+                      <sup>ο</sup>
+                    </>
+                  ) : null}{' '}
+                  FORUM — {f.etos}
+                </span>
+                {ypotitlos && (
+                  <span className="istoria__tab-sub">
+                    {String(ypotitlos)
+                      .split('\n')
+                      .map((line, j) => (
+                        <span className="istoria__tab-subline" key={j}>
+                          {line}
+                        </span>
+                      ))}
+                  </span>
+                )}
+              </a>
+            );
+          })}
         </nav>
       </div>
     </section>

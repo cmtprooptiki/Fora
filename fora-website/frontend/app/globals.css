@@ -1463,6 +1463,8 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .istoria__tab-sub {
   display: block; margin-top: 12px; font-size: 0.98rem; line-height: 1.4; max-width: 32ch;
 }
+/* Κάθε γραμμή του υπότιτλου ξεχωριστά (το «\n» στους ΥΠΟΤΙΤΛΟΥΣ σπάει γραμμή) */
+.istoria__tab-subline { display: block; }
 @media (max-width: 720px) {
   .istoria__eyebrow { display: none; }
   .istoria__tabs { flex-direction: column; gap: 22px; }
