@@ -1377,12 +1377,19 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .hero__intro-btn { font-size: 1.15rem; padding: 14px 30px; }
 
 /* --- «Η Ιστορία του Forum»: προηγούμενα Fora (μόνο στο τρέχον Forum) --- */
-.istoria { position: relative; overflow: hidden; color: #fff; isolation: isolate; }
+.istoria {
+  position: relative; overflow: hidden; color: #fff; isolation: isolate;
+  /* Το σκούρο φόντο μένει στην ενότητα ώστε οι στρώσεις των εικόνων να είναι
+     διάφανες και το πέρασμα από τη μία διοργάνωση στην άλλη να μη σκουραίνει. */
+  background-color: var(--fora-hero-to);
+}
 .istoria__bg {
   position: absolute; inset: 0; z-index: 0;
-  background-color: var(--fora-hero-to);
   background-size: cover; background-position: center;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.6s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .istoria__bg { transition: none; }
 }
 .istoria__overlay {
   position: absolute; inset: 0; z-index: 0;
