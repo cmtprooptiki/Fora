@@ -1437,20 +1437,21 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .istoria__tab-title sup { font-size: 0.55em; vertical-align: super; }
 .istoria__tab-title::after {
   content: ''; position: absolute; left: 0; bottom: 0;
-  width: 56px; height: 3px; background: #fff;
+  /* Πλήρες πλάτος του τίτλου: από το «3ο» μέχρι το «2024» */
+  width: 100%; height: 3px; background: #fff;
   transform: scaleX(0); transform-origin: left; transition: transform 0.25s ease;
 }
-/* Η μπάρα της ενεργής διοργάνωσης λειτουργεί ως χρονόμετρο: ξεκινά γεμάτη και
-   μικραίνει προς τα αριστερά· μόλις εξαφανιστεί, το component περνά στην
-   επόμενη διοργάνωση. Επειδή η κλάση «is-active» μετακινείται σε άλλο στοιχείο,
-   η κίνηση ξεκινά από την αρχή σε κάθε εναλλαγή. */
+/* Η μπάρα της ενεργής διοργάνωσης λειτουργεί ως χρονόμετρο: ξεκινά από το
+   «1ο/2ο/3ο…» και γεμίζει προς τα δεξιά μέχρι τη χρονιά· μόλις συμπληρωθεί,
+   το component περνά στην επόμενη διοργάνωση. Επειδή η κλάση «is-active»
+   μετακινείται σε άλλο στοιχείο, η κίνηση ξεκινά από την αρχή κάθε φορά. */
 .istoria__tab.is-active .istoria__tab-title::after {
   transform: scaleX(1);
   animation: istoria-bar var(--istoria-dur, 4500ms) linear forwards;
 }
 @keyframes istoria-bar {
-  from { transform: scaleX(1); }
-  to { transform: scaleX(0); }
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 /* Παγώνει μαζί με το χρονόμετρο: εκτός οθόνης ή με τον δείκτη στους επιλογείς. */
 .istoria[data-running='0'] .istoria__tab-title::after { animation-play-state: paused; }
