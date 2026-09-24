@@ -115,6 +115,9 @@
     "syndesmoEggrafis": {
       "type": "string"
     },
+    "syndesmoEisodou": {
+      "type": "string"
+    },
     "eikonaHero": {
       "type": "media",
       "multiple": false,

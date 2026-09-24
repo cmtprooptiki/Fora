@@ -1320,6 +1320,18 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .hero__agenda-solid { background: #fff; color: #231F20; border-color: #fff; }
 .hero__agenda-solid:hover { background: #eef3fb; color: #231F20; }
 
+/* Κουμπί «Είσοδος στο Forum» (Figma «CTA_BUTTON» 404×59):
+   λευκό, Hagrid Regular 24px, σκούρο κείμενο, κενό 16px από την κουκκίδα. */
+.hero__eisodos {
+  background: #fff; color: #231f20; border-color: #fff;
+  font-family: var(--font-heading); font-weight: 400;
+  font-size: clamp(1rem, 1.25vw, 24px); line-height: 1.46;
+  gap: 16px; border-radius: 8px; justify-content: center;
+  padding: 10px clamp(28px, 3.35vw, 64px);
+}
+.hero__eisodos::after { margin-left: 0; }
+.hero__eisodos:hover { background: #eef3fb; color: #231f20; }
+
 /* Μπλοκ κάτω από την κεφαλίδα: αριθμοί + παράγραφος + κουμπί */
 .hero__below {
   position: relative; z-index: 1;

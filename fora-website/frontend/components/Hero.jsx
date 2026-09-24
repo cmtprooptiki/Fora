@@ -5,6 +5,9 @@ import StatNumber from './StatNumber';
 export default function Hero({ forum, backHref, backLabel }) {
   const heroImg = forum?.eikonaHero?.url ? mediaUrl(forum.eikonaHero.url) : null;
   const reg = forum?.syndesmoEggrafis;
+  // «Είσοδος στο Forum»: σύνδεσμος για την πλατφόρμα της διοργάνωσης.
+  // Συμπληρώνεται στο Strapi· αν μείνει κενός, το κουμπί δεν εμφανίζεται.
+  const eisodos = forum?.syndesmoEisodou;
   const stats = forum?.arithmoi || [];
   const intro = forum?.paragrafosKefalidas;
   const introBtnText = forum?.koumpiKefalidasKeimeno;
@@ -46,6 +49,16 @@ export default function Hero({ forum, backHref, backLabel }) {
           <h1 className="hero__title">{forum?.thema}</h1>
 
           <div className="hero__actions" id="eggrafi">
+            {eisodos && (
+              <a
+                href={eisodos}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--white hero__eisodos"
+              >
+                Είσοδος στο Forum
+              </a>
+            )}
             {reg && (
               <a href={reg} target="_blank" rel="noopener noreferrer" className="btn btn--white">
                 Εγγραφή
