@@ -2143,7 +2143,7 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   display: flex; align-items: center; justify-content: space-between;
   gap: 24px; flex-wrap: wrap; margin: 0;
   font-family: var(--font-heading); font-weight: 500; text-transform: uppercase;
-  font-size: clamp(2.2rem, 6.25vw, 120px); line-height: 1.05;
+  font-size: clamp(2.2rem, 3.33vw, 64px); line-height: 1.05;
   color: #000;
 }
 .prog__title > span:last-child { color: var(--fora-blue); }
