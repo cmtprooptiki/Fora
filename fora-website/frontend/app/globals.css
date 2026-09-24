@@ -1325,9 +1325,9 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .hero__eisodos {
   background: #fff; color: #231f20; border-color: #fff;
   font-family: var(--font-heading); font-weight: 400;
-  font-size: clamp(1rem, 1.05vw, 20px); line-height: 1.46;
-  gap: 14px; border-radius: 8px; justify-content: center;
-  padding: 9px clamp(24px, 2.4vw, 46px);
+  font-size: 16px; line-height: 1.46;
+  gap: 12px; border-radius: 8px; justify-content: center;
+  padding: 8px clamp(20px, 1.8vw, 34px);
 }
 .hero__eisodos::after { margin-left: 0; }
 .hero__eisodos:hover { background: #eef3fb; color: #231f20; }
