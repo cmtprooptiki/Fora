@@ -39,7 +39,10 @@ export default function Programma({ forum }) {
     <section className="section programma" id="analytiko-programma">
       <div className="container">
         <div className="section__head">
-          <h2>Πρόγραμμα Forum</h2>
+          <h2 className="prog__title">
+            <span>Πρόγραμμα</span>
+            <span>Forum</span>
+          </h2>
           {forum?.imerominia && (
             <p className="prog__date">
               <IconCalendar />

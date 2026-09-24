@@ -2136,6 +2136,22 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
    ΑΝΑΛΥΤΙΚΟ ΠΡΟΓΡΑΜΜΑ (accordion)
    ========================================================================== */
 /* Ημερομηνία κάτω από τον τίτλο (εικονίδιο ημερολογίου) */
+/* Τίτλος ενότητας (Figma «header-title-row»): «ΠΡΟΓΡΑΜΜΑ» μαύρο αριστερά και
+   «FORUM» μπλε δεξιά, απλωμένα στις δύο άκρες του container. Hagrid Medium 120px. */
+#analytiko-programma .section__head { max-width: none; }
+.prog__title {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap; margin: 0;
+  font-family: var(--font-heading); font-weight: 500; text-transform: uppercase;
+  font-size: clamp(2.2rem, 6.25vw, 120px); line-height: 1.05;
+  color: #000;
+}
+.prog__title > span:last-child { color: var(--fora-blue); }
+/* Σε στενές οθόνες στοιβάζονται αριστερά αντί να «πετάγονται» στις δύο άκρες */
+@media (max-width: 700px) {
+  .prog__title { justify-content: flex-start; gap: 0.25em; }
+}
+
 .prog__date { display: flex; align-items: center; gap: 8px; margin: 8px 0 0; color: var(--fora-text-soft); font-size: 1.02rem; }
 .prog__date svg { width: 18px; height: 18px; flex: 0 0 auto; }
 
