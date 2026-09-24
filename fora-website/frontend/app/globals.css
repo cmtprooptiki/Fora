@@ -2161,6 +2161,30 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .prog__group { border-bottom: 1px solid var(--fora-border); }
 .prog__group:last-child { border-bottom: none; }
 
+/* Απλές γραμμές (προσέλευση, διαλείμματα, συζήτηση, κλείσιμο): ώρα αριστερά,
+   τίτλος στη μέση, προαιρετική ετικέτα δεξιά — χωρίς πτυσσόμενο περιεχόμενο. */
+.prog__row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px clamp(16px, 2.4vw, 26px);
+  border-bottom: 1px solid var(--fora-border);
+}
+.prog__row:last-child { border-bottom: none; }
+.prog__row-time {
+  flex: 0 0 auto; width: 180px;
+  font-family: var(--font-body); font-size: 0.94rem;
+  color: var(--fora-text-soft); white-space: nowrap;
+}
+.prog__row-title {
+  flex: 1 1 auto; min-width: 0;
+  font-family: var(--font-body); font-weight: 600; font-size: 1rem;
+  color: var(--fora-black); line-height: 1.35;
+}
+@media (max-width: 640px) {
+  .prog__row { flex-wrap: wrap; gap: 6px 12px; }
+  .prog__row-time { width: 100%; }
+  .prog__row .prog__pill { margin-left: auto; }
+}
+
 .prog__head {
   width: 100%; background: none; border: none; cursor: pointer; text-align: left;
   display: flex; align-items: center; gap: 16px; padding: 18px clamp(16px, 2.4vw, 26px);

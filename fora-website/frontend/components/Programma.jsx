@@ -1,6 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+
+// Απλές γραμμές του προγράμματος (προσέλευση, διαλείμματα, κλείσιμο) που δεν
+// είναι πτυσσόμενες ενότητες. Το «meta» δηλώνει μετά από ποια ενότητα μπαίνει
+// η γραμμή: -1 = πριν από την 1η, 0 = μετά την 1η, 1 = μετά τη 2η κ.ο.κ.
+// Εμφανίζονται μόνο στο τρέχον Forum.
+const APLES_GRAMMES = [
+  { meta: -1, ora: '10:00 - 10:20', titlos: 'Προσέλευση - Χαιρετισμοί' },
+  { meta: 0, ora: '11:40 - 12:00', titlos: 'Συζήτηση - Διάλειμμα Καφέ', etiketa: 'Διάλειμμα' },
+  { meta: 1, ora: '13:20 - 14:00', titlos: 'Συζήτηση - Διάλειμμα Γεύμα', etiketa: 'Διάλειμμα' },
+  { meta: 2, ora: '15:10 - 15:20', titlos: 'Συζήτηση', etiketa: 'Συζήτηση' },
+  { meta: 3, ora: '16:50 - 17:00', titlos: 'Κλείσιμο' },
+];
 
 // Μικρά εικονίδια (γραμμικά) σε στυλ Figma
 const IconCalendar = () => (
@@ -35,6 +47,18 @@ export default function Programma({ forum }) {
 
   const toggle = (i) => setOpenIndex((prev) => (prev === i ? -1 : i));
 
+  // Οι απλές γραμμές που μπαίνουν μετά την ενότητα με δείκτη «meta».
+  const aplesMeta = (meta) =>
+    isCurrent
+      ? APLES_GRAMMES.filter((g) => g.meta === meta).map((g) => (
+          <div className="prog__row" key={`${g.meta}-${g.ora}`}>
+            <span className="prog__row-time">{g.ora}</span>
+            <span className="prog__row-title">{g.titlos}</span>
+            {g.etiketa && <span className="prog__pill">{g.etiketa}</span>}
+          </div>
+        ))
+      : null;
+
   return (
     <section className="section programma" id="analytiko-programma">
       <div className="container">
@@ -52,6 +76,7 @@ export default function Programma({ forum }) {
         </div>
 
         <div className="prog">
+          {aplesMeta(-1)}
           {sessions.map((s, i) => {
             const isOpen = openIndex === i;
             const items = s.stoixeia || [];
@@ -60,7 +85,8 @@ export default function Programma({ forum }) {
                 ? 'Στρογγυλό Τραπέζι'
                 : `Ενότητα ${i + 1}`;
             return (
-              <div className={`prog__group ${isOpen ? 'is-open' : ''}`} key={i}>
+              <Fragment key={i}>
+              <div className={`prog__group ${isOpen ? 'is-open' : ''}`}>
                 <button
                   type="button"
                   className="prog__head"
@@ -116,6 +142,8 @@ export default function Programma({ forum }) {
                   </div>
                 )}
               </div>
+              {aplesMeta(i)}
+              </Fragment>
             );
           })}
         </div>
