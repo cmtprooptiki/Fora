@@ -2142,7 +2142,8 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .prog__title {
   display: flex; align-items: center; justify-content: space-between;
   gap: 24px; flex-wrap: wrap; margin: 0;
-  font-family: var(--font-heading); font-weight: 500; text-transform: uppercase;
+  /* Ίδιο βάρος με τους τίτλους «Θεματικές Ενότητες» κ.λπ. (.thematics__head) */
+  font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;
   font-size: clamp(2.2rem, 3.33vw, 64px); line-height: 1.05;
   color: #000;
 }
