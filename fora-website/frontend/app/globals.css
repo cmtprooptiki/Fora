@@ -2148,6 +2148,18 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   color: #000;
 }
 .prog__title > span:last-child { color: var(--fora-blue); }
+
+/* Η επικεφαλίδα «ΘΕΜΑΤΙΚΕΣ ΕΝΟΤΗΤΕΣ» ακολουθεί ακριβώς το ίδιο μοτίβο με το
+   «ΠΡΟΓΡΑΜΜΑ FORUM». Είναι σκόπιμα περιορισμένη στο #thematikes, ώστε να μην
+   αλλάξουν οι άλλες ενότητες που μοιράζονται την κλάση (Ομιλητές, Στιγμιότυπα),
+   και μόνο σε υπολογιστή, ώστε να μείνουν άθικτα τα μεγέθη tablet/κινητού. */
+#thematikes .thematics__head > span:last-child { color: var(--fora-blue); }
+@media (min-width: 1025px) {
+  #thematikes .thematics__head {
+    align-items: center; gap: 24px;
+    font-size: clamp(2.2rem, 3.33vw, 64px); line-height: 1.05;
+  }
+}
 /* Σε στενές οθόνες στοιβάζονται αριστερά αντί να «πετάγονται» στις δύο άκρες */
 @media (max-width: 700px) {
   .prog__title { justify-content: flex-start; gap: 0.25em; }
