@@ -11,7 +11,10 @@ export default function Sponsors({ forum }) {
     <section className="section" id="synergates">
       <div className="container">
         <div className="section__head">
-          <h2>Συνεργάτες του Forum</h2>
+          <h2 className="prog__title">
+            <span>Συνεργάτες</span>
+            <span>του Forum</span>
+          </h2>
           <p className="section__intro">
             Μαζί διαμορφώνουμε το μέλλον της υγείας, με τη στήριξη επιστημονικών
             φορέων, οργανισμών και εταιρειών.

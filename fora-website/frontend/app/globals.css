@@ -2138,7 +2138,8 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 /* Ημερομηνία κάτω από τον τίτλο (εικονίδιο ημερολογίου) */
 /* Τίτλος ενότητας (Figma «header-title-row»): «ΠΡΟΓΡΑΜΜΑ» μαύρο αριστερά και
    «FORUM» μπλε δεξιά, απλωμένα στις δύο άκρες του container. Hagrid Medium 120px. */
-#analytiko-programma .section__head { max-width: none; }
+#analytiko-programma .section__head,
+#synergates .section__head { max-width: none; }
 .prog__title {
   display: flex; align-items: center; justify-content: space-between;
   gap: 24px; flex-wrap: wrap; margin: 0;
