@@ -2153,9 +2153,11 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
    «ΠΡΟΓΡΑΜΜΑ FORUM». Είναι σκόπιμα περιορισμένη στο #thematikes, ώστε να μην
    αλλάξουν οι άλλες ενότητες που μοιράζονται την κλάση (Ομιλητές, Στιγμιότυπα),
    και μόνο σε υπολογιστή, ώστε να μείνουν άθικτα τα μεγέθη tablet/κινητού. */
-#thematikes .thematics__head > span:last-child { color: var(--fora-blue); }
+#thematikes .thematics__head > span:last-child,
+#omilites .thematics__head > span:last-child { color: var(--fora-blue); }
 @media (min-width: 1025px) {
-  #thematikes .thematics__head {
+  #thematikes .thematics__head,
+  #omilites .thematics__head {
     align-items: center; gap: 24px;
     font-size: clamp(2.2rem, 3.33vw, 64px); line-height: 1.05;
   }
