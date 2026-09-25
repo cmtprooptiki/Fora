@@ -1941,8 +1941,6 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   #omilites .thematics__intro,
   /* Στιγμιότυπα του Forum */
   .mgal__intro,
-  /* Συνεργάτες του Forum */
-  #synergates .section__intro,
   /* Η Ιστορία του Forum */
   .istoria__intro {
     font-size: 24px;
@@ -2140,6 +2138,52 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
    «FORUM» μπλε δεξιά, απλωμένα στις δύο άκρες του container. Hagrid Medium 120px. */
 #analytiko-programma .section__head,
 #synergates .section__head { max-width: none; }
+
+/* --- Εισαγωγή ενότητας «Συνεργάτες» (Figma «Frame 14» 1728×137) -------------
+   Αριστερά η παράγραφος (793px, δηλαδή λιγότερο από το μισό πλάτος, ώστε να μη
+   φτάνει κάτω από το «ΤΟΥ FORUM») και δεξιά το σλόγκαν σε λεπτό γαλάζιο
+   πλαίσιο, με διακοσμητικό τόξο 180px να ξεπροβάλλει από πίσω αριστερά. */
+.syn__lead {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: clamp(32px, 5vw, 96px);
+  margin-top: clamp(40px, 6.9vw, 120px);
+}
+.syn__intro {
+  flex: 0 1 793px; max-width: 793px; margin: 0;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: clamp(1rem, 1.67vw, 32px); line-height: 1.34;
+  color: #231f20;
+}
+/* Στο σχέδιο ο εκθέτης «ο» είναι 20,64px πάνω σε κείμενο 32px */
+.syn__intro .ordinal { font-size: 0.645em; }
+
+.syn__slogan { position: relative; flex: 0 0 auto; }
+.syn__slogan-arc {
+  position: absolute; z-index: 0; pointer-events: none;
+  left: -66px; top: 50%; translate: 0 -50%;
+  width: 180px; height: 180px;
+}
+.syn__slogan-arc svg { display: block; width: 100%; height: 100%; }
+.syn__slogan-text {
+  position: relative; z-index: 1; margin: 0;
+  width: 388px; max-width: 100%;
+  border: 1px solid #11c0ea;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: clamp(1rem, 1.67vw, 32px); line-height: 1.5;
+  color: #231f20; text-align: right; text-transform: uppercase;
+}
+/* Στο Figma το πλαίσιο «κόβεται» στο ύψος των κεφαλαίων (73px αντί για 96px).
+   Όπου υποστηρίζεται, το αναπαράγουμε· αλλού απλώς είναι λίγο πιο ψηλό. */
+@supports (text-box: trim-both cap alphabetic) {
+  .syn__slogan-text { text-box: trim-both cap alphabetic; }
+}
+/* Σε tablet/κινητά στοιβάζονται· το τόξο είναι διακοσμητικό και αποσύρεται. */
+@media (max-width: 1024px) {
+  .syn__lead { flex-direction: column; gap: 28px; margin-top: 40px; }
+  .syn__intro { flex: 1 1 auto; max-width: none; font-size: clamp(1rem, 2.4vw, 20px); }
+  .syn__slogan-arc { display: none; }
+  .syn__slogan-text { width: 100%; font-size: clamp(0.95rem, 2.4vw, 20px); }
+}
 .prog__title {
   display: flex; align-items: center; justify-content: space-between;
   gap: 24px; flex-wrap: wrap; margin: 0;
