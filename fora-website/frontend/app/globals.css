@@ -2167,15 +2167,9 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .syn__slogan-text {
   position: relative; z-index: 1; margin: 0;
   width: 388px; max-width: 100%;
-  border: 1px solid #11c0ea;
   font-family: var(--font-body); font-weight: 400;
   font-size: clamp(1rem, 1.67vw, 32px); line-height: 1.5;
   color: #231f20; text-align: right; text-transform: uppercase;
-}
-/* Στο Figma το πλαίσιο «κόβεται» στο ύψος των κεφαλαίων (73px αντί για 96px).
-   Όπου υποστηρίζεται, το αναπαράγουμε· αλλού απλώς είναι λίγο πιο ψηλό. */
-@supports (text-box: trim-both cap alphabetic) {
-  .syn__slogan-text { text-box: trim-both cap alphabetic; }
 }
 /* Σε tablet/κινητά στοιβάζονται· το τόξο είναι διακοσμητικό και αποσύρεται. */
 @media (max-width: 1024px) {
