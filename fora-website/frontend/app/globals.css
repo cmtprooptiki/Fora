@@ -2603,36 +2603,98 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .speaker--soon .spk-empty__title { font-size: 20px; font-size: clamp(17px, 6.8cqw, 28px); }
 .speaker--soon .spk-empty__text { font-size: 15px; font-size: clamp(13px, 4.4cqw, 18px); }
 
-/* Παράθυρο (modal) βιογραφικού ομιλητή */
+/* --- Παράθυρο βιογραφικού ομιλητή ------------------------------------------
+   Δύο στήλες: η φωτογραφία σε πλήρες ύψος αριστερά (ίδιο κάδρο με την κάρτα)
+   και το κείμενο δεξιά. Σε στενές οθόνες στοιβάζονται. */
 .smodal-overlay {
   position: fixed; inset: 0;
-  background: rgba(10, 20, 35, 0.62);
+  background: rgba(10, 20, 35, 0.66);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center;
   z-index: 1000; padding: 20px;
   animation: smodal-fade 0.15s ease;
 }
 @keyframes smodal-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes smodal-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
 .smodal {
-  background: #fff; border-radius: 16px;
-  max-width: 640px; width: 100%; max-height: 88vh; overflow-y: auto;
-  padding: clamp(24px, 4vw, 40px); position: relative;
-  box-shadow: var(--shadow-md);
+  background: #fff; border-radius: 20px;
+  max-width: 940px; width: 100%; max-height: 88vh;
+  padding: 0; overflow: hidden; position: relative;
+  box-shadow: 0 24px 70px rgba(10, 20, 35, 0.34);
+  display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  animation: smodal-rise 0.22s ease;
 }
-.smodal__close {
-  position: absolute; top: 12px; right: 16px;
-  background: none; border: none; font-size: 2rem; line-height: 1;
-  cursor: pointer; color: var(--fora-text-soft);
+/* Χωρίς φωτογραφία: μία στήλη, πιο στενό παράθυρο */
+.smodal--nophoto { grid-template-columns: 1fr; max-width: 680px; }
+
+.smodal__media {
+  position: relative;
+  min-height: clamp(360px, 46vh, 500px);
+  background: var(--fora-bg-blue-grey);
 }
-.smodal__close:hover { color: var(--fora-black); }
-.smodal__head { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
 .smodal__photo {
-  width: 96px; height: 96px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
-  border: 3px solid #fff; box-shadow: 0 0 0 1px var(--fora-border); background: var(--fora-section-tint);
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  display: block; border: none; border-radius: 0; box-shadow: none;
 }
-.smodal__name { font-family: var(--font-serif); font-weight: 700; font-size: 1.4rem; color: #000; margin: 0 0 4px; }
-.smodal__title { color: var(--fora-blue); font-weight: 600; margin: 0; font-size: 0.98rem; }
-.smodal__bio { color: var(--fora-text); line-height: 1.7; }
-@media (max-width: 520px) { .smodal__head { flex-direction: column; text-align: center; } }
+/* Ίδια ετικέτα ρόλου με την κάρτα, κάτω αριστερά πάνω στη φωτογραφία */
+.smodal__badge {
+  position: absolute; left: 20px; bottom: 20px;
+  background: #fff; color: #231f20; border-radius: 40px;
+  padding: 9px 18px;
+  font-family: var(--font-body); font-weight: 400; font-size: 15px; line-height: 1;
+  text-transform: uppercase; white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(16, 24, 40, 0.14);
+}
+
+.smodal__content {
+  padding: clamp(28px, 3.4vw, 48px);
+  max-height: 88vh; overflow-y: auto;
+}
+.smodal__name {
+  margin: 0; color: #231f20;
+  font-family: var(--font-heading); font-weight: 500;
+  font-size: clamp(1.35rem, 2.1vw, 32px); line-height: 1.2;
+}
+.smodal__title {
+  margin: 10px 0 0; color: #4e4749; font-weight: 500;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.15vw, 20px); line-height: 1.35;
+}
+.smodal__bio {
+  margin-top: clamp(20px, 2vw, 28px);
+  padding-top: clamp(20px, 2vw, 28px);
+  border-top: 1px solid var(--fora-border);
+  color: var(--fora-text); line-height: 1.7;
+}
+.smodal__bio p:last-child { margin-bottom: 0; }
+
+.smodal__close {
+  position: absolute; top: 14px; right: 14px; z-index: 2;
+  width: 40px; height: 40px; border-radius: 50%; padding: 0;
+  background: rgba(255, 255, 255, 0.92); border: 1px solid var(--fora-border);
+  display: grid; place-items: center; cursor: pointer; color: #231f20;
+  box-shadow: 0 2px 10px rgba(16, 24, 40, 0.12);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.smodal__close svg { width: 18px; height: 18px; }
+.smodal__close:hover { background: #fff; color: #000; }
+
+@media (max-width: 760px) {
+  .smodal {
+    grid-template-columns: 1fr;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .smodal__media { min-height: 0; aspect-ratio: 4 / 3; }
+  .smodal__content { max-height: none; overflow: visible; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .smodal { animation: none; }
+}
 
 /* ==========================================================================
    ΣΥΝΕΡΓΑΤΕΣ

@@ -158,21 +158,34 @@ export default function Speakers({ forum }) {
           aria-modal="true"
           aria-label={`Βιογραφικό: ${active.onoma}`}
         >
-          <div className="smodal" onClick={(e) => e.stopPropagation()}>
+          <div
+            className={`smodal ${activePhoto ? '' : 'smodal--nophoto'}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button className="smodal__close" aria-label="Κλείσιμο" onClick={() => setActive(null)}>
-              ×
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                   strokeLinecap="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
             </button>
-            <div className="smodal__head">
-              {activePhoto && <img className="smodal__photo" src={activePhoto} alt={active.onoma} />}
-              <div>
-                <h3 className="smodal__name">{active.onoma}</h3>
-                {active.idiotita && <p className="smodal__title">{active.idiotita}</p>}
+
+            {/* Η φωτογραφία σε πλήρες ύψος στα αριστερά, ώστε να φαίνεται
+                καθαρά ο ομιλητής αντί για μικρό στρογγυλό εικονίδιο. */}
+            {activePhoto && (
+              <div className="smodal__media">
+                <img className="smodal__photo" src={activePhoto} alt={active.onoma} />
+                <span className="smodal__badge">{rolosGia(active.onoma)}</span>
               </div>
+            )}
+
+            <div className="smodal__content">
+              <h3 className="smodal__name">{active.onoma}</h3>
+              {active.idiotita && <p className="smodal__title">{active.idiotita}</p>}
+              <div
+                className="smodal__bio"
+                dangerouslySetInnerHTML={{ __html: active.viografiko.replace(/\n/g, '<br/>') }}
+              />
             </div>
-            <div
-              className="smodal__bio"
-              dangerouslySetInnerHTML={{ __html: active.viografiko.replace(/\n/g, '<br/>') }}
-            />
           </div>
         </div>
       )}
