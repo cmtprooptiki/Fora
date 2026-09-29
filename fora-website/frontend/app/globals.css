@@ -2723,6 +2723,12 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 }
 .mgal__head-accent { color: var(--fora-blue); }
 .mgal__intro { max-width: 62ch; }
+/* Σε κινητά η λέξη «ΣΤΙΓΜΙΟΤΥΠΑ» (11 χαρακτήρες) δεν χωράει στα 60px που δίνει
+   ο κοινός κανόνας των επικεφαλίδων και κόβεται στην άκρη. Μικραίνει ΜΟΝΟ αυτή
+   η επικεφαλίδα — οι υπόλοιπες ενότητες έχουν πιο κοντές λέξεις. */
+@media (max-width: 600px) {
+  .mgal__head { font-size: min(12.4vw, 48px); }
+}
 
 .mgal__bar {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
