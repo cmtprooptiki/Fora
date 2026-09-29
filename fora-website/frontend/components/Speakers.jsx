@@ -3,6 +3,21 @@
 import { useState, useEffect } from 'react';
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+
+// Ετικέτα πάνω στη φωτογραφία. Όλοι εμφανίζονται ως «ΟΜΙΛΗΤΗΣ»· όσοι
+// συντονίζουν ενότητα γράφονται εδώ (αρκεί το επώνυμο, χωρίς τόνους).
+const SYNTONISTES = ['παπαδακης', 'πολυζος'];
+
+const XORIS_TONOUS = (s) =>
+  (s || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '');
+
+function rolosGia(onoma) {
+  const kathara = XORIS_TONOUS(onoma);
+  return SYNTONISTES.some((s) => kathara.includes(s)) ? 'Συντονιστής' : 'Ομιλητής';
+}
 function mediaUrl(url) {
   if (!url) return '';
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
@@ -89,10 +104,10 @@ export default function Speakers({ forum }) {
                   ) : (
                     <span className="speaker__initials">{initials}</span>
                   )}
+                  <span className="speaker__badge">{rolosGia(sp.onoma)}</span>
                 </div>
                 <h3 className="speaker__name">{sp.onoma}</h3>
                 {sp.idiotita && <p className="speaker__title">{sp.idiotita}</p>}
-                {hasBio && <span className="speaker__more">Δείτε το βιογραφικό →</span>}
               </>
             );
 
@@ -119,6 +134,18 @@ export default function Speakers({ forum }) {
               </article>
             );
           })}
+
+          {/* Τελευταίο πλακίδιο: όσο η διοργάνωση είναι υπό διαμόρφωση, κρατά
+              θέση για τα ονόματα που δεν έχουν ανακοινωθεί ακόμη. */}
+          {isDraft && (
+            <div className="speaker speaker--soon">
+              <span className="spk-empty__icon" aria-hidden="true">i</span>
+              <p className="spk-empty__title">Νέα Ονόματα Έρχονται Σύντομα</p>
+              <p className="spk-empty__text">
+                Μείνετε συντονισμένοι για τις επόμενες ανακοινώσεις.
+              </p>
+            </div>
+          )}
         </div>
         )}
       </div>
