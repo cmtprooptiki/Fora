@@ -2621,76 +2621,131 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   to { opacity: 1; transform: none; }
 }
 .smodal {
-  background: #fff; border-radius: 20px;
-  max-width: 940px; width: 100%; max-height: 88vh;
+  background: #fafafa; border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  width: 100%; max-width: 880px; max-height: 88vh;
   padding: 0; overflow: hidden; position: relative;
-  box-shadow: 0 24px 70px rgba(10, 20, 35, 0.34);
-  display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  display: flex; flex-direction: column;
   animation: smodal-rise 0.22s ease;
 }
-/* Χωρίς φωτογραφία: μία στήλη, πιο στενό παράθυρο */
-.smodal--nophoto { grid-template-columns: 1fr; max-width: 680px; }
 
-.smodal__media {
-  position: relative;
-  min-height: clamp(360px, 46vh, 500px);
-  background: var(--fora-bg-blue-grey);
+/* --- Κεφαλίδα (72px) --- */
+.smodal__topbar {
+  flex: 0 0 auto; height: 72px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 0 24px 0 32px;
+  border-bottom: 1px solid #ebeaec;
 }
+.smodal__eyebrow {
+  font-family: var(--font-body); font-weight: 700; font-size: 13px;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--fora-blue);
+}
+.smodal__close {
+  flex: 0 0 auto; width: 24px; height: 24px; padding: 0;
+  background: none; border: none; cursor: pointer; color: #231f20;
+  display: grid; place-items: center;
+  transition: color 0.16s ease;
+}
+.smodal__close svg { width: 24px; height: 24px; }
+.smodal__close:hover { color: var(--fora-blue); }
+
+/* --- Σώμα: φωτογραφία 304px αριστερά, κείμενο δεξιά --- */
+.smodal__body {
+  flex: 1 1 auto; min-height: 0;
+  display: flex; gap: 40px; padding: 32px;
+}
+.smodal__portrait { flex: 0 0 304px; display: flex; flex-direction: column; gap: 16px; }
 .smodal__photo {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover; object-position: top center;
-  display: block; border: none; border-radius: 0; box-shadow: none;
+  width: 100%; aspect-ratio: 304 / 380;
+  border-radius: 8px; overflow: hidden;
+  background: var(--fora-bg-blue-grey);
+  display: grid; place-items: center;
 }
-/* Ίδια ετικέτα ρόλου με την κάρτα, κάτω αριστερά πάνω στη φωτογραφία */
-.smodal__badge {
-  position: absolute; left: 20px; bottom: 20px;
-  background: #fff; color: #231f20; border-radius: 40px;
-  padding: 9px 18px;
-  font-family: var(--font-body); font-weight: 400; font-size: 15px; line-height: 1;
+.smodal__photo img {
+  width: 100%; height: 100%; display: block;
+  object-fit: cover; object-position: top center;
+}
+.smodal__meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.smodal__type {
+  background: #ebeaec; color: #231f20; border-radius: 40px; padding: 8px 14px;
+  font-family: var(--font-body); font-weight: 400; font-size: 12px; line-height: 1;
   text-transform: uppercase; white-space: nowrap;
-  box-shadow: 0 2px 10px rgba(16, 24, 40, 0.14);
+}
+.smodal__count {
+  font-family: var(--font-body); font-size: 12px; color: #4e4749; white-space: nowrap;
 }
 
-.smodal__content {
-  padding: clamp(28px, 3.4vw, 48px);
-  max-height: 88vh; overflow-y: auto;
+.smodal__info {
+  flex: 1 1 auto; min-width: 0; min-height: 0;
+  display: flex; flex-direction: column; gap: 16px;
 }
+.smodal__identity { display: flex; flex-direction: column; gap: 8px; }
 .smodal__name {
   margin: 0; color: #231f20;
   font-family: var(--font-heading); font-weight: 500;
-  font-size: clamp(1.35rem, 2.1vw, 32px); line-height: 1.2;
+  font-size: 30px; line-height: 1.18;
 }
-.smodal__title {
-  margin: 10px 0 0; color: #4e4749; font-weight: 500;
-  font-family: var(--font-body);
-  font-size: clamp(0.95rem, 1.15vw, 20px); line-height: 1.35;
+.smodal__role {
+  margin: 0; color: var(--fora-blue);
+  font-family: var(--font-body); font-weight: 500;
+  font-size: 18px; line-height: 1.35;
 }
+.smodal__divider { display: block; flex: 0 0 auto; height: 1px; background: #ebeaec; }
+/* Μόνο το βιογραφικό κυλάει — η φωτογραφία και το όνομα μένουν στη θέση τους.
+   Η μπάρα κύλισης είναι λεπτή (4px) και μπλε, όπως στο σχέδιο. */
 .smodal__bio {
-  margin-top: clamp(20px, 2vw, 28px);
-  padding-top: clamp(20px, 2vw, 28px);
-  border-top: 1px solid var(--fora-border);
-  color: var(--fora-text); line-height: 1.7;
+  flex: 1 1 auto; min-height: 0; overflow-y: auto;
+  padding-right: 12px;
+  font-family: var(--font-body); font-size: 17px; line-height: 1.5; color: #231f20;
+  scrollbar-width: thin; scrollbar-color: var(--fora-blue) #ebeaec;
 }
+.smodal__bio p { margin: 0 0 1em; }
 .smodal__bio p:last-child { margin-bottom: 0; }
+.smodal__bio::-webkit-scrollbar { width: 4px; }
+.smodal__bio::-webkit-scrollbar-track { background: #ebeaec; border-radius: 40px; }
+.smodal__bio::-webkit-scrollbar-thumb { background: var(--fora-blue); border-radius: 40px; }
 
-.smodal__close {
-  position: absolute; top: 14px; right: 14px; z-index: 2;
-  width: 40px; height: 40px; border-radius: 50%; padding: 0;
-  background: rgba(255, 255, 255, 0.92); border: 1px solid var(--fora-border);
-  display: grid; place-items: center; cursor: pointer; color: #231f20;
-  box-shadow: 0 2px 10px rgba(16, 24, 40, 0.12);
-  transition: background 0.18s ease, color 0.18s ease;
+/* --- Υποσέλιδο πλοήγησης (90px) --- */
+.smodal__nav {
+  flex: 0 0 auto; height: 90px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 0 32px; border-top: 1px solid #ebeaec;
 }
-.smodal__close svg { width: 18px; height: 18px; }
-.smodal__close:hover { background: #fff; color: #000; }
+.smodal__navbtn {
+  background: none; border: none; cursor: pointer;
+  padding: 8px 16px; border-radius: 4px;
+  font-family: var(--font-heading); font-weight: 500; font-size: 14px; color: #000;
+  white-space: nowrap; transition: background 0.16s ease, color 0.16s ease;
+}
+.smodal__navbtn:hover { background: #ebeaec; color: var(--fora-blue); }
+.smodal__next { display: flex; align-items: center; gap: 16px; }
+.smodal__next-info { display: flex; flex-direction: column; gap: 4px; text-align: left; }
+.smodal__next-label {
+  font-family: var(--font-body); font-size: 12px; color: #4e4749;
+  letter-spacing: 0.8px; text-transform: uppercase; white-space: nowrap;
+}
+.smodal__next-name {
+  font-family: var(--font-heading); font-weight: 500; font-size: 15px; color: #231f20;
+  white-space: nowrap;
+}
 
+/* Σε στενές οθόνες: μία στήλη και κύλιση ολόκληρου του παραθύρου. */
 @media (max-width: 760px) {
-  .smodal {
-    grid-template-columns: 1fr;
-    max-height: 90vh; overflow-y: auto;
+  .smodal { max-height: 92vh; }
+  .smodal__topbar { height: 60px; padding: 0 14px 0 18px; }
+  .smodal__eyebrow { font-size: 11px; letter-spacing: 1px; }
+  .smodal__body {
+    flex-direction: column; gap: 20px; padding: 18px;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
   }
-  .smodal__media { min-height: 0; aspect-ratio: 4 / 3; }
-  .smodal__content { max-height: none; overflow: visible; }
+  .smodal__portrait { flex: 0 0 auto; }
+  .smodal__photo { aspect-ratio: 4 / 3; }
+  .smodal__bio { overflow: visible; padding-right: 0; font-size: 15px; }
+  .smodal__name { font-size: 22px; }
+  .smodal__role { font-size: 15px; }
+  .smodal__nav { height: auto; padding: 12px 14px; }
+  .smodal__next-info { display: none; }
+  .smodal__navbtn { font-size: 13px; padding: 8px 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .smodal { animation: none; }

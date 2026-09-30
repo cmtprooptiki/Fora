@@ -26,15 +26,22 @@ function mediaUrl(url) {
 
 export default function Speakers({ forum }) {
   const speakers = forum?.omilites || [];
-  const [active, setActive] = useState(null); // ο επιλεγμένος ομιλητής (ή null)
+  // Κρατάμε τη ΘΕΣΗ του ομιλητή (όχι το αντικείμενο), ώστε το παράθυρο να
+  // μπορεί να πηγαίνει στον προηγούμενο/επόμενο χωρίς να κλείσει. -1 = κλειστό.
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const total = speakers.length;
+  const active = activeIndex >= 0 && activeIndex < total ? speakers[activeIndex] : null;
 
   useEffect(() => {
+    if (!active) return undefined;
     const onKey = (e) => {
-      if (e.key === 'Escape') setActive(null);
+      if (e.key === 'Escape') setActiveIndex(-1);
+      else if (e.key === 'ArrowRight') setActiveIndex((i) => (i + 1) % total);
+      else if (e.key === 'ArrowLeft') setActiveIndex((i) => (i - 1 + total) % total);
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, []);
+  }, [active, total]);
 
   // Χωρίς ομιλητές:
   //  • στο ΤΡΕΧΟΝ Forum η ενότητα παραμένει και δείχνει μήνυμα αναμονής,
@@ -94,8 +101,6 @@ export default function Speakers({ forum }) {
               .map((w) => w[0])
               .slice(0, 2)
               .join('');
-            const hasBio = !!(sp.viografiko && sp.viografiko.trim());
-
             const inner = (
               <>
                 <div className="speaker__photo">
@@ -111,27 +116,23 @@ export default function Speakers({ forum }) {
               </>
             );
 
-            return hasBio ? (
+            return (
               <div
                 className="speaker speaker--clickable"
                 key={i}
                 role="button"
                 tabIndex={0}
                 aria-haspopup="dialog"
-                onClick={() => setActive(sp)}
+                onClick={() => setActiveIndex(i)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    setActive(sp);
+                    setActiveIndex(i);
                   }
                 }}
               >
                 {inner}
               </div>
-            ) : (
-              <article className="speaker" key={i}>
-                {inner}
-              </article>
             );
           })}
 
@@ -153,39 +154,95 @@ export default function Speakers({ forum }) {
       {active && (
         <div
           className="smodal-overlay"
-          onClick={() => setActive(null)}
+          onClick={() => setActiveIndex(-1)}
           role="dialog"
           aria-modal="true"
           aria-label={`Βιογραφικό: ${active.onoma}`}
         >
-          <div
-            className={`smodal ${activePhoto ? '' : 'smodal--nophoto'}`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className="smodal__close" aria-label="Κλείσιμο" onClick={() => setActive(null)}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-                   strokeLinecap="round" aria-hidden="true">
-                <path d="M6 6l12 12M18 6L6 18" />
-              </svg>
-            </button>
+          <div className="smodal" onClick={(e) => e.stopPropagation()}>
+            {/* Κεφαλίδα: διαδρομή αριστερά, κλείσιμο δεξιά */}
+            <div className="smodal__topbar">
+              <span className="smodal__eyebrow">Ομιλητές&nbsp; /&nbsp; Βιογραφικό</span>
+              <button
+                type="button"
+                className="smodal__close"
+                aria-label="Κλείσιμο"
+                onClick={() => setActiveIndex(-1)}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+                     strokeLinecap="round" aria-hidden="true">
+                  <path d="M5.5 5.5l13 13M18.5 5.5l-13 13" />
+                </svg>
+              </button>
+            </div>
 
-            {/* Η φωτογραφία σε πλήρες ύψος στα αριστερά, ώστε να φαίνεται
-                καθαρά ο ομιλητής αντί για μικρό στρογγυλό εικονίδιο. */}
-            {activePhoto && (
-              <div className="smodal__media">
-                <img className="smodal__photo" src={activePhoto} alt={active.onoma} />
-                <span className="smodal__badge">{rolosGia(active.onoma)}</span>
+            <div className="smodal__body">
+              <div className="smodal__portrait">
+                <div className="smodal__photo">
+                  {activePhoto ? (
+                    <img src={activePhoto} alt={active.onoma} />
+                  ) : (
+                    <span className="speaker__initials">
+                      {(active.onoma || '')
+                        .split(' ')
+                        .map((w) => w[0])
+                        .slice(0, 2)
+                        .join('')}
+                    </span>
+                  )}
+                </div>
+                <div className="smodal__meta">
+                  <span className="smodal__type">{rolosGia(active.onoma)}</span>
+                  <span className="smodal__count">
+                    {String(activeIndex + 1).padStart(2, '0')} /{' '}
+                    {String(total).padStart(2, '0')}
+                  </span>
+                </div>
+              </div>
+
+              <div className="smodal__info">
+                <div className="smodal__identity">
+                  <h3 className="smodal__name">{active.onoma}</h3>
+                  {active.idiotita && <p className="smodal__role">{active.idiotita}</p>}
+                </div>
+                <span className="smodal__divider" aria-hidden="true" />
+                <div
+                  className="smodal__bio"
+                  dangerouslySetInnerHTML={{
+                    __html: (active.viografiko || '').replace(/\n/g, '<br/>'),
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Πλοήγηση στον προηγούμενο/επόμενο ομιλητή, χωρίς κλείσιμο */}
+            {total > 1 && (
+              <div className="smodal__nav">
+                <button
+                  type="button"
+                  className="smodal__navbtn"
+                  onClick={() => setActiveIndex((i) => (i - 1 + total) % total)}
+                >
+                  ←&nbsp;&nbsp;Προηγούμενος
+                </button>
+
+                <div className="smodal__next">
+                  <span className="smodal__next-info">
+                    <span className="smodal__next-label">Επόμενος ομιλητής</span>
+                    <span className="smodal__next-name">
+                      {speakers[(activeIndex + 1) % total]?.onoma}
+                    </span>
+                  </span>
+                  <button
+                    type="button"
+                    className="smodal__navbtn"
+                    onClick={() => setActiveIndex((i) => (i + 1) % total)}
+                  >
+                    Επόμενος&nbsp;&nbsp;→
+                  </button>
+                </div>
               </div>
             )}
-
-            <div className="smodal__content">
-              <h3 className="smodal__name">{active.onoma}</h3>
-              {active.idiotita && <p className="smodal__title">{active.idiotita}</p>}
-              <div
-                className="smodal__bio"
-                dangerouslySetInnerHTML={{ __html: active.viografiko.replace(/\n/g, '<br/>') }}
-              />
-            </div>
           </div>
         </div>
       )}
