@@ -162,6 +162,8 @@ export default function Speakers({ forum }) {
           <div className="smodal" onClick={(e) => e.stopPropagation()}>
             {/* Κεφαλίδα: διαδρομή αριστερά, κλείσιμο δεξιά */}
             <div className="smodal__topbar">
+              {/* Λαβή «φύλλου» — φαίνεται μόνο σε tablet/κινητό */}
+              <span className="smodal__handle" aria-hidden="true" />
               <span className="smodal__eyebrow">Ομιλητές&nbsp; /&nbsp; Βιογραφικό</span>
               <button
                 type="button"
@@ -221,9 +223,12 @@ export default function Speakers({ forum }) {
                 <button
                   type="button"
                   className="smodal__navbtn"
+                  aria-label="Προηγούμενος ομιλητής"
                   onClick={() => setActiveIndex((i) => (i - 1 + total) % total)}
                 >
-                  ←&nbsp;&nbsp;Προηγούμενος
+                  <span className="smodal__navarrow" aria-hidden="true">←</span>
+                  {/* Η λέξη κρύβεται σε tablet/κινητό, όπου μένει μόνο το βέλος */}
+                  <span className="smodal__navword">Προηγούμενος</span>
                 </button>
 
                 <div className="smodal__next">
@@ -236,9 +241,11 @@ export default function Speakers({ forum }) {
                   <button
                     type="button"
                     className="smodal__navbtn"
+                    aria-label="Επόμενος ομιλητής"
                     onClick={() => setActiveIndex((i) => (i + 1) % total)}
                   >
-                    Επόμενος&nbsp;&nbsp;→
+                    <span className="smodal__navword">Επόμενος</span>
+                    <span className="smodal__navarrow" aria-hidden="true">→</span>
                   </button>
                 </div>
               </div>

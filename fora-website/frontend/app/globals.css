@@ -2712,11 +2712,14 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   padding: 0 32px; border-top: 1px solid #ebeaec;
 }
 .smodal__navbtn {
+  display: inline-flex; align-items: center; gap: 8px;
   background: none; border: none; cursor: pointer;
   padding: 8px 16px; border-radius: 4px;
   font-family: var(--font-heading); font-weight: 500; font-size: 14px; color: #000;
   white-space: nowrap; transition: background 0.16s ease, color 0.16s ease;
 }
+/* Η λαβή του «φύλλου» υπάρχει μόνο στις μικρές οθόνες */
+.smodal__handle { display: none; }
 .smodal__navbtn:hover { background: #ebeaec; color: var(--fora-blue); }
 .smodal__next { display: flex; align-items: center; gap: 16px; }
 .smodal__next-info { display: flex; flex-direction: column; gap: 4px; text-align: left; }
@@ -2730,7 +2733,7 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 }
 
 /* Σε στενές οθόνες: μία στήλη και κύλιση ολόκληρου του παραθύρου. */
-@media (max-width: 760px) {
+@media (max-width: 600px) {
   .smodal { max-height: 92vh; }
   .smodal__topbar { height: 60px; padding: 0 14px 0 18px; }
   .smodal__eyebrow { font-size: 11px; letter-spacing: 1px; }
@@ -2746,6 +2749,60 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   .smodal__nav { height: auto; padding: 12px 14px; }
   .smodal__next-info { display: none; }
   .smodal__navbtn { font-size: 13px; padding: 8px 10px; }
+}
+
+/* ==========================================================================
+   ΠΑΡΑΘΥΡΟ ΒΙΟΓΡΑΦΙΚΟΥ ΣΕ TABLET (601–1024px) — Figma «Member bio sheet»
+   Γίνεται «φύλλο» που ακουμπά στον πάτο της οθόνης: λαβή αντί για διαδρομή,
+   φωτογραφία σε πλήρες πλάτος, και πλοήγηση μόνο με βελάκια.
+   ========================================================================== */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .smodal-overlay { align-items: flex-end; padding: 0 24px; }
+  .smodal {
+    max-width: 696px; max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  /* Κεφαλίδα 56px: λαβή 44×4 στο κέντρο, «×» 16px δεξιά, χωρίς γραμμή */
+  .smodal__topbar {
+    position: relative; height: 56px; padding: 0;
+    justify-content: center; border-bottom: none;
+  }
+  .smodal__eyebrow { display: none; }
+  .smodal__handle {
+    display: block; width: 44px; height: 4px;
+    background: #ebeaec; border-radius: 40px;
+  }
+  .smodal__close { position: absolute; right: 17px; bottom: 20px; width: 16px; height: 16px; }
+  .smodal__close svg { width: 16px; height: 16px; }
+
+  /* Περιεχόμενο: φωτογραφία 9:8 σε πλήρες πλάτος, μετά τα κείμενα */
+  .smodal__body {
+    flex-direction: column; gap: 16px;
+    padding: 0 24px 16px;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+  }
+  .smodal__portrait { flex: 0 0 auto; width: 100%; gap: 0; }
+  .smodal__photo { aspect-ratio: 9 / 8; border-radius: 8px; }
+  /* Στο σχέδιο δεν υπάρχει ετικέτα ρόλου ούτε μετρητής σε αυτό το μέγεθος */
+  .smodal__meta { display: none; }
+
+  .smodal__info { gap: 12px; }
+  .smodal__name { font-size: 25px; }
+  .smodal__role { font-size: 16px; }
+  .smodal__bio { overflow: visible; padding-right: 0; font-size: 15px; }
+
+  /* Πλοήγηση 78px: σκέτο «←» αριστερά, όνομα + «→» δεξιά */
+  .smodal__nav { height: 78px; padding: 0 24px; }
+  .smodal__navbtn {
+    padding: 4px 12px;
+    font-family: var(--font-body); font-weight: 500; font-size: 16px; color: #000;
+  }
+  .smodal__navword { display: none; }
+  .smodal__next { gap: 16px; align-items: center; }
+  .smodal__next-label { display: none; }
+  .smodal__next-name { font-size: 13px; }
+  .smodal__next .smodal__navbtn { color: #4e4749; font-weight: 400; }
 }
 @media (prefers-reduced-motion: reduce) {
   .smodal { animation: none; }
