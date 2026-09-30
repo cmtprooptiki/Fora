@@ -2732,23 +2732,61 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   white-space: nowrap;
 }
 
-/* Σε στενές οθόνες: μία στήλη και κύλιση ολόκληρου του παραθύρου. */
+/* ==========================================================================
+   ΠΑΡΑΘΥΡΟ ΒΙΟΓΡΑΦΙΚΟΥ ΣΕ ΚΙΝΗΤΑ (≤600px) — Figma «Member bio sheet» (393px)
+   Ίδιο «φύλλο» με το tablet, αλλά σε όλο το πλάτος της οθόνης και με
+   περιθώρια 16px αντί για 24px. Η φωτογραφία είναι πιο όρθια (361×391).
+   ========================================================================== */
 @media (max-width: 600px) {
-  .smodal { max-height: 92vh; }
-  .smodal__topbar { height: 60px; padding: 0 14px 0 18px; }
-  .smodal__eyebrow { font-size: 11px; letter-spacing: 1px; }
+  .smodal-overlay { align-items: flex-end; padding: 0; }
+  .smodal {
+    max-width: none; max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  /* Κεφαλίδα 56px: λαβή 44×4 στο κέντρο, «×» 16px δεξιά, χωρίς γραμμή */
+  .smodal__topbar {
+    position: relative; height: 56px; padding: 0;
+    justify-content: center; border-bottom: none;
+  }
+  .smodal__eyebrow { display: none; }
+  .smodal__handle {
+    display: block; width: 44px; height: 4px;
+    background: #ebeaec; border-radius: 40px;
+  }
+  .smodal__close { position: absolute; right: 22px; top: 22px; width: 16px; height: 16px; }
+  .smodal__close svg { width: 16px; height: 16px; }
+
   .smodal__body {
-    flex-direction: column; gap: 20px; padding: 18px;
+    flex-direction: column; gap: 16px;
+    padding: 0 16px 16px;
     overflow-y: auto; -webkit-overflow-scrolling: touch;
   }
-  .smodal__portrait { flex: 0 0 auto; }
-  .smodal__photo { aspect-ratio: 4 / 3; }
+  .smodal__portrait { flex: 0 0 auto; width: 100%; gap: 0; }
+  .smodal__photo { aspect-ratio: 361 / 391; border-radius: 8px; }
+  .smodal__meta { display: none; }
+
+  .smodal__info { gap: 12px; }
+  .smodal__name { font-size: 25px; }
+  .smodal__role { font-size: 16px; }
   .smodal__bio { overflow: visible; padding-right: 0; font-size: 15px; }
-  .smodal__name { font-size: 22px; }
-  .smodal__role { font-size: 15px; }
-  .smodal__nav { height: auto; padding: 12px 14px; }
-  .smodal__next-info { display: none; }
-  .smodal__navbtn { font-size: 13px; padding: 8px 10px; }
+
+  /* Πλοήγηση 78px: σκέτο «←» αριστερά, όνομα + «→» δεξιά */
+  .smodal__nav { height: 78px; padding: 0 16px; }
+  .smodal__navbtn {
+    padding: 4px 12px;
+    font-family: var(--font-body); font-weight: 500; font-size: 16px; color: #000;
+  }
+  .smodal__navword { display: none; }
+  .smodal__next { gap: 16px; align-items: center; min-width: 0; }
+  .smodal__next-label { display: none; }
+  /* Πολύ μεγάλα ονόματα κόβονται με αποσιωπητικά αντί να σπρώξουν έξω το βέλος */
+  .smodal__next-info { min-width: 0; }
+  .smodal__next-name {
+    font-size: 13px; max-width: 52vw;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .smodal__next .smodal__navbtn { color: #4e4749; font-weight: 400; }
 }
 
 /* ==========================================================================
