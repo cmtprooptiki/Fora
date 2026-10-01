@@ -18,7 +18,21 @@ export default function HeroImage({ forum }) {
   const goldGroup = (forum?.synergates || []).find((gr) =>
     (gr?.katigoria || '').toLowerCase().includes('χρυσ')
   );
-  const goldLabel = goldGroup?.katigoria || 'Χρυσός Χορηγός';
+  // Στην ενότητα «Συνεργάτες» η κατηγορία εμφανίζεται με ΚΕΦΑΛΑΙΑ μέσω CSS,
+  // οπότε δεν φαινόταν ότι είναι καταχωρημένη πεζά και χωρίς τόνους. Εδώ όμως
+  // το κείμενο δείχνεται αυτούσιο, γι' αυτό διορθώνουμε τη γραφή των γνωστών
+  // ονομασιών. Οποιαδήποτε άλλη κατηγορία εμφανίζεται όπως γράφτηκε.
+  const SOSTI_GRAFI = {
+    'χρυσος χορηγος': 'Χρυσός Χορηγός',
+    'μεγας χορηγος': 'Μέγας Χορηγός',
+    'χορηγος': 'Χορηγός',
+  };
+  const kleidi = (goldGroup?.katigoria || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .trim();
+  const goldLabel = SOSTI_GRAFI[kleidi] || goldGroup?.katigoria || 'Χρυσός Χορηγός';
 
   if (!img && !goldGroup) return null;
 
