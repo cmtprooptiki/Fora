@@ -1,6 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+// Πέρα από αυτή την απόσταση (ή με αρκετά γρήγορη κίνηση) το «φύλλο» κλείνει.
+const SYRSIMO_ORIO = 110;      // px
+const SYRSIMO_TAXYTITA = 0.55; // px ανά ms
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
 
@@ -32,10 +36,70 @@ export default function Speakers({ forum }) {
   const total = speakers.length;
   const active = activeIndex >= 0 && activeIndex < total ? speakers[activeIndex] : null;
 
+  // --- Σύρσιμο του «φύλλου» προς τα κάτω (κινητά/tablet), όπως στους χάρτες ---
+  const [dragY, setDragY] = useState(0);     // πόσο έχει κατέβει με το δάχτυλο
+  const [dragging, setDragging] = useState(false);
+  const [closing, setClosing] = useState(false);
+  const dragRef = useRef(null);
+  const timerRef = useRef(null);
+
+  const einaiMikriOthoni = () =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 1024px)').matches;
+
+  const closeModal = () => {
+    if (!einaiMikriOthoni()) {
+      setActiveIndex(-1);
+      setDragY(0);
+      return;
+    }
+    // Στο «φύλλο» κλείνουμε με γλίστρημα προς τα κάτω
+    setDragging(false);
+    setClosing(true);
+    timerRef.current = window.setTimeout(() => {
+      setActiveIndex(-1);
+      setClosing(false);
+      setDragY(0);
+    }, 240);
+  };
+
+  useEffect(() => () => window.clearTimeout(timerRef.current), []);
+
+  const onHandleDown = (e) => {
+    if (!einaiMikriOthoni()) return;
+    dragRef.current = { startY: e.clientY, lastY: e.clientY, lastT: performance.now(), v: 0 };
+    setDragging(true);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      /* ο browser μπορεί να μην το υποστηρίζει — το σύρσιμο δουλεύει ούτως ή άλλως */
+    }
+  };
+
+  const onHandleMove = (e) => {
+    const d = dragRef.current;
+    if (!d) return;
+    const now = performance.now();
+    const dt = now - d.lastT;
+    if (dt > 0) d.v = (e.clientY - d.lastY) / dt;
+    d.lastY = e.clientY;
+    d.lastT = now;
+    setDragY(Math.max(0, e.clientY - d.startY));
+  };
+
+  const onHandleUp = (e) => {
+    const d = dragRef.current;
+    if (!d) return;
+    dragRef.current = null;
+    setDragging(false);
+    const apostasi = Math.max(0, e.clientY - d.startY);
+    if (apostasi > SYRSIMO_ORIO || d.v > SYRSIMO_TAXYTITA) closeModal();
+    else setDragY(0); // δεν έφτασε αρκετά κάτω — επιστρέφει στη θέση του
+  };
+
   useEffect(() => {
     if (!active) return undefined;
     const onKey = (e) => {
-      if (e.key === 'Escape') setActiveIndex(-1);
+      if (e.key === 'Escape') closeModal();
       else if (e.key === 'ArrowRight') setActiveIndex((i) => (i + 1) % total);
       else if (e.key === 'ArrowLeft') setActiveIndex((i) => (i - 1 + total) % total);
     };
@@ -154,14 +218,31 @@ export default function Speakers({ forum }) {
       {active && (
         <div
           className="smodal-overlay"
-          onClick={() => setActiveIndex(-1)}
+          onClick={closeModal}
           role="dialog"
           aria-modal="true"
           aria-label={`Βιογραφικό: ${active.onoma}`}
         >
-          <div className="smodal" onClick={(e) => e.stopPropagation()}>
-            {/* Κεφαλίδα: διαδρομή αριστερά, κλείσιμο δεξιά */}
-            <div className="smodal__topbar">
+          <div
+            className={`smodal${dragging ? ' smodal--dragging' : ''}`}
+            onClick={(e) => e.stopPropagation()}
+            style={
+              closing
+                ? { transform: 'translateY(100%)' }
+                : dragY
+                  ? { transform: `translateY(${dragY}px)` }
+                  : undefined
+            }
+          >
+            {/* Κεφαλίδα: διαδρομή αριστερά, κλείσιμο δεξιά. Σε κινητά/tablet
+                ολόκληρη λειτουργεί ως λαβή — σύρετε προς τα κάτω για κλείσιμο. */}
+            <div
+              className="smodal__topbar"
+              onPointerDown={onHandleDown}
+              onPointerMove={onHandleMove}
+              onPointerUp={onHandleUp}
+              onPointerCancel={onHandleUp}
+            >
               {/* Λαβή «φύλλου» — φαίνεται μόνο σε tablet/κινητό */}
               <span className="smodal__handle" aria-hidden="true" />
               <span className="smodal__eyebrow">Ομιλητές&nbsp; /&nbsp; Βιογραφικό</span>
@@ -169,7 +250,7 @@ export default function Speakers({ forum }) {
                 type="button"
                 className="smodal__close"
                 aria-label="Κλείσιμο"
-                onClick={() => setActiveIndex(-1)}
+                onClick={closeModal}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
                      strokeLinecap="round" aria-hidden="true">

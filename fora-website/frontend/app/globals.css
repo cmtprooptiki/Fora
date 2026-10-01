@@ -2720,6 +2720,11 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 }
 /* Η λαβή του «φύλλου» υπάρχει μόνο στις μικρές οθόνες */
 .smodal__handle { display: none; }
+/* Το γλίστρημα του «φύλλου» (σύρσιμο/κλείσιμο) — σε υπολογιστή δεν ενεργοποιείται
+   ποτέ, γιατί το σύρσιμο επιτρέπεται μόνο κάτω από τα 1024px. */
+.smodal { transition: transform 0.24s cubic-bezier(0.22, 0.61, 0.36, 1); }
+/* Όσο το δάχτυλο σέρνει, το παράθυρο ακολουθεί χωρίς καθυστέρηση */
+.smodal--dragging { transition: none; }
 .smodal__navbtn:hover { background: #ebeaec; color: var(--fora-blue); }
 .smodal__next { display: flex; align-items: center; gap: 16px; }
 .smodal__next-info { display: flex; flex-direction: column; gap: 4px; text-align: left; }
@@ -2744,11 +2749,15 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
     border-radius: 16px 16px 0 0;
   }
 
-  /* Κεφαλίδα 56px: λαβή 44×4 στο κέντρο, «×» 16px δεξιά, χωρίς γραμμή */
+  /* Κεφαλίδα 56px: λαβή 44×4 στο κέντρο, «×» 16px δεξιά, χωρίς γραμμή.
+     Ολόκληρη η ζώνη πιάνεται με το δάχτυλο (βλ. σχόλιο στο μπλοκ του tablet). */
   .smodal__topbar {
     position: relative; height: 56px; padding: 0;
     justify-content: center; border-bottom: none;
+    touch-action: none; cursor: grab;
+    user-select: none; -webkit-user-select: none;
   }
+  .smodal--dragging .smodal__topbar { cursor: grabbing; }
   .smodal__eyebrow { display: none; }
   .smodal__handle {
     display: block; width: 44px; height: 4px;
@@ -2801,11 +2810,16 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
     border-radius: 16px 16px 0 0;
   }
 
-  /* Κεφαλίδα 56px: λαβή 44×4 στο κέντρο, «×» 16px δεξιά, χωρίς γραμμή */
+  /* Κεφαλίδα 56px: λαβή 44×4 στο κέντρο, «×» 16px δεξιά, χωρίς γραμμή.
+     Ολόκληρη η ζώνη πιάνεται με το δάχτυλο: το touch-action: none εμποδίζει
+     τον browser να κυλήσει τη σελίδα ή να κάνει ανανέωση ενώ σέρνουμε. */
   .smodal__topbar {
     position: relative; height: 56px; padding: 0;
     justify-content: center; border-bottom: none;
+    touch-action: none; cursor: grab;
+    user-select: none; -webkit-user-select: none;
   }
+  .smodal--dragging .smodal__topbar { cursor: grabbing; }
   .smodal__eyebrow { display: none; }
   .smodal__handle {
     display: block; width: 44px; height: 4px;
