@@ -96,6 +96,17 @@ export default function Speakers({ forum }) {
     else setDragY(0); // δεν έφτασε αρκετά κάτω — επιστρέφει στη θέση του
   };
 
+  // Ενημερώνουμε το <html> ότι το παράθυρο είναι ανοιχτό, ώστε το κουμπί
+  // προσβασιμότητας (ξεχωριστό component) να παραμερίσει σε κινητά.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (active) root.dataset.speakerModal = '1';
+    else delete root.dataset.speakerModal;
+    return () => {
+      delete root.dataset.speakerModal;
+    };
+  }, [active]);
+
   useEffect(() => {
     if (!active) return undefined;
     const onKey = (e) => {

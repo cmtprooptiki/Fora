@@ -154,6 +154,23 @@ body {
   transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
 }
 .a11y-panel[data-open='true'] { opacity: 1; visibility: visible; transform: none; }
+
+/* Όσο είναι ανοιχτό το παράθυρο βιογραφικού ομιλητή σε ΚΙΝΗΤΟ, το «φύλλο»
+   φτάνει ως τον πάτο της οθόνης και το κουμπί προσβασιμότητας σκέπαζε το
+   βελάκι «επόμενος». Μετακινείται πάνω αριστερά, πάνω από το σκοτεινό φόντο,
+   όπου δεν κρύβει τίποτα. Σε tablet/υπολογιστή παραμένει στη θέση του. */
+@media (max-width: 600px) {
+  html[data-speaker-modal='1'] .a11y-fab {
+    top: 14px; left: 14px; right: auto; bottom: auto;
+    width: 46px; height: 46px;
+  }
+  html[data-speaker-modal='1'] .a11y-fab svg { width: 30px; height: 30px; }
+  html[data-speaker-modal='1'] .a11y-panel {
+    top: 70px; left: 14px; right: auto; bottom: auto;
+    max-width: calc(100vw - 28px);
+    transform-origin: top left;
+  }
+}
 .a11y-panel__head {
   background: var(--fora-blue); color: #fff; padding: 14px 16px;
   display: flex; align-items: center; justify-content: space-between;
