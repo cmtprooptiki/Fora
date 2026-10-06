@@ -22,7 +22,15 @@ const toDate = (value, fallback) => {
 export default async function sitemap() {
   const simera = new Date();
 
-  const [forums, articles] = await Promise.all([getAllForums(), getArticles()]);
+  // Αν για οποιονδήποτε λόγο το Strapi δεν απαντήσει, ο χάρτης βγαίνει με τις
+  // σταθερές σελίδες αντί να αποτύχει η σελίδα (ή το build).
+  let forums = [];
+  let articles = [];
+  try {
+    [forums, articles] = await Promise.all([getAllForums(), getArticles()]);
+  } catch (err) {
+    console.warn(`[FORA] sitemap: αδυναμία ανάγνωσης από το Strapi — ${err.message}`);
+  }
 
   // Σταθερές σελίδες
   const stathers = [
