@@ -8,7 +8,7 @@ const SYRSIMO_TAXYTITA = 0.55; // px ανά ms
 
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
 
-// Ετικέτα πάνω στη φωτογραφία. Όλοι εμφανίζονται ως «ΟΜΙΛΗΤΗΣ»· όσοι
+// Ετικέτα πάνω στη φωτογραφία. Όλοι εμφανίζονται ως «ΟΜΙΛΗΤΗΣ/ΟΜΙΛΗΤΡΙΑ»· όσοι
 // συντονίζουν ενότητα γράφονται εδώ (αρκεί το επώνυμο, χωρίς τόνους).
 const SYNTONISTES = ['παπαδακης', 'πολυζος'];
 
@@ -18,9 +18,29 @@ const XORIS_TONOUS = (s) =>
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '');
 
+// Εξαιρέσεις για ονόματα που δεν ακολουθούν τον ελληνικό κανόνα — κυρίως
+// ξενόγλωσσα. Γράψτε το επώνυμο με πεζά και χωρίς τόνους.
+const GYNAIKES = [];
+const ANDRES = [];
+
+// Στα ελληνικά τα ανδρικά ονόματα και επώνυμα τελειώνουν σε «ς» (Δαφούλας,
+// Πολύζος, Γουρζουλίδης, Γιώργος), ενώ τα γυναικεία ποτέ (Καϊτελίδου, Δάφνη).
+// Αρκεί μία λέξη του ονόματος να τελειώνει σε «ς» για να είναι άνδρας.
+function einaiGynaika(onoma) {
+  const kathara = XORIS_TONOUS(onoma);
+  if (GYNAIKES.some((n) => kathara.includes(n))) return true;
+  if (ANDRES.some((n) => kathara.includes(n))) return false;
+  const lekseis = kathara.replace(/[.,·]/g, ' ').split(/\s+/).filter(Boolean);
+  // «σ» μαζί με «ς»: το toLowerCase() μετατρέπει το τελικό «Σ» των κεφαλαίων σε «σ»
+  return !lekseis.some((w) => /[σς]$/.test(w));
+}
+
 function rolosGia(onoma) {
   const kathara = XORIS_TONOUS(onoma);
-  return SYNTONISTES.some((s) => kathara.includes(s)) ? 'Συντονιστής' : 'Ομιλητής';
+  const syntonizei = SYNTONISTES.some((s) => kathara.includes(s));
+  const gynaika = einaiGynaika(onoma);
+  if (syntonizei) return gynaika ? 'Συντονίστρια' : 'Συντονιστής';
+  return gynaika ? 'Ομιλήτρια' : 'Ομιλητής';
 }
 function mediaUrl(url) {
   if (!url) return '';
