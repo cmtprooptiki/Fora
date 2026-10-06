@@ -7,12 +7,31 @@ import { Fragment, useState } from 'react';
 // η γραμμή: -1 = πριν από την 1η, 0 = μετά την 1η, 1 = μετά τη 2η κ.ο.κ.
 // Εμφανίζονται μόνο στο τρέχον Forum.
 const APLES_GRAMMES = [
-  { meta: -1, ora: '10:00 - 10:20', titlos: 'Προσέλευση - Χαιρετισμοί' },
-  { meta: 0, ora: '11:40 - 12:00', titlos: 'Συζήτηση - Διάλειμμα Καφέ', etiketa: 'Διάλειμμα' },
-  { meta: 1, ora: '13:20 - 14:00', titlos: 'Συζήτηση - Διάλειμμα Γεύμα', etiketa: 'Διάλειμμα' },
-  { meta: 2, ora: '15:10 - 15:20', titlos: 'Συζήτηση', etiketa: 'Συζήτηση' },
-  { meta: 3, ora: '16:50 - 17:00', titlos: 'Κλείσιμο' },
+  { meta: -1, ora: '10:00 – 10:20', titlos: 'Προσέλευση - Χαιρετισμοί' },
+  { meta: -1, ora: '10:20 – 10:30', titlos: 'Εναρκτήρια Ομιλία' },
+  { meta: 0, ora: '11:40 – 12:10', titlos: 'Συζήτηση – Coffee Break', etiketa: 'Διάλειμμα' },
+  { meta: 1, ora: '13:20 – 14:00', titlos: 'Συζήτηση – Lunch Break', etiketa: 'Διάλειμμα' },
+  { meta: 2, ora: '15:10 – 15:30', titlos: 'Συζήτηση – Coffee Break', etiketa: 'Διάλειμμα' },
+  { meta: 3, ora: '16:50 – 17:00', titlos: 'Κλείσιμο' },
 ];
+
+// Η ημερομηνία της κεφαλίδας εμφανίζεται με την ημέρα μπροστά («Δευτέρα, 2
+// Νοεμβρίου 2026»). Η ημέρα υπολογίζεται από το πεδίο «Ημερομηνία Έναρξης»
+// του Strapi, ώστε να μη χρειάζεται να τη γράφει κανείς με το χέρι.
+const IMERES = ['Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο'];
+const EXEI_IMERA = /^(Δευτέρα|Τρίτη|Τετάρτη|Πέμπτη|Παρασκευή|Σάββατο|Κυριακή)/i;
+
+function imerominiaMeImera(forum) {
+  const keimeno = (forum?.imerominia || '').trim();
+  if (!keimeno) return '';
+  // Αν το κείμενο στο Strapi περιέχει ήδη ημέρα, δεν την προσθέτουμε δεύτερη φορά
+  if (EXEI_IMERA.test(keimeno)) return keimeno;
+  if (!forum?.imerominiaEnarksis) return keimeno;
+  const d = new Date(forum.imerominiaEnarksis);
+  if (Number.isNaN(d.getTime())) return keimeno;
+  // getUTCDay: σταθερό αποτέλεσμα ανεξάρτητα από τη ζώνη ώρας του διακομιστή
+  return `${IMERES[d.getUTCDay()]}, ${keimeno}`;
+}
 
 // Μικρά εικονίδια (γραμμικά) σε στυλ Figma
 const IconCalendar = () => (
@@ -70,7 +89,7 @@ export default function Programma({ forum }) {
           {forum?.imerominia && (
             <p className="prog__date">
               <IconCalendar />
-              {forum.imerominia}
+              {imerominiaMeImera(forum)}
             </p>
           )}
         </div>

@@ -2281,13 +2281,17 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 
 .prog__body {
   border-top: 1px solid var(--fora-border);
-  padding: 4px clamp(16px, 2.4vw, 26px) 18px calc(clamp(16px, 2.4vw, 26px) + 46px);
+  /* Figma: 32px πάνω/κάτω, και αριστερή εσοχή ίση με τον κύκλο του αριθμού +
+     το κενό του, ώστε τα θέματα να ευθυγραμμίζονται με τον τίτλο της ενότητας. */
+  padding: 32px clamp(16px, 2.4vw, 26px) 32px calc(clamp(16px, 2.4vw, 26px) + 46px);
 }
 .prog__coord { display: flex; align-items: center; gap: 8px; color: var(--fora-blue); font-weight: 600; font-size: 0.96rem; padding: 14px 0 6px; }
 .prog__coord svg { width: 18px; height: 18px; flex: 0 0 auto; }
 .prog__items { list-style: none; margin: 0; padding: 0; }
-.prog__item { padding: 12px 0; border-top: 1px solid #eef0f3; }
-.prog__item:first-child { border-top: none; }
+/* Τα θέματα κάθε ενότητας χωρίς διαχωριστικές γραμμές — μόνο με κενό 24px,
+   όπως στο σχέδιο. */
+.prog__item { padding: 0; border-top: none; margin-top: 24px; }
+.prog__item:first-child { margin-top: 0; }
 .prog__item-titlerow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .prog__item-time { color: var(--fora-blue); font-weight: 600; font-size: 0.88rem; white-space: nowrap; }
 .prog__item-title { font-weight: 700; color: var(--fora-black); font-size: 1rem; }
