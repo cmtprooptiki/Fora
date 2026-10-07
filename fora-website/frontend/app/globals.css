@@ -79,7 +79,11 @@
   --fora-hero-to: #0a3d7a;        /* κάτω δεξιά της κεφαλίδας hero */
 
   /* --- Γραμματοσειρές --- */
-  --font-heading: "GreekThetaFix", "hagrid", "Poppins", "Segoe UI", Arial, sans-serif;
+  /* Η «Lato» μπαίνει αμέσως μετά τη Hagrid ως εφεδρεία ανά χαρακτήρα: όσα
+     σύμβολα λείπουν από τη Hagrid — π.χ. τα ρουμανικά «ț», «ș», «ă» στο όνομα
+     «Dr. Grațiela-Denisa Iordache» — αποδίδονται σε Lato αντί να πέφτουν σε
+     τυχαία γραμματοσειρά του λειτουργικού, που φαινόταν ξένη δίπλα στα άλλα. */
+  --font-heading: "GreekThetaFix", "hagrid", "Lato", "Poppins", "Segoe UI", Arial, sans-serif;
   --font-serif: "Cambo", Georgia, "Times New Roman", serif;
   --font-body: "Lato", "Segoe UI", Arial, sans-serif;
 
