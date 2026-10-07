@@ -150,6 +150,27 @@ export default function Speakers({ forum }) {
 
   const activePhoto = active?.fotografia?.url ? mediaUrl(active.fotografia.url) : null;
 
+  // --- Πού μπαίνει το «Νέα Ονόματα Έρχονται Σύντομα» ---
+  // Το πλέγμα έχει 4 κάρτες ανά σειρά. Αν οι ομιλητές συμπληρώνουν ακριβώς
+  // τις σειρές (πολλαπλάσιο του 4), το πλακίδιο θα ξεκινούσε ΜΟΝΟ του νέα
+  // σειρά με τρία κενά δίπλα του — άσχημο. Σε αυτή την περίπτωση μπαίνει ως
+  // λωρίδα πλήρους πλάτους κάτω από το πλέγμα. Αλλιώς καταλαμβάνει την πρώτη
+  // ελεύθερη θέση της τελευταίας σειράς.
+  const STILES = 4;
+  const sitesGemates = total % STILES === 0;
+  const soonStoPlegma = isDraft && hasSpeakers && !sitesGemates;
+  const soonSeLorida = isDraft && hasSpeakers && sitesGemates;
+
+  const perieximenoSoon = (
+    <>
+      <span className="spk-empty__icon" aria-hidden="true">i</span>
+      <p className="spk-empty__title">Νέα Ονόματα Έρχονται Σύντομα</p>
+      <p className="spk-empty__text">
+        Μείνετε συντονισμένοι για τις επόμενες ανακοινώσεις.
+      </p>
+    </>
+  );
+
   return (
     // Λευκό φόντο τμήματος (όπως το «Πρόγραμμα» πιο πάνω) — ο γκρι τόνος
     // μεταφέρθηκε στις κάρτες των ομιλητών (.speaker στο globals.css).
@@ -231,19 +252,15 @@ export default function Speakers({ forum }) {
             );
           })}
 
-          {/* Τελευταίο πλακίδιο: όσο η διοργάνωση είναι υπό διαμόρφωση, κρατά
-              θέση για τα ονόματα που δεν έχουν ανακοινωθεί ακόμη. */}
-          {isDraft && (
-            <div className="speaker speaker--soon">
-              <span className="spk-empty__icon" aria-hidden="true">i</span>
-              <p className="spk-empty__title">Νέα Ονόματα Έρχονται Σύντομα</p>
-              <p className="spk-empty__text">
-                Μείνετε συντονισμένοι για τις επόμενες ανακοινώσεις.
-              </p>
-            </div>
+          {/* Πλακίδιο στην πρώτη ελεύθερη θέση της τελευταίας σειράς */}
+          {soonStoPlegma && (
+            <div className="speaker speaker--soon">{perieximenoSoon}</div>
           )}
         </div>
         )}
+
+        {/* Λωρίδα πλήρους πλάτους, όταν οι σειρές είναι γεμάτες */}
+        {soonSeLorida && <div className="spk-empty">{perieximenoSoon}</div>}
       </div>
 
       {active && (
