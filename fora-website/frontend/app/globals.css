@@ -2898,9 +2898,9 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   min-width: 0; min-height: 0; display: flex; align-items: center; justify-content: center;
 }
 .sponsor-logo img { max-height: 60px; width: auto; object-fit: contain; }
-/* Ο χρυσός χορηγός προβάλλεται μεγαλύτερος (Figma: ύψος 149px σε οθόνη 1920).
+/* Ο χρυσός χορηγός προβάλλεται μεγαλύτερος από τις υπόλοιπες κατηγορίες.
    Αφορά ΜΟΝΟ την κατηγορία με «χρυσ» στο όνομά της — οι υπόλοιπες μένουν 60px. */
-.sponsor-group--gold .sponsor-logo img { max-height: clamp(90px, 7.8vw, 149px); }
+.sponsor-group--gold .sponsor-logo img { max-height: clamp(70px, 5.2vw, 100px); }
 
 /* ==========================================================================
    ΣΤΙΓΜΙΟΤΥΠΑ ΤΟΥ FORUM (Figma: Section_Gallery)
