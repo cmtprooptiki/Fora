@@ -52,8 +52,12 @@ export default function Sponsors({ forum }) {
           </div>
         </div>
 
-        {groups.map((group, gi) => (
-          <div className="sponsor-group" key={gi}>
+        {groups.map((group, gi) => {
+          // Ο χρυσός χορηγός προβάλλεται με μεγαλύτερο λογότυπο από τις
+          // υπόλοιπες κατηγορίες (Figma «Συνεργάτες»).
+          const einaiXrysos = (group?.katigoria || '').toLowerCase().includes('χρυσ');
+          return (
+          <div className={`sponsor-group ${einaiXrysos ? 'sponsor-group--gold' : ''}`} key={gi}>
             <h3 className="sponsor-group__title">{group.katigoria}</h3>
             <div className="sponsor-group__logos">
               {(group.logotypa || []).map((s, si) => {
@@ -77,7 +81,8 @@ export default function Sponsors({ forum }) {
               })}
             </div>
           </div>
-        ))}
+          );
+        })}
 
         {/* Υποσημείωση προσχεδίου, κάτω από τις κατηγορίες και τα λογότυπα.
             Ίδιος διακόπτης με τα υπόλοιπα μηνύματα «υπό διαμόρφωση»: εμφανίζεται
