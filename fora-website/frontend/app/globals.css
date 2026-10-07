@@ -2906,7 +2906,9 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .sponsor-group:last-of-type { margin-bottom: 0; }
 .sponsor-group__title {
   color: var(--fora-black); text-transform: uppercase; letter-spacing: 0.08em;
-  font-family: var(--font-body); font-weight: 700; font-size: 0.9rem;
+  font-family: var(--font-body); font-weight: 700;
+  /* Μεγαλύτερος τίτλος κατηγορίας: από 14px σε 24px σε μεγάλη οθόνη */
+  font-size: clamp(1rem, 1.25vw, 24px);
   margin-bottom: clamp(24px, 3.33vw, 64px); display: block;
 }
 .sponsor-group__title::after { content: none; }
