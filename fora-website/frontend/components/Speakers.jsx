@@ -173,7 +173,9 @@ export default function Speakers({ forum }) {
   const perieximenoSoon = (
     <>
       <span className="spk-empty__icon" aria-hidden="true">i</span>
-      <p className="spk-empty__title">Νέα Ονόματα Έρχονται Σύντομα</p>
+      <p className="spk-empty__title">
+        «Η ενότητα θα εμπλουτιστεί με το σύνολο των ομιλητών»
+      </p>
       <p className="spk-empty__text">
         Μείνετε συντονισμένοι για τις επόμενες ανακοινώσεις.
       </p>

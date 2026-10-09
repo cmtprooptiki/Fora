@@ -2615,7 +2615,8 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   background: #f7f7fa; border-radius: 16px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: clamp(14px, 1.05vw, 20px); text-align: center;
-  padding: clamp(40px, 4.2vw, 80px) clamp(18px, 3.1vw, 60px);
+  /* Figma: 80px πάνω-κάτω, μόλις 24px στα πλάγια ώστε να χωράει η μεγάλη φράση */
+  padding: clamp(40px, 4.2vw, 80px) clamp(14px, 1.25vw, 24px);
 }
 .speaker--soon .spk-empty__title,
 .speaker--soon .spk-empty__text { margin: 0; }
