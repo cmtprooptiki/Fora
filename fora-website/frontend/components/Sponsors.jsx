@@ -1,5 +1,10 @@
 import { mediaUrl } from '../lib/strapi';
 
+// Λογότυπα με κάθετη διάταξη: περιορισμένα στο ίδιο ύψος με τα πλατιά δείχνουν
+// πολύ μικρά, γιατί είναι στενά. Προβάλλονται ψηλότερα. Γράψτε το όνομα όπως
+// είναι καταχωρημένο στο Strapi, με πεζά (αρκεί τμήμα του).
+const PSILA_LOGOTYPA = ['υπουργείο υγείας'];
+
 export default function Sponsors({ forum }) {
   const groups = forum?.synergates || [];
   // «Υπό διαμόρφωση» — ίδιο πεδίο με τη λωρίδα κορυφής και την υποσημείωση
@@ -67,8 +72,17 @@ export default function Sponsors({ forum }) {
                 ) : (
                   <span>{s.onoma}</span>
                 );
+                // Κάθετα λογότυπα φαίνονται μικρά όταν περιορίζονται στο ίδιο
+                // ύψος με τα πλατιά. Όσα μπουν εδώ παίρνουν μεγαλύτερο ύψος.
+                const psilo = PSILA_LOGOTYPA.some((n) =>
+                  (s.onoma || '').toLowerCase().includes(n)
+                );
                 return (
-                  <div className="sponsor-logo" title={s.onoma || ''} key={si}>
+                  <div
+                    className={`sponsor-logo ${psilo ? 'sponsor-logo--tall' : ''}`}
+                    title={s.onoma || ''}
+                    key={si}
+                  >
                     {s.istoselida ? (
                       <a href={s.istoselida} target="_blank" rel="noopener noreferrer">
                         {inner}
