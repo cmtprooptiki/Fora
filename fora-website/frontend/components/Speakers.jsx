@@ -23,14 +23,23 @@ const XORIS_TONOUS = (s) =>
 const GYNAIKES = [];
 const ANDRES = [];
 
+// Γυναικεία ονόματα αρχαίας κλίσης που λήγουν σε «ς» — οι μοναδικές εξαιρέσεις
+// στον κανόνα παρακάτω. Ελέγχονται ως ΟΛΟΚΛΗΡΗ λέξη, ώστε να μην μπερδεύονται
+// με επώνυμα που τυχαίνει να τα περιέχουν.
+const GYNAIKEIA_SE_SIGMA = [
+  'αρτεμις', 'θετις', 'ιρις', 'ελπις', 'δωρις', 'νεμεσις', 'λαχεσις', 'τηθυς',
+];
+
 // Στα ελληνικά τα ανδρικά ονόματα και επώνυμα τελειώνουν σε «ς» (Δαφούλας,
-// Πολύζος, Γουρζουλίδης, Γιώργος), ενώ τα γυναικεία ποτέ (Καϊτελίδου, Δάφνη).
-// Αρκεί μία λέξη του ονόματος να τελειώνει σε «ς» για να είναι άνδρας.
+// Πολύζος, Γουρζουλίδης, Γιώργος), ενώ τα γυναικεία σχεδόν ποτέ (Καϊτελίδου,
+// Δάφνη). Αρκεί μία λέξη του ονόματος να τελειώνει σε «ς» για να είναι άνδρας.
 function einaiGynaika(onoma) {
   const kathara = XORIS_TONOUS(onoma);
   if (GYNAIKES.some((n) => kathara.includes(n))) return true;
   if (ANDRES.some((n) => kathara.includes(n))) return false;
-  const lekseis = kathara.replace(/[.,·]/g, ' ').split(/\s+/).filter(Boolean);
+  const lekseis = kathara.replace(/[.,·()]/g, ' ').split(/\s+/).filter(Boolean);
+  // Πρώτα οι εξαιρέσεις: «Άρτεμις Μαρκάτου» λήγει σε ς αλλά είναι γυναίκα
+  if (lekseis.some((w) => GYNAIKEIA_SE_SIGMA.includes(w))) return true;
   // «σ» μαζί με «ς»: το toLowerCase() μετατρέπει το τελικό «Σ» των κεφαλαίων σε «σ»
   return !lekseis.some((w) => /[σς]$/.test(w));
 }
