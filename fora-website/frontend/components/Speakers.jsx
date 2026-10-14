@@ -10,7 +10,7 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
 
 // Ετικέτα πάνω στη φωτογραφία. Όλοι εμφανίζονται ως «ΟΜΙΛΗΤΗΣ/ΟΜΙΛΗΤΡΙΑ»· όσοι
 // συντονίζουν ενότητα γράφονται εδώ (αρκεί το επώνυμο, χωρίς τόνους).
-const SYNTONISTES = ['παπαδακης', 'πολυζος'];
+const SYNTONISTES = ['παπαδακης', 'πολυζος', 'παπαβασιλειου'];
 
 const XORIS_TONOUS = (s) =>
   (s || '')
