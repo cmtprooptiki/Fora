@@ -159,9 +159,13 @@ export default function Header({ settings, archive = [], registerHref }) {
             <span className="site-nav__num" aria-hidden="true">03</span>
             <span className="site-nav__label">Πρόγραμμα</span>
           </a>
+          <a href={`${base}#synergates`}>
+            <span className="site-nav__num" aria-hidden="true">04</span>
+            <span className="site-nav__label">Συνεργάτες</span>
+          </a>
           {/* Πλέον οδηγεί στη σελίδα «Νέα & Ανακοινώσεις», όχι στο υποσέλιδο */}
           <a href="/news/">
-            <span className="site-nav__num" aria-hidden="true">04</span>
+            <span className="site-nav__num" aria-hidden="true">05</span>
             <span className="site-nav__label">Νέα &amp; Ανακοινώσεις</span>
           </a>
 
