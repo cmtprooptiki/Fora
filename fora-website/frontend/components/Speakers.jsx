@@ -187,18 +187,6 @@ export default function Speakers({ forum }) {
     // μεταφέρθηκε στις κάρτες των ομιλητών (.speaker στο globals.css).
     <section className="section" id="omilites">
       <div className="container">
-        {/* Υποσημείωση προσχεδίου — πάνω από τον τίτλο της ενότητας.
-            Εμφανίζεται όσο το Forum είναι «υπό διαμόρφωση», δηλαδή όσο έχει
-            κείμενο το «Μήνυμα Κορυφής» (mynimaKorifis) στο Strapi. Αδειάζοντάς
-            το, φεύγουν μαζί και η λωρίδα κορυφής και αυτή η υποσημείωση. */}
-        {isDraft && (
-          <p className="draft-note">
-            <span className="draft-note__star" aria-hidden="true">*</span>
-            Το πρόγραμμα είναι προσωρινό και ενδέχεται να τροποποιηθεί. Οι ομιλητές
-            θα επιβεβαιωθούν σύντομα.
-          </p>
-        )}
-
         <div className="thematics__head">
           <span>Ομιλητές</span>
           <span>Του Forum</span>
