@@ -123,35 +123,9 @@ export default function Speakers({ forum }) {
   //  • σε προηγούμενο Forum δεν έχει νόημα («θα ανακοινωθούν») και κρύβεται.
   const isCurrent = !!forum?.trexonForum;
   const hasSpeakers = speakers.length > 0;
-  // «Υπό διαμόρφωση»: ίδιος διακόπτης με τη λωρίδα κορυφής — ένα πεδίο στο
-  // Strapi ελέγχει όλα τα μηνύματα προσχεδίου.
-  const isDraft = !!forum?.mynimaKorifis?.trim();
   if (!hasSpeakers && !isCurrent) return null;
 
   const activePhoto = active?.fotografia?.url ? mediaUrl(active.fotografia.url) : null;
-
-  // --- Πού μπαίνει το «Νέα Ονόματα Έρχονται Σύντομα» ---
-  // Το πλέγμα έχει 4 κάρτες ανά σειρά. Αν οι ομιλητές συμπληρώνουν ακριβώς
-  // τις σειρές (πολλαπλάσιο του 4), το πλακίδιο θα ξεκινούσε ΜΟΝΟ του νέα
-  // σειρά με τρία κενά δίπλα του — άσχημο. Σε αυτή την περίπτωση μπαίνει ως
-  // λωρίδα πλήρους πλάτους κάτω από το πλέγμα. Αλλιώς καταλαμβάνει την πρώτη
-  // ελεύθερη θέση της τελευταίας σειράς.
-  const STILES = 4;
-  const sitesGemates = total % STILES === 0;
-  const soonStoPlegma = isDraft && hasSpeakers && !sitesGemates;
-  const soonSeLorida = isDraft && hasSpeakers && sitesGemates;
-
-  const perieximenoSoon = (
-    <>
-      <span className="spk-empty__icon" aria-hidden="true">i</span>
-      <p className="spk-empty__title">
-        &quot;Η ενότητα θα εμπλουτιστεί με το σύνολο των ομιλητών&quot;
-      </p>
-      <p className="spk-empty__text">
-        Μείνετε συντονισμένοι για τις επόμενες ανακοινώσεις.
-      </p>
-    </>
-  );
 
   return (
     // Λευκό φόντο τμήματος (όπως το «Πρόγραμμα» πιο πάνω) — ο γκρι τόνος
@@ -222,15 +196,8 @@ export default function Speakers({ forum }) {
             );
           })}
 
-          {/* Πλακίδιο στην πρώτη ελεύθερη θέση της τελευταίας σειράς */}
-          {soonStoPlegma && (
-            <div className="speaker speaker--soon">{perieximenoSoon}</div>
-          )}
         </div>
         )}
-
-        {/* Λωρίδα πλήρους πλάτους, όταν οι σειρές είναι γεμάτες */}
-        {soonSeLorida && <div className="spk-empty">{perieximenoSoon}</div>}
       </div>
 
       {active && (
