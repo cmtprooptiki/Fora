@@ -2289,8 +2289,35 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
      το κενό του, ώστε τα θέματα να ευθυγραμμίζονται με τον τίτλο της ενότητας. */
   padding: 32px clamp(16px, 2.4vw, 26px) 32px calc(clamp(16px, 2.4vw, 26px) + 46px);
 }
-.prog__coord { display: flex; align-items: center; gap: 8px; color: var(--fora-blue); font-weight: 600; font-size: 0.96rem; padding: 14px 0 6px; }
-.prog__coord svg { width: 18px; height: 18px; flex: 0 0 auto; }
+/* --- Πρόσωπα: ετικέτα ρόλου, όνομα, ιδιότητα (Figma «speaker-block») -------
+   ΣΥΝΤΟΝΙΣΤΗΣ            ← μπλε κεφαλαία, μικρά γράμματα
+   Μιχάλης Παπαδάκης      ← όνομα, έντονο
+   Υποδιευθυντής…         ← ιδιότητα, μικρή και γκρι                        */
+.prog__people { display: block; }
+.prog__people-label {
+  display: block; margin-bottom: 4px;
+  font-family: var(--font-body); font-weight: 600; font-size: 13px;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--fora-blue);
+}
+.prog__person { display: block; }
+.prog__person + .prog__person { margin-top: 10px; }
+.prog__person-name {
+  display: block;
+  font-family: var(--font-body); font-weight: 700; font-size: 15px;
+  line-height: 1.3; color: var(--fora-black);
+}
+.prog__person-role {
+  display: block; margin-top: 2px;
+  font-family: var(--font-body); font-weight: 400; font-size: 13px;
+  line-height: 1.35; color: var(--fora-text-soft);
+}
+/* Ο συντονιστής της ενότητας κάθεται πάνω από τα θέματα, με γραμμή χωρισμού */
+.prog__body > .prog__people {
+  padding-bottom: 20px; margin-bottom: 4px;
+  border-bottom: 1px solid #eef0f3;
+}
+/* Οι ομιλητές κάθε θέματος μπαίνουν λίγο πιο κάτω από τον τίτλο του */
+.prog__item .prog__people { margin-top: 12px; }
 .prog__items { list-style: none; margin: 0; padding: 0; }
 /* Τα θέματα κάθε ενότητας χωρίς διαχωριστικές γραμμές — μόνο με κενό 24px,
    όπως στο σχέδιο. */
@@ -2299,8 +2326,6 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 .prog__item-titlerow { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .prog__item-time { color: var(--fora-blue); font-weight: 600; font-size: 0.88rem; white-space: nowrap; }
 .prog__item-title { font-weight: 700; color: var(--fora-black); font-size: 1rem; }
-.prog__item-desc { display: flex; align-items: flex-start; gap: 7px; margin-top: 5px; color: var(--fora-text-soft); font-size: 0.92rem; line-height: 1.45; }
-.prog__item-desc svg { width: 15px; height: 15px; flex: 0 0 auto; margin-top: 3px; }
 .prog__pill { margin-left: auto; font-size: 0.72rem; font-weight: 700; padding: 3px 12px; border-radius: 999px; background: #e3edfa; color: var(--fora-blue); white-space: nowrap; }
 .prog__pill--muted { background: #eef0f3; color: #6b7280; }
 
@@ -2358,11 +2383,11 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 
   /* Ανοιγμένο περιεχόμενο: εσοχή 88px, padding 32px */
   .prog__body { border-top: 0; padding: 32px 88px; }
-  .prog__coord {
-    gap: 8px; padding: 0 0 16px;
-    font-family: var(--font-body); font-weight: 700; font-size: 20px; color: #2874af;
-  }
-  .prog__coord svg { width: 18px; height: 18px; }
+  /* Πρόσωπα σε tablet: μεγαλύτερα μεγέθη, όπως και τα υπόλοιπα του πίνακα */
+  .prog__body > .prog__people { padding-bottom: 20px; }
+  .prog__people-label { font-size: 15px; }
+  .prog__person-name { font-size: 18px; }
+  .prog__person-role { font-size: 15px; }
 
   /* Στοιχεία: γραμμή ΚΑΤΩ από κάθε στοιχείο, κενό 24px ανάμεσά τους */
   .prog__item {
@@ -2377,11 +2402,6 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
   .prog__item-title {
     font-family: var(--font-body); font-weight: 700; font-size: 20px; color: #231f20;
   }
-  .prog__item-desc {
-    gap: 8px; margin-top: 8px;
-    font-family: var(--font-body); font-weight: 400; font-size: 16px; color: #888;
-  }
-  .prog__item-desc svg { width: 16px; height: 16px; margin-top: 2px; }
   /* Ετικέτα «Διάλειμμα»: γαλάζιο πλαίσιο, γωνίες 6px */
   .prog__pill {
     font-family: var(--font-body); font-weight: 700; font-size: 14px;
@@ -2442,11 +2462,11 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 
   /* Ανοιγμένο περιεχόμενο: padding 32/16 */
   .prog__body { border-top: 0; padding: 32px 16px; }
-  .prog__coord {
-    gap: 8px; padding: 0 0 16px; margin: 0;
-    font-family: var(--font-body); font-weight: 700; font-size: 16px; color: #2874af;
-  }
-  .prog__coord svg { width: 18px; height: 18px; }
+  /* Πρόσωπα σε κινητό */
+  .prog__body > .prog__people { padding-bottom: 16px; }
+  .prog__people-label { font-size: 12px; }
+  .prog__person-name { font-size: 16px; }
+  .prog__person-role { font-size: 14px; }
   .prog__items { margin-top: 24px; }
 
   .prog__item {
@@ -2462,12 +2482,6 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
     font-family: var(--font-body); font-weight: 700; font-size: 18px; line-height: 1.22;
     color: #231f20;
   }
-  .prog__item-desc {
-    gap: 8px; margin-top: 8px;
-    font-family: var(--font-body); font-weight: 400; font-size: 16px; line-height: 1.19;
-    color: #888;
-  }
-  .prog__item-desc svg { width: 16px; height: 16px; margin-top: 2px; }
   .prog__pill {
     margin-left: 0;
     font-family: var(--font-body); font-weight: 700; font-size: 14px;

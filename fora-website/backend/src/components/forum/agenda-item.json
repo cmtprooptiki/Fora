@@ -29,6 +29,11 @@
     "idiotita": {
       "type": "string"
     },
+    "omilites": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.agenda-person"
+    },
     "ora": {
       "type": "string"
     }

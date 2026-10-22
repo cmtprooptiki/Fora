@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_forum_agenda_people",
+  "info": {
+    "displayName": "Πρόσωπο Προγράμματος",
+    "description": "Ένα πρόσωπο στο πρόγραμμα: ονοματεπώνυμο και ιδιότητα. Χρησιμοποιείται για ομιλητές και συντονιστές, ώστε μία ομιλία να μπορεί να έχει περισσότερους από έναν."
+  },
+  "options": {},
+  "attributes": {
+    "onoma": {
+      "type": "string",
+      "required": true
+    },
+    "idiotita": {
+      "type": "text"
+    }
+  }
+}

@@ -1,6 +1,42 @@
 'use client';
 
 import { Fragment, useState } from 'react';
+import { omilitisLabel, syntonistisLabel, etiketaOmadas } from '../lib/rolos';
+
+// --- Πρόσωπα (ομιλητές / συντονιστές) -------------------------------------
+// Τα νέα πεδία είναι επαναλαμβανόμενα («omilites», «syntonistes») ώστε μία
+// ομιλία να μπορεί να έχει περισσότερους από έναν. Τα παλιά πεδία ενός
+// προσώπου διατηρούνται ως εφεδρεία, για τα προηγούμενα Fora.
+const prosopaOmiliton = (item) => {
+  const lista = (item?.omilites || []).filter((p) => p?.onoma);
+  if (lista.length) return lista;
+  return item?.omilitis ? [{ onoma: item.omilitis, idiotita: item.idiotita }] : [];
+};
+
+const prosopaSyntoniston = (session) => {
+  const lista = (session?.syntonistes || []).filter((p) => p?.onoma);
+  if (lista.length) return lista;
+  return session?.syntonistis ? [{ onoma: session.syntonistis }] : [];
+};
+
+// Ετικέτα («ΟΜΙΛΗΤΗΣ», «ΟΜΙΛΗΤΡΙΑ», «ΟΜΙΛΗΤΕΣ») και από κάτω κάθε πρόσωπο με
+// το όνομά του σε δική του γραμμή και την ιδιότητα πιο μικρή από κάτω.
+function ProsopaBlok({ prosopa, plithyntikos = 'Ομιλητές', enikos = omilitisLabel }) {
+  if (!prosopa || prosopa.length === 0) return null;
+  return (
+    <div className="prog__people">
+      <span className="prog__people-label">
+        {etiketaOmadas(prosopa, plithyntikos, enikos)}
+      </span>
+      {prosopa.map((p, i) => (
+        <span className="prog__person" key={i}>
+          <span className="prog__person-name">{p.onoma}</span>
+          {p.idiotita && <span className="prog__person-role">{p.idiotita}</span>}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 // Απλές γραμμές του προγράμματος (προσέλευση, διαλείμματα, κλείσιμο) που δεν
 // είναι πτυσσόμενες ενότητες. Το «meta» δηλώνει μετά από ποια ενότητα μπαίνει
@@ -38,19 +74,6 @@ const IconCalendar = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
     <rect x="3" y="4.5" width="18" height="16" rx="2" />
     <path d="M3 9.5h18M8 2.5v4M16 2.5v4" />
-  </svg>
-);
-const IconPeople = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="9" cy="8" r="3.2" />
-    <path d="M2.8 19c0-3 2.8-5.2 6.2-5.2S15.2 16 15.2 19" />
-    <path d="M16.2 5.4a3 3 0 0 1 0 5.7M21.2 19c0-2.2-1-3.9-2.6-4.8" />
-  </svg>
-);
-const IconPerson = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="8" r="3.4" />
-    <path d="M5 20c0-3.4 3.1-6 7-6s7 2.6 7 6" />
   </svg>
 );
 
@@ -124,12 +147,13 @@ export default function Programma({ forum }) {
 
                 {isOpen && (
                   <div className="prog__body">
-                    {s.syntonistis && (
-                      <p className="prog__coord">
-                        <IconPeople />
-                        Συντονιστής: {s.syntonistis}
-                      </p>
-                    )}
+                    {/* Συντονιστής/ές της ενότητας */}
+                    <ProsopaBlok
+                      prosopa={prosopaSyntoniston(s)}
+                      plithyntikos="Συντονιστές"
+                      enikos={syntonistisLabel}
+                    />
+
                     <ul className="prog__items">
                       {items.map((it, j) => {
                         const isBreak = it.typos === 'Διάλειμμα';
@@ -145,15 +169,13 @@ export default function Programma({ forum }) {
                                 </span>
                               )}
                             </span>
-                            {it.omilitis && (
-                              <span className="prog__item-desc">
-                                <IconPerson />
-                                <span>
-                                  {it.omilitis}
-                                  {it.idiotita ? ` · ${it.idiotita}` : ''}
-                                </span>
-                              </span>
-                            )}
+                            <ProsopaBlok
+                              prosopa={prosopaOmiliton(it)}
+                              /* Στο στρογγυλό τραπέζι δεν είναι «ομιλητές» */
+                              plithyntikos={
+                                it.typos === 'Στρογγυλό Τραπέζι' ? 'Συμμετέχοντες' : 'Ομιλητές'
+                              }
+                            />
                           </li>
                         );
                       })}

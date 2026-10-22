@@ -1,6 +1,11 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import {
+  xorisTonous,
+  omilitisLabel,
+  syntonistisLabel,
+} from '../lib/rolos';
 
 // Πέρα από αυτή την απόσταση (ή με αρκετά γρήγορη κίνηση) το «φύλλο» κλείνει.
 const SYRSIMO_ORIO = 110;      // px
@@ -10,46 +15,12 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
 
 // Ετικέτα πάνω στη φωτογραφία. Όλοι εμφανίζονται ως «ΟΜΙΛΗΤΗΣ/ΟΜΙΛΗΤΡΙΑ»· όσοι
 // συντονίζουν ενότητα γράφονται εδώ (αρκεί το επώνυμο, χωρίς τόνους).
+// Ο κανόνας αναγνώρισης φύλου βρίσκεται στο lib/rolos.js, κοινός με το πρόγραμμα.
 const SYNTONISTES = ['παπαδακης', 'πολυζος', 'παπαβασιλειου'];
 
-const XORIS_TONOUS = (s) =>
-  (s || '')
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '');
-
-// Εξαιρέσεις για ονόματα που δεν ακολουθούν τον ελληνικό κανόνα — κυρίως
-// ξενόγλωσσα. Γράψτε το επώνυμο με πεζά και χωρίς τόνους.
-const GYNAIKES = [];
-const ANDRES = [];
-
-// Γυναικεία ονόματα αρχαίας κλίσης που λήγουν σε «ς» — οι μοναδικές εξαιρέσεις
-// στον κανόνα παρακάτω. Ελέγχονται ως ΟΛΟΚΛΗΡΗ λέξη, ώστε να μην μπερδεύονται
-// με επώνυμα που τυχαίνει να τα περιέχουν.
-const GYNAIKEIA_SE_SIGMA = [
-  'αρτεμις', 'θετις', 'ιρις', 'ελπις', 'δωρις', 'νεμεσις', 'λαχεσις', 'τηθυς',
-];
-
-// Στα ελληνικά τα ανδρικά ονόματα και επώνυμα τελειώνουν σε «ς» (Δαφούλας,
-// Πολύζος, Γουρζουλίδης, Γιώργος), ενώ τα γυναικεία σχεδόν ποτέ (Καϊτελίδου,
-// Δάφνη). Αρκεί μία λέξη του ονόματος να τελειώνει σε «ς» για να είναι άνδρας.
-function einaiGynaika(onoma) {
-  const kathara = XORIS_TONOUS(onoma);
-  if (GYNAIKES.some((n) => kathara.includes(n))) return true;
-  if (ANDRES.some((n) => kathara.includes(n))) return false;
-  const lekseis = kathara.replace(/[.,·()]/g, ' ').split(/\s+/).filter(Boolean);
-  // Πρώτα οι εξαιρέσεις: «Άρτεμις Μαρκάτου» λήγει σε ς αλλά είναι γυναίκα
-  if (lekseis.some((w) => GYNAIKEIA_SE_SIGMA.includes(w))) return true;
-  // «σ» μαζί με «ς»: το toLowerCase() μετατρέπει το τελικό «Σ» των κεφαλαίων σε «σ»
-  return !lekseis.some((w) => /[σς]$/.test(w));
-}
-
 function rolosGia(onoma) {
-  const kathara = XORIS_TONOUS(onoma);
-  const syntonizei = SYNTONISTES.some((s) => kathara.includes(s));
-  const gynaika = einaiGynaika(onoma);
-  if (syntonizei) return gynaika ? 'Συντονίστρια' : 'Συντονιστής';
-  return gynaika ? 'Ομιλήτρια' : 'Ομιλητής';
+  const syntonizei = SYNTONISTES.some((s) => xorisTonous(onoma).includes(s));
+  return syntonizei ? syntonistisLabel(onoma) : omilitisLabel(onoma);
 }
 function mediaUrl(url) {
   if (!url) return '';

@@ -16,6 +16,11 @@
     "syntonistis": {
       "type": "string"
     },
+    "syntonistes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.agenda-person"
+    },
     "stoixeia": {
       "type": "component",
       "repeatable": true,

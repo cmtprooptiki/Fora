@@ -65,7 +65,12 @@ const FORUM_POPULATE = {
   synergates: { populate: { logotypa: { populate: { logotypo: true } } } },
   fotografies: true,
   vinteo: true,
-  programma: { populate: { stoixeia: true } },
+  programma: {
+    populate: {
+      syntonistes: true,
+      stoixeia: { populate: { omilites: true } },
+    },
+  },
 };
 
 /** Επιστρέφει όλες τις διοργανώσεις (Forums), από τη νεότερη στην παλαιότερη. */
