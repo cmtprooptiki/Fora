@@ -2940,6 +2940,17 @@ html[data-nav-hidden='1'] body:has(.draft-banner) .site-header {
 /* Ο χρυσός χορηγός προβάλλεται μεγαλύτερος από όλους τους υπόλοιπους.
    Αφορά ΜΟΝΟ την κατηγορία με «χρυσ» στο όνομά της. */
 .sponsor-group--gold .sponsor-logo img { max-height: 140px; }
+/* Σε tablet και κινητά τα λογότυπα μικραίνουν — στα 100px έπιαναν υπερβολικό
+   χώρο και η ενότητα γινόταν ατελείωτη. Ο χρυσός χορηγός μένει αναλογικά
+   μεγαλύτερος από τους υπόλοιπους και στα τρία μεγέθη οθόνης. */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .sponsor-logo img { max-height: 72px; }
+  .sponsor-group--gold .sponsor-logo img { max-height: 100px; }
+}
+@media (max-width: 600px) {
+  .sponsor-logo img { max-height: 54px; }
+  .sponsor-group--gold .sponsor-logo img { max-height: 76px; }
+}
 
 /* ==========================================================================
    ΣΤΙΓΜΙΟΤΥΠΑ ΤΟΥ FORUM (Figma: Section_Gallery)
