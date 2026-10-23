@@ -87,8 +87,7 @@ export default function Header({ settings, archive = [], registerHref }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, [menuOpen]);
 
-  // Ο διακόπτης μπαίνει στο <html> ώστε να τον διαβάζει και η λωρίδα
-  // ανακοίνωσης (.draft-banner), που είναι ξεχωριστό component.
+  // Ο διακόπτης μπαίνει στο <html>, ώστε η απόκρυψη να ορίζεται με CSS.
   useEffect(() => {
     const root = document.documentElement;
     root.dataset.navHidden = hidden ? '1' : '0';

@@ -3,7 +3,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import AccessibilityWidget from '../components/AccessibilityWidget';
 import CookieConsent from '../components/CookieConsent';
-import DraftBanner from '../components/DraftBanner';
 import CountdownPopup from '../components/CountdownPopup';
 import { getSiteSettings, getAllForums } from '../lib/strapi';
 
@@ -32,10 +31,7 @@ export default async function RootLayout({ children }) {
   const archive = forums
     .slice()
     .sort((a, b) => (b.etos || 0) - (a.etos || 0));
-  // Μήνυμα λωρίδας κορυφής: διαβάζεται από το ΤΡΕΧΟΝ Forum. Κενό πεδίο = καμία
-  // λωρίδα, οπότε κλείνει από το Strapi χωρίς νέα έκδοση του ιστότοπου.
   const current = forums.find((f) => f.trexonForum) || null;
-  const draftMessage = current?.mynimaKorifis?.trim() || null;
   // Σύνδεσμος του κουμπιού «Εγγραφείτε τώρα» στη μπάρα πλοήγησης.
   // Διαβάζεται από το πεδίο «Σύνδεσμος Εγγραφής» (syndesmoEggrafis) του
   // τρέχοντος Forum — το ίδιο που χρησιμοποιεί και το κουμπί «Εγγραφή» στην
@@ -63,9 +59,6 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body>
-        {/* Λωρίδα ανακοίνωσης — πάνω από τη μπάρα πλοήγησης, μόνο για το
-            τρέχον Forum (πεδίο «Μήνυμα Κορυφής» στο Strapi). */}
-        <DraftBanner text={draftMessage} />
         <Header settings={settings} archive={archive} registerHref={registerHref} />
         <main>{children}</main>
         <Footer settings={settings} />
