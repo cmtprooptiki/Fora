@@ -44,7 +44,12 @@ function ProsopaBlok({ prosopa, plithyntikos = 'Ομιλητές', enikos = omil
 // Εμφανίζονται μόνο στο τρέχον Forum.
 const APLES_GRAMMES = [
   { meta: -1, ora: '10:00 – 10:20', titlos: 'Προσέλευση - Χαιρετισμοί' },
-  { meta: -1, ora: '10:20 – 10:30', titlos: 'Εναρκτήρια Ομιλία' },
+  {
+    meta: -1,
+    ora: '10:20 – 10:30',
+    titlos: 'Εναρκτήρια Ομιλία',
+    prosopo: { onoma: 'Ειρήνη Αγαπηδάκη', idiotita: 'Αναπληρώτρια Υπουργός Υγείας' },
+  },
   { meta: 0, ora: '11:40 – 12:10', titlos: 'Συζήτηση – Coffee Break', etiketa: 'Διάλειμμα' },
   { meta: 1, ora: '13:20 – 14:00', titlos: 'Συζήτηση – Lunch Break', etiketa: 'Διάλειμμα' },
   { meta: 2, ora: '15:10 – 15:30', titlos: 'Συζήτηση – Coffee Break', etiketa: 'Διάλειμμα' },
@@ -95,7 +100,18 @@ export default function Programma({ forum }) {
       ? APLES_GRAMMES.filter((g) => g.meta === meta).map((g) => (
           <div className="prog__row" key={`${g.meta}-${g.ora}`}>
             <span className="prog__row-time">{g.ora}</span>
-            <span className="prog__row-title">{g.titlos}</span>
+            <span className="prog__row-title">
+              <span className="prog__row-label">{g.titlos}</span>
+              {/* Προαιρετικός ομιλητής δίπλα στον τίτλο της γραμμής */}
+              {g.prosopo && (
+                <span className="prog__row-person">
+                  <span className="prog__row-person-name">{g.prosopo.onoma}</span>
+                  {g.prosopo.idiotita && (
+                    <span className="prog__row-person-role">{g.prosopo.idiotita}</span>
+                  )}
+                </span>
+              )}
+            </span>
             {g.etiketa && <span className="prog__pill">{g.etiketa}</span>}
           </div>
         ))

@@ -2181,6 +2181,24 @@ html[data-nav-hidden='1'] .site-header { translate: 0 -100%; }
   font-family: var(--font-body); font-weight: 600; font-size: 1rem;
   color: var(--fora-black); line-height: 1.35;
 }
+/* Προαιρετικός ομιλητής δίπλα στον τίτλο μιας απλής γραμμής (π.χ. «Εναρκτήρια
+   Ομιλία»). Τίτλος και πρόσωπο είναι ΞΕΧΩΡΙΣΤΑ στοιχεία flex, ώστε όταν δεν
+   χωράνε μαζί να αλλάζει γραμμή ΟΛΟΚΛΗΡΟ το πρόσωπο — αντί να σπάει ο τίτλος
+   στη μέση. */
+.prog__row-title:has(.prog__row-person) {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  column-gap: 18px; row-gap: 4px;
+}
+.prog__row-label { min-width: 0; }
+.prog__row-person { white-space: nowrap; }
+.prog__row-person-name { font-weight: 700; color: var(--fora-blue); }
+.prog__row-person-role {
+  margin-left: 8px; font-weight: 400; font-size: 0.92em; color: var(--fora-text-soft);
+}
+@media (max-width: 600px) {
+  .prog__row-person { white-space: normal; }
+  .prog__row-person-role { display: block; margin-left: 0; }
+}
 @media (max-width: 640px) {
   .prog__row { flex-wrap: wrap; gap: 6px 12px; }
   .prog__row-time { width: 100%; }
