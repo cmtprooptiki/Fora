@@ -680,15 +680,6 @@ main { min-height: 40vh; }
   vertical-align: 0.62em; margin-left: 0.04em;
 }
 
-/* Μπλε ταμπέλα «Οι εγγραφές είναι ανοιχτές.» */
-.cdp__pill {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  margin: 24px 0 0; height: 48px; border-radius: 8px;
-  background: linear-gradient(90deg, #2874af 0%, #0d4f9f 100%);
-  color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 16px;
-}
-.cdp__pill svg { width: 20px; height: 20px; flex: 0 0 auto; }
-
 .cdp__sub {
   margin: 24px 0 0; text-align: center; color: var(--fora-text);
   font-family: var(--font-body); font-size: 16px; line-height: 24px;
@@ -724,31 +715,55 @@ main { min-height: 40vh; }
 
 /* Μπλε ζώνη με το λευκό κουμπί */
 .cdp__actions {
-  margin-top: 32px; padding: 40px 32px;
+  margin-top: 32px; padding: 40px 32px 56px;
   background: linear-gradient(90deg, #2874af 0%, #0d4f9f 100%);
+  display: flex; flex-direction: column; gap: 16px;
 }
 .cdp__cta {
   display: flex; align-items: center; justify-content: center; gap: 16px;
   min-height: 88px; padding: 24px; border-radius: 8px;
   background: #fff; color: #231f20; text-decoration: none;
   font-family: var(--font-heading); font-weight: 400; font-size: 20px;
+  border: 1px solid #fff;
   transition: background 0.18s ease, transform 0.18s ease;
 }
 .cdp__cta:hover { background: #eef3fb; color: #231f20; transform: translateY(-1px); }
+/* Κουκκίδα που ανοίγει σε «σκόπευτρο» στο hover — ίδια με τα κουμπιά του site */
+.cdp__cta::after {
+  content: ''; flex: 0 0 auto; margin-left: 2px;
+  width: 4px; height: 4px; border-radius: 50%; background: currentColor;
+  box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent,
+              0 0 0 0 transparent, 0 0 0 0 transparent;
+  transition: box-shadow 0.22s ease;
+}
+.cdp__cta:hover::after {
+  box-shadow: 0 -6px 0 0 currentColor, 0 6px 0 0 currentColor,
+              -6px 0 0 0 currentColor, 6px 0 0 0 currentColor;
+}
+/* Δευτερεύον κουμπί: διάφανο με λευκό περίγραμμα, χαμηλότερο, χωρίς κουκκίδα */
+.cdp__cta--ghost {
+  min-height: 54px; padding: 14px 24px;
+  background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.75);
+  font-size: 18px;
+}
+.cdp__cta--ghost:hover {
+  background: rgba(255, 255, 255, 0.12); color: #fff; border-color: #fff;
+}
+.cdp__cta--ghost::after { content: none; }
 
 @media (max-width: 600px) {
   .cdp-overlay { padding: 12px; align-items: flex-start; }
   .cdp__body { padding: 60px 20px 0; }
   .cdp__title { font-size: 26px; line-height: 1.3; }
-  .cdp__pill { height: auto; padding: 12px 14px; font-size: 14px; gap: 8px; }
   .cdp__sub { font-size: 14px; line-height: 21px; margin-top: 18px; }
   .cdp__timer { gap: 8px; margin-top: 28px; }
   .cdp__box { min-height: 74px; padding: 10px 4px; }
   .cdp__num { font-size: 26px; }
   .cdp__label { font-size: 9px; letter-spacing: 0.02em; }
   .cdp__details { margin-top: 24px; font-size: 13px; flex-wrap: wrap; }
-  .cdp__actions { margin-top: 24px; padding: 20px; }
+  .cdp__actions { margin-top: 24px; padding: 20px 20px 28px; gap: 12px; }
   .cdp__cta { min-height: 64px; padding: 18px; font-size: 17px; }
+  .cdp__cta--ghost { min-height: 48px; padding: 12px 18px; font-size: 15px; }
 }
 
 /* ==========================================================================
