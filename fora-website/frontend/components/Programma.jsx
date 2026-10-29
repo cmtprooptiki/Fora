@@ -100,18 +100,17 @@ export default function Programma({ forum }) {
       ? APLES_GRAMMES.filter((g) => g.meta === meta).map((g) => (
           <div className="prog__row" key={`${g.meta}-${g.ora}`}>
             <span className="prog__row-time">{g.ora}</span>
-            <span className="prog__row-title">
-              <span className="prog__row-label">{g.titlos}</span>
-              {/* Προαιρετικός ομιλητής δίπλα στον τίτλο της γραμμής */}
-              {g.prosopo && (
-                <span className="prog__row-person">
-                  <span className="prog__row-person-name">{g.prosopo.onoma}</span>
-                  {g.prosopo.idiotita && (
-                    <span className="prog__row-person-role">{g.prosopo.idiotita}</span>
-                  )}
-                </span>
-              )}
-            </span>
+            <span className="prog__row-title">{g.titlos}</span>
+            {/* Προαιρετικός ομιλητής, δεξιά — στην ίδια στήλη με την ώρα
+                των πτυσσόμενων ενοτήτων από κάτω. */}
+            {g.prosopo && (
+              <span className="prog__row-person">
+                <span className="prog__row-person-name">{g.prosopo.onoma}</span>
+                {g.prosopo.idiotita && (
+                  <span className="prog__row-person-role">{g.prosopo.idiotita}</span>
+                )}
+              </span>
+            )}
             {g.etiketa && <span className="prog__pill">{g.etiketa}</span>}
           </div>
         ))
