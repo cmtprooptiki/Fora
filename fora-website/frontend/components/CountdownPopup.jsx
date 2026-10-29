@@ -12,6 +12,14 @@ import { useEffect, useState } from 'react';
 
 const KEY = 'fora-countdown-seen';
 
+// Σύνδεσμος της φόρμας εγγραφής, για το κουμπί «Δηλώστε συμμετοχή».
+// Γράφεται εδώ γιατί δεν υπάρχει ξεχωριστό πεδίο στο Strapi — το
+// «syndesmoEggrafis» το χρησιμοποιεί το κουμπί «Είσοδος στο forum», που
+// οδηγεί στην πλατφόρμα και όχι στη φόρμα. Αν αλλάξει η διοργάνωση,
+// ενημερώστε αυτή τη γραμμή.
+const SYNDESMOS_EGGRAFIS =
+  'https://projector-web.gr/cmt-prooptiki/gr/5rd-hybrid-forum-fora-2026/registration';
+
 function diff(target) {
   const ms = target - Date.now();
   if (ms <= 0) return null;
@@ -160,11 +168,12 @@ export default function CountdownPopup({
           >
             Είσοδος στο forum
           </a>
-          {/* Δευτερεύον: διάφανο με λευκό περίγραμμα */}
+          {/* Δευτερεύον: διάφανο με λευκό περίγραμμα, προς τη φόρμα εγγραφής */}
           <a
             className="cdp__cta cdp__cta--ghost"
-            href={registerHref || '#'}
-            {...(registerHref ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            href={SYNDESMOS_EGGRAFIS}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Δηλώστε συμμετοχή
           </a>
