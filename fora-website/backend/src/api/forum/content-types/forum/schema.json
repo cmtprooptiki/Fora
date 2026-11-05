@@ -168,6 +168,11 @@
       "repeatable": true,
       "component": "forum.video"
     },
+    "parousiaseis": {
+      "type": "component",
+      "repeatable": true,
+      "component": "forum.presentation"
+    },
     "programma": {
       "type": "component",
       "repeatable": true,

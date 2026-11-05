@@ -65,6 +65,7 @@ const FORUM_POPULATE = {
   synergates: { populate: { logotypa: { populate: { logotypo: true } } } },
   fotografies: true,
   vinteo: true,
+  parousiaseis: { populate: { arxeio: true, eikonaExofyllou: true } },
   programma: {
     populate: {
       syntonistes: true,

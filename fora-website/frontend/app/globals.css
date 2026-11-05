@@ -2983,6 +2983,136 @@ html[data-nav-hidden='1'] .site-header { translate: 0 -100%; }
 }
 
 /* ==========================================================================
+   ΠΑΡΟΥΣΙΑΣΕΙΣ ΟΜΙΛΗΤΩΝ (Figma «Section gallery — Παρουσιάσεις»)
+   Πλέγμα 2 στηλών (κενό 32 / 64px). Κάθε κάρτα: εξώφυλλο 848×500 με χρωματιστό
+   πάνελ αριστερά και φωτογραφία δεξιά (36,5%), και από κάτω στοιχεία και
+   ενέργειες. Τα μεγέθη μέσα στην κάρτα ακολουθούν το ΠΛΑΤΟΣ ΤΗΣ ΚΑΡΤΑΣ (cqw),
+   με εφεδρεία σε px για παλιούς browsers.
+   ========================================================================== */
+.pres-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(16px, 1.67vw, 32px); row-gap: clamp(40px, 3.33vw, 64px);
+  margin-top: clamp(32px, 4.17vw, 80px);
+}
+.pres { container-type: inline-size; min-width: 0; }
+
+/* --- Εξώφυλλο --- */
+.pres__cover {
+  position: relative; display: flex; overflow: hidden;
+  aspect-ratio: 848 / 500; text-decoration: none;
+  background: #e8f0f9; color: var(--fora-blue);
+}
+.pres--dark .pres__cover { background: var(--fora-blue); color: #fff; }
+.pres__panel {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; flex-direction: column;
+  padding: 30px; padding: clamp(18px, 4.25cqw, 36px);
+}
+.pres__mast { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pres__forum {
+  font-family: var(--font-body); font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; font-size: 13px; font-size: clamp(10px, 1.77cqw, 15px);
+}
+.pres__icon { display: inline-flex; }
+.pres__icon svg { width: 22px; height: 22px; width: clamp(16px, 2.83cqw, 24px); height: clamp(16px, 2.83cqw, 24px); }
+.pres__titles { display: flex; flex-direction: column; margin-block: auto; padding-block: 12px; }
+.pres__topic {
+  font-family: var(--font-body); font-weight: 400;
+  font-size: 13px; font-size: clamp(10px, 1.77cqw, 15px); opacity: 0.85;
+}
+.pres__ctitle {
+  margin-top: 16px; margin-top: clamp(8px, 2.6cqw, 22px);
+  font-family: var(--font-heading); font-weight: 500; line-height: 1.03;
+  font-size: 32px; font-size: clamp(18px, 4.5cqw, 38px);
+}
+.pres__csub {
+  margin-top: 16px; margin-top: clamp(8px, 2.83cqw, 24px);
+  font-family: var(--font-body); font-weight: 400; line-height: 1.3;
+  font-size: 17px; font-size: clamp(12px, 2.36cqw, 20px);
+}
+.pres__foot {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding-top: 14px; padding-top: clamp(8px, 2cqw, 16px);
+  border-top: 1px solid rgba(13, 79, 159, 0.35);
+  font-family: var(--font-body); text-transform: uppercase; letter-spacing: 0.02em;
+  font-size: 12px; font-size: clamp(9px, 1.53cqw, 13px);
+}
+.pres--dark .pres__foot { border-top-color: rgba(255, 255, 255, 0.35); }
+.pres--dark .pres__topic, .pres--dark .pres__foot { opacity: 0.9; }
+
+.pres__img { flex: 0 0 36.5%; position: relative; overflow: hidden; background: #dfe7f1; }
+.pres__img img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.pres__cover:hover .pres__img img { transform: scale(1.03); }
+
+/* Ετικέτα «PDF» πάνω δεξιά */
+.pres__badge {
+  position: absolute; top: 20px; right: 20px;
+  top: clamp(10px, 2.83cqw, 24px); right: clamp(10px, 2.83cqw, 24px);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  background: var(--fora-blue); color: #fff;
+  font-family: var(--font-body); font-weight: 700; line-height: 1;
+  font-size: 13px; font-size: clamp(10px, 1.77cqw, 15px);
+}
+.pres__badge svg { width: 1.05em; height: 1.05em; }
+/* Χωρίς φωτογραφία σε σκούρο πάνελ: λευκή ετικέτα για να φαίνεται */
+.pres--dark.pres--noimg .pres__badge { background: #fff; color: var(--fora-blue); }
+
+/* --- Στοιχεία κάτω από το εξώφυλλο --- */
+.pres__info { margin-top: 24px; margin-top: clamp(14px, 2.83cqw, 24px); }
+.pres__title {
+  margin: 0; color: #231f20;
+  font-family: var(--font-heading); font-weight: 500; line-height: 1.2;
+  font-size: 26px; font-size: clamp(19px, 3.77cqw, 32px);
+}
+.pres__meta, .pres__details {
+  margin: 0; color: #6b6b6b; font-family: var(--font-body); line-height: 1.3;
+  font-size: 17px; font-size: clamp(14px, 2.36cqw, 20px);
+}
+.pres__meta { margin-top: 12px; margin-top: clamp(8px, 1.89cqw, 16px); }
+.pres__details { margin-top: 6px; margin-top: clamp(4px, 0.94cqw, 8px); }
+
+.pres__actions {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  gap: 12px 20px; margin-top: 14px; margin-top: clamp(12px, 1.89cqw, 16px);
+}
+.pres__view {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; min-height: clamp(42px, 6.6cqw, 56px);
+  padding: 0 24px; padding: 0 clamp(16px, 3.3cqw, 28px);
+  border: 1px solid var(--fora-blue); border-radius: 6px;
+  color: var(--fora-blue); text-decoration: none; background: transparent;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: 17px; font-size: clamp(14px, 2.36cqw, 20px);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.pres__view:hover { background: var(--fora-blue); color: #fff; }
+.pres__dl {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--fora-blue); text-decoration: none;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: 17px; font-size: clamp(14px, 2.36cqw, 20px);
+}
+.pres__dl svg { width: 1.1em; height: 1.1em; }
+.pres__dl:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Πλήθος παρουσιάσεων στο τέλος */
+.pres-count {
+  margin: clamp(40px, 3.33vw, 64px) 0 0; padding-top: 24px;
+  border-top: 1px solid #e5e7eb; text-align: right;
+  font-family: var(--font-body); font-size: 15px; color: #6b6b6b;
+}
+
+/* Tablet/κινητό: μία κάρτα ανά σειρά */
+@media (max-width: 760px) {
+  .pres-grid { grid-template-columns: 1fr; row-gap: 40px; }
+  .pres-count { font-size: 14px; }
+}
+
+/* ==========================================================================
    ΟΡΙΖΟΝΤΙΟ SLIDER ΣΕ ΚΙΝΗΤΑ (≤600px)
    «Ομιλητές του Forum» και «Στιγμιότυπα του Forum»: αντί για πλέγμα, μία
    σειρά που σέρνεται με το δάχτυλο και «κουμπώνει» σε κάθε κάρτα.
