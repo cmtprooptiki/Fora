@@ -162,9 +162,14 @@ export default function Header({ settings, archive = [], registerHref }) {
             <span className="site-nav__num" aria-hidden="true">04</span>
             <span className="site-nav__label">Συνεργάτες</span>
           </a>
+          {/* Ενότητα «Στιγμιότυπα του Forum» (φωτογραφίες, βίντεο, παρουσιάσεις) */}
+          <a href={`${base}#gallery`}>
+            <span className="site-nav__num" aria-hidden="true">05</span>
+            <span className="site-nav__label">Υλικό</span>
+          </a>
           {/* Πλέον οδηγεί στη σελίδα «Νέα & Ανακοινώσεις», όχι στο υποσέλιδο */}
           <a href="/news/">
-            <span className="site-nav__num" aria-hidden="true">05</span>
+            <span className="site-nav__num" aria-hidden="true">06</span>
             <span className="site-nav__label">Νέα &amp; Ανακοινώσεις</span>
           </a>
 

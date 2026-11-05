@@ -956,6 +956,22 @@ html[data-nav-hidden='1'] .site-header { translate: 0 -100%; }
 .site-nav__ctawrap,
 .site-nav__contact { display: none; }
 
+/* Μενού υπολογιστή με 6 στοιχεία: κανένα δεν «σπάει» σε δύο γραμμές και η
+   απόσταση μικραίνει όσο στενεύει η οθόνη (στα 1920px μένει 88px, όπως ήταν).
+   Μετρημένο στον ζωντανό ιστότοπο από 1025 έως 1920px. */
+@media (min-width: 1025px) {
+  .site-nav > a, .nav-dropdown__toggle { white-space: nowrap; }
+  .site-nav { gap: clamp(12px, min(4.6vw, 18vw - 200px), 88px); }
+}
+/* Μικρά laptop (1025–1279px): λίγο μικρότερα γράμματα/λογότυπο/κουμπί */
+@media (min-width: 1025px) and (max-width: 1279px) {
+  .site-header__inner { gap: 16px; }
+  .site-header__logo img { height: 40px; }
+  .site-nav a, .nav-dropdown__toggle { font-size: 0.875rem; }
+  .site-nav__cta { font-size: 0.875rem; padding: 9px 16px; }
+  .site-nav { gap: clamp(12px, 18vw - 172px, 32px); }
+}
+
 @media (max-width: 1024px) {
   /* Με ανοιχτό μενού η μπάρα γίνεται λευκή, με το κανονικό (μπλε) λογότυπο
      και σκούρο «X» — όπως στο σχέδιο. */
