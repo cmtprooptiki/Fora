@@ -233,8 +233,8 @@ export default function MediaGallery({ forums = [], currentForum }) {
           <span className="mgal__head-accent">Του Forum</span>
         </div>
         <p className="thematics__intro mgal__intro">
-          Φωτογραφικά στιγμιότυπα, ομιλίες και παρασκήνια από τις εργασίες των
-          διοργανώσεων, αποτυπώνοντας την ενέργεια της μετάβασης.
+          Φωτογραφικά στιγμιότυπα, βίντεο, ομιλίες και παρουσιάσεις από τη
+          διοργάνωση
         </p>
 
         <div className="mgal__bar">
