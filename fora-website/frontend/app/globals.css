@@ -669,8 +669,26 @@ main { min-height: 40vh; }
   font-family: var(--font-body); font-size: 14px; line-height: 17px;
 }
 
-/* Πλαϊνή στήλη */
+/* Πλαϊνή στήλη — «κολλάει» δεξιά όσο ο επισκέπτης κατεβαίνει στο κείμενο.
+   Αφήνει χώρο για τη μπάρα όταν φαίνεται (88px) και ανεβαίνει όταν αυτή
+   κρύβεται στο scroll προς τα κάτω. Σε χαμηλές οθόνες, αν δεν χωράει
+   ολόκληρη, κυλάει μέσα της ώστε να φαίνεται και το Newsletter. */
 .art-side { display: flex; flex-direction: column; gap: 32px; }
+@media (min-width: 1025px) {
+  .art-side {
+    --art-side-top: calc(88px + 24px);
+    position: sticky; top: var(--art-side-top);
+    max-height: calc(100vh - var(--art-side-top) - 16px);
+    overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+    /* περιθώριο ώστε η σκιά των καρτών να μην «κόβεται» από το overflow */
+    padding: 4px 6px 12px; margin: -4px -6px -12px;
+    transition: top 0.32s ease, max-height 0.32s ease;
+  }
+  html[data-nav-hidden='1'] .art-side { --art-side-top: 24px; }
+}
+@media (min-width: 1025px) and (prefers-reduced-motion: reduce) {
+  .art-side { transition: none; }
+}
 .art-card { display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 12px; }
 .art-card--cta {
   gap: 20px; background: #fff; border: 1px solid rgba(13, 79, 159, 0.1);
