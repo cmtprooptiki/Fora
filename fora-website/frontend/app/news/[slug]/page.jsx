@@ -1,4 +1,5 @@
 import { getArticleBySlug, mediaUrl } from '../../../lib/strapi';
+import { markdownToHtml } from '../../../lib/markdown';
 
 export const dynamic = 'force-dynamic';
 
@@ -57,10 +58,12 @@ export default async function ArticlePage({ params }) {
       <section className="section">
         <div className="container nws-article">
           {img && <img className="nws-article__img" src={img} alt={a.titlos} />}
+          {/* Το κείμενο γράφεται στο Strapi σε Markdown (κουμπιά επικεφαλίδας,
+              έντονων κ.λπ.) και μετατρέπεται εδώ σε HTML. */}
           {a.keimeno && (
             <div
               className="nws-article__body"
-              dangerouslySetInnerHTML={{ __html: a.keimeno.replace(/\n/g, '<br/>') }}
+              dangerouslySetInnerHTML={{ __html: markdownToHtml(a.keimeno) }}
             />
           )}
           <p className="nws-article__back">
