@@ -100,6 +100,27 @@ export async function getCurrentForum() {
   return forums.find((f) => f.trexonForum) || forums[0];
 }
 
+/**
+ * «Ελαφριά» εκδοχή του τρέχοντος Forum: μόνο ημερομηνίες, χώρος και
+ * σύνδεσμος εγγραφής (για την πλαϊνή στήλη των άρθρων) — χωρίς εικόνες,
+ * ομιλητές κ.λπ., ώστε η σελίδα του άρθρου να φορτώνει γρήγορα.
+ */
+export async function getCurrentForumBasic() {
+  try {
+    const json = await fetchAPI('forums', {
+      filters: { trexonForum: { $eq: true } },
+      fields: [
+        'arithmos', 'etos', 'imerominia', 'imerominiaEnarksis', 'imerominiaLiksis',
+        'xoros', 'xorosSyntomos', 'syndesmoEggrafis',
+      ],
+      pagination: { pageSize: 1 },
+    });
+    return json.data?.[0] || null;
+  } catch (err) {
+    return null;
+  }
+}
+
 /** Επιστρέφει ένα Forum με βάση το slug του (για τις σελίδες αρχείου). */
 export async function getForumBySlug(slug) {
   const forums = await getAllForums();

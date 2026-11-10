@@ -610,25 +610,181 @@ main { min-height: 40vh; }
 /* Η σελιδοποίηση κεντράρεται κάτω από το πλέγμα */
 .nws-all .pager { justify-content: center; margin-top: clamp(32px, 4vw, 56px); }
 
-/* --- Σελίδα άρθρου --- */
-.nws-article { max-width: 860px; }
-.nws-article__img { width: 100%; border-radius: 12px; margin-bottom: 32px; }
-.nws-article__body { color: var(--fora-text); font-size: 18px; line-height: 1.75; }
-/* Μορφοποίηση από το Strapi (Markdown). Η απόσταση παραγράφων ίση με μία
-   κενή γραμμή, όπως έδειχναν ως τώρα τα άρθρα. */
+/* --- Σελίδα άρθρου (Figma «article-template») --- */
+
+/* Κεφαλίδα: 64px κάτω από τη μπάρα, 64px κάτω */
+.nws-hero--article .nws-hero__inner { padding-block: calc(64px + 88px) 64px; }
+.nws-hero--article .nws-crumbs { font-size: 14px; }
+.nws-hero--article .nws-crumbs a,
+.nws-hero--article .nws-crumbs__sep { color: rgba(255, 255, 255, 0.8); }
+.nws-hero--article .nws-crumbs a:hover { color: #fff; }
+/* Στη διαδρομή ο τίτλος «κόβεται» με αποσιωπητικά (στο σχέδιο: «5ο Υβριδικό Forum») */
+.nws-crumbs__current--short {
+  max-width: min(420px, 55vw); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.nws-hero--article .nws-hero__title--article {
+  margin-top: 24px; font-size: clamp(1.7rem, 2.5vw, 48px); line-height: 1.17;
+}
+.art-meta {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px 24px;
+  margin-top: 24px;
+  font-family: var(--font-body); font-size: 14px; color: rgba(255, 255, 255, 0.8);
+}
+.art-meta__tag {
+  padding: 6px 16px; border-radius: 6px; background: rgba(255, 255, 255, 0.16);
+  color: #fff; font-weight: 700; font-size: 12px; line-height: 14px;
+  text-transform: uppercase;   /* με lang="el" ο browser βγάζει και τους τόνους */
+}
+
+/* Δύο στήλες: κείμενο (1304px στα 1920) + πλαϊνή στήλη 360px, κενό 64px */
+.art-main { padding-block: 64px 80px; }
+.art-split {
+  display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 64px; align-items: start;
+}
+.art-body { display: flex; flex-direction: column; gap: 40px; min-width: 0; }
+.art-body__media {
+  position: relative; overflow: hidden; width: 100%;
+  aspect-ratio: 1304 / 540; border-radius: 12px; background: var(--fora-section-tint);
+}
+.art-body__img { position: relative; width: 100%; height: 100%; object-fit: cover; }
+/* Τετράγωνες/κάθετες εικόνες: ολόκληρες, πάνω σε θολό φόντο της ίδιας εικόνας */
+.art-body__media--fit .art-body__img { object-fit: contain; }
+.art-body__media-bg {
+  position: absolute; inset: -24px; width: calc(100% + 48px); height: calc(100% + 48px);
+  object-fit: cover; filter: blur(22px) brightness(0.92); pointer-events: none;
+}
+/* Κείμενο: Lato 24/32, -5% (στυλ «Paragraph» του σχεδίου) */
+.art-body__lead,
+.nws-article__body {
+  font-family: var(--font-body); font-size: clamp(17px, 1.25vw, 24px);
+  line-height: 1.334; letter-spacing: -0.05em;
+}
+.art-body__lead { margin: 0; color: var(--fora-black); }
+.art-body__rule { width: 100%; height: 0; margin: 0; border: 0; border-top: 1px solid #e5e7eb; }
+.nws-article__body { color: #4b5563; }
+.art-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.art-tags li {
+  padding: 6px 16px; border-radius: 6px; background: #f3f4f6; color: #4b5563;
+  font-family: var(--font-body); font-size: 14px; line-height: 17px;
+}
+
+/* Πλαϊνή στήλη */
+.art-side { display: flex; flex-direction: column; gap: 32px; }
+.art-card { display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 12px; }
+.art-card--cta {
+  gap: 20px; background: #fff; border: 1px solid rgba(13, 79, 159, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
+}
+.art-card--info { background: #fff; border: 1px solid #e5e7eb; }
+.art-card--nl { background: rgba(13, 79, 159, 0.04); }
+.art-card__title {
+  margin: 0; font-family: var(--font-heading); font-weight: 700;
+  font-size: 18px; line-height: 1.25; color: var(--fora-black);
+}
+.art-card--cta .art-card__title { font-size: 20px; color: var(--fora-blue); }
+.art-card--nl .art-card__title { color: var(--fora-blue); }
+.art-card__text {
+  margin: 0; font-family: var(--font-body); font-size: 15px; line-height: 22px; color: #4b5563;
+}
+.art-card--nl .art-card__text { font-size: 14px; line-height: 20px; }
+.art-card__btn {
+  width: 100%; justify-content: center; padding: 12px 24px; border-radius: 8px;
+  font-family: var(--font-heading); font-weight: 700; font-size: 18px;
+}
+.art-card__btn:hover { transform: none; }
+.art-info { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.art-info li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-family: var(--font-body); font-size: 14px; line-height: 17px; color: #4b5563;
+}
+.art-info svg { flex: none; width: 16px; height: 16px; color: var(--fora-blue); margin-top: 0.5px; }
+.art-nl { display: flex; flex-direction: column; gap: 16px; margin: 0; }
+.art-nl__input {
+  width: 100%; padding: 10px 16px; border: 1px solid #e5e7eb; border-radius: 6px;
+  background: #fff; color: var(--fora-black); font-family: var(--font-body); font-size: 14px;
+}
+.art-nl__input::placeholder { color: #9ca3af; }
+.art-nl__input:focus { outline: 2px solid var(--fora-blue); outline-offset: 1px; }
+.art-nl__btn {
+  width: 100%; padding: 8px 12px; border: 0; border-radius: 6px; cursor: pointer;
+  background: var(--fora-blue); color: #fff;
+  font-family: var(--font-heading); font-weight: 700; font-size: 14px;
+  transition: background 0.18s ease;
+}
+.art-nl__btn:hover { background: var(--fora-blue-dark); }
+
+/* Σχετικά Άρθρα & Νέα */
+.art-rel { background: #f3f4f6; padding-block: 64px 80px; }
+.art-rel__title {
+  margin: 0 0 40px; font-family: var(--font-body); font-weight: 700;
+  font-size: clamp(24px, 1.67vw, 32px); line-height: 1.2; color: var(--fora-black);
+}
+.art-rel__grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; align-items: start;
+}
+.art-rel__card {
+  display: flex; flex-direction: column; gap: 20px; overflow: hidden;
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; color: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.art-rel__card:hover { color: inherit; transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.art-rel__img { display: block; width: 100%; height: 200px; object-fit: cover; }
+.art-rel__img--empty { background: var(--fora-section-tint); }
+.art-rel__body { display: flex; flex-direction: column; gap: 12px; padding: 0 24px 24px; }
+.art-rel__date { font-family: var(--font-body); font-size: 12px; color: #737373; }
+.art-rel__name,
+.art-rel__sum {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.art-rel__name {
+  font-family: var(--font-heading); font-weight: 700; font-size: 18px; line-height: 1.25;
+  color: var(--fora-black);
+}
+.art-rel__sum { font-family: var(--font-body); font-size: 14px; line-height: 20px; color: #737373; }
+
+@media (max-width: 1280px) {
+  .art-split { grid-template-columns: minmax(0, 1fr) 320px; gap: 40px; }
+}
+@media (max-width: 1024px) {
+  /* Tablet: η πλαϊνή στήλη πάει κάτω από το κείμενο, σε δύο στήλες */
+  .art-split { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .art-side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .art-card--nl { grid-column: 1 / -1; }
+  .art-rel__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .art-rel__card:nth-child(n + 3) { display: none; }
+}
+@media (max-width: 700px) {
+  .nws-hero--article .nws-hero__inner { padding-block: calc(40px + 88px) 40px; }
+  .nws-hero--article .nws-hero__title--article { margin-top: 18px; }
+  .art-meta { margin-top: 18px; gap: 8px 14px; font-size: 13px; }
+  .art-meta__dot { display: none; }   /* σε στενή οθόνη η κουκκίδα «κρέμεται» στο τέλος της γραμμής */
+  .art-main { padding-block: 32px 56px; }
+  .art-body { gap: 28px; }
+  .art-body__media { aspect-ratio: 16 / 10; }
+  .art-body__lead,
+  .nws-article__body { font-size: 17px; line-height: 1.6; letter-spacing: -0.02em; }
+  .art-side { grid-template-columns: minmax(0, 1fr); }
+  .art-rel { padding-block: 48px 56px; }
+  .art-rel__title { margin-bottom: 24px; }
+  .art-rel__grid { grid-template-columns: minmax(0, 1fr); }
+  .art-rel__card:nth-child(n + 3) { display: flex; }
+}
+
+/* Μορφοποίηση από το Strapi (Markdown) μέσα στο κείμενο του άρθρου */
 .nws-article__body > :first-child { margin-top: 0; }
 .nws-article__body > :last-child { margin-bottom: 0; }
-.nws-article__body p { margin: 0 0 1.75em; }
+.nws-article__body p { margin: 0 0 1.667em; }
 .nws-article__body h2,
 .nws-article__body h3,
 .nws-article__body h4,
 .nws-article__body h5,
 .nws-article__body h6 {
-  font-family: var(--font-heading); font-weight: 700; line-height: 1.3;
+  font-family: var(--font-heading); font-weight: 700; line-height: 1.3; letter-spacing: normal;
   color: var(--fora-black); margin: 1.9em 0 0.7em;
 }
-.nws-article__body h2 { font-size: clamp(22px, 2vw, 28px); color: var(--fora-blue); }
-.nws-article__body h3 { font-size: clamp(20px, 1.6vw, 23px); }
+.nws-article__body h2 { font-size: clamp(22px, 1.6vw, 30px); color: var(--fora-blue); }
+.nws-article__body h3 { font-size: clamp(20px, 1.35vw, 26px); }
 .nws-article__body h4,
 .nws-article__body h5,
 .nws-article__body h6 { font-size: 19px; }
@@ -658,7 +814,6 @@ main { min-height: 40vh; }
   background: var(--fora-section-tint); border-radius: 10px; line-height: 1.5;
 }
 .nws-article__body pre code { background: none; padding: 0; }
-.nws-article__back { margin-top: 40px; font-weight: 700; }
 
 @media (max-width: 1024px) {
   .nws-feat { flex-direction: column; align-items: stretch; gap: 0; }
@@ -677,7 +832,6 @@ main { min-height: 40vh; }
   .nws-feat__title { font-size: 20px; }
   .nws-feat__sum { font-size: 15px; }
   .nws-btn { padding: 12px 22px; font-size: 16px; }
-  .nws-article__body { font-size: 16px; }
 }
 
 /* ==========================================================================

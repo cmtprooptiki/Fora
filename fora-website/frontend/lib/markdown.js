@@ -264,3 +264,35 @@ export function markdownToHtml(md) {
   if (!md) return '';
   return renderBlocks(String(md).replace(/\r\n?/g, '\n').split('\n'));
 }
+
+/**
+ * Χωρίζει την ΠΡΩΤΗ παράγραφο του κειμένου (την «εισαγωγή», που στο σχέδιο
+ * εμφανίζεται πιο σκούρα και με γραμμή από κάτω) από το υπόλοιπο.
+ * Αν το κείμενο ξεκινά με επικεφαλίδα/λίστα κ.λπ., δεν υπάρχει εισαγωγή.
+ * Επιστρέφει { lead: HTML ή '', rest: Markdown }.
+ */
+export function splitLead(md) {
+  const lines = String(md || '').replace(/\r\n?/g, '\n').split('\n');
+  let i = 0;
+  while (i < lines.length && !lines[i].trim()) i++;
+  if (i >= lines.length || startsBlock(lines[i])) return { lead: '', rest: lines.join('\n') };
+  const buf = [];
+  while (i < lines.length && lines[i].trim() && !startsBlock(lines[i])) buf.push(lines[i++]);
+  return {
+    lead: buf.map((l) => inline(l.trim())).join('<br />'),
+    rest: lines.slice(i).join('\n'),
+  };
+}
+
+/** Σκέτο κείμενο χωρίς σύμβολα Markdown (για περιλήψεις και χρόνο ανάγνωσης). */
+export function plainText(md) {
+  return String(md || '')
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/^\s{0,3}(#{1,6}|>|[-*+]\s|\d{1,9}[.)]\s)\s*/gm, '')
+    .replace(/(\*\*|__|~~|[*`])/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}

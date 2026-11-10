@@ -49,6 +49,9 @@
     "keimeno": {
       "type": "richtext"
     },
+    "etiketes": {
+      "type": "text"
+    },
     "proveblimeno": {
       "type": "boolean",
       "default": false
